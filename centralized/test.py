@@ -27,7 +27,7 @@ source_router_entry = tk.Entry(window, textvariable = source_router_var, font=('
 dest_router_entry = tk.Entry(window, textvariable = dest_router_var, font=('calibre',10,'normal'))
 offline_routers_entry = tk.Entry(window, textvariable = offline_routers_var, font=('calibre',10,'normal'))
 
-# ERROR CHECKING - not done
+# ERROR CHECKING
 def print_errors():
     # create canvas for displaying error msgs
     canvas = tk.Canvas(window, width= 750, height= 150, bg="White")
@@ -93,21 +93,22 @@ def validate():
 sub_btn=tk.Button(window,text = 'Submit', command = validate)
 
 def edges():
-    '''should display an undirected graph with num_routers_var
+    '''should display an undirected graph with and 
     allow user to change cost of each edge'''
-    # create canvas for displaying error msgs
-    canvas = tk.Canvas(window, width= 300, height= 150, bg="White")
-    canvas.create_text(10,10, anchor='nw', text="print undirected graph here", fill="red", font=('calibre 10 bold'))  
-    canvas.grid(row=5,column=0, columnspan = 5, sticky = tk.W+tk.E)
+    # create a new window for displaying the graph with randomized edges
     
-    # allow user to input cost for each edge OR randomize costs
+    # allow user the option to change cost for each edge 
 
-    # upon submitting, should run submit()
+    # if user selects centralized algorithm, run animate() with cent param 
     
-
-def submit():
-    '''pass input from entry widgets into vars for use in algorithms
-    create the undirected graph'''  
+    # if user selects decentralized algorithm, run animate_decent()
+    
+def animate_cent(type):
+    '''play animation for centralized or decentralized algorithm
+    type is either "cent" or "decent"'''  
+    # create a new window for animating the route
+    # user can toggle between steps with back and forward arrows
+    # option to quit and restart  
 
 
 # placing the label and entry using grid
