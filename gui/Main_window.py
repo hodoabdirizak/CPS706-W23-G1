@@ -33,7 +33,6 @@ class Main_window(tk.Frame):
   
   
 class Page1(tk.Frame):  
-  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         label = tk.Label(self, text="Edges", font=('calibre 12 bold'))  
