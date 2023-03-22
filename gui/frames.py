@@ -68,10 +68,9 @@ class Main_window(tk.Frame):
             else:
                 canvas = tk.Canvas(self, width= 750, height= 150, bg="White")
                 canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
-                canvas.grid(row=5,column=0, columnspan = 10, sticky = tk.W+tk.E)  
+                canvas.grid(row=6,column=0, columnspan = 10, sticky = tk.W+tk.E)  
 
         sub_btn=tk.Button(self, text = 'Submit', command = validate)
-        sub_btn.grid(row=4,column=1)  
 
         # placing the label and entry using grid
         label.grid(row=0,column=0)
@@ -94,11 +93,11 @@ class Page1(tk.Frame):
 
         button1 = tk.Button(self, text="Go Back to Input", command=lambda: controller.show_frame(Main_window))  
         # button1.pack()  
-        button1.grid(row=5,column=1)
+        button1.grid(row=7,column=1)
 
         button2 = tk.Button(self, text="Submit", command=lambda: controller.show_frame(Page2))  
         # button2.pack()  
-        button2.grid(row=5,column=2)
+        button2.grid(row=7,column=2)
         print("num_routers = {}, sourcec_router = {}, dest_router = {}, offline_routers = {}".format(num_routers, source_router, dest_router, offline_routers))
   
 class Page2(tk.Frame):  
