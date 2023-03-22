@@ -92,6 +92,19 @@ def validate():
 
 sub_btn=tk.Button(window,text = 'Submit', command = validate)
 
+def open_secondary_window():
+    # Create secondary (or popup) window.
+    secondary_window = tk.Toplevel()
+    secondary_window.title("Customize Graph")
+    secondary_window.config(width=700, height=400)
+    # Create a button to close (destroy) this window.
+    button_close = tk.Button(
+        secondary_window,
+        text="Close window",
+        command=secondary_window.destroy
+    )
+    button_close.place(x=75, y=75)
+
 def edges():
     '''should display an undirected graph with and 
     allow user to change cost of each edge'''
