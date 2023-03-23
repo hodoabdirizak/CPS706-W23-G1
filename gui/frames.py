@@ -26,6 +26,7 @@ class Container(tk.Tk):
 
 num_routers = source_router = dest_router = 0
 offline_routers = []
+buttonClicked = False
 
 class Main_window(tk.Frame):  
     def __init__(self, parent, controller):  
@@ -56,21 +57,31 @@ class Main_window(tk.Frame):
             if invalid: print error msg to window 
             else: call edges()'''
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get(),offline_routers_var.get())
-            print(err_msg)
-            if err_msg == "":
+            print("err msg:",err_msg)
+            canvas = tk.Canvas(self, width= 750, height= 150)
+            canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
+            canvas.grid(row=6,column=0, columnspan = 10, sticky = tk.W+tk.E)  
+            if err_msg == None:
                 num_routers = int(num_routers_var.get())
                 source_router = int(source_router_var.get())
                 dest_router = int(dest_router_var.get())
                 offline_routers_raw = offline_routers_var.get()
-                offline_routers = [int(router) for router in offline_routers_raw.split(",")]
-                self.show_frame(Page1)
+                if offline_routers_raw == "":
+                    offline_routers = []
+                else:
+                    offline_routers = [int(router) for router in offline_routers_raw.split(",")]                
+                return True
 
-            else:
-                canvas = tk.Canvas(self, width= 750, height= 150, bg="White")
-                canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
-                canvas.grid(row=6,column=0, columnspan = 10, sticky = tk.W+tk.E)  
+            return False
+            
+        def switch():
+            if validate():
+                sub_btn['state'] = tk.NORMAL
+            if not validate():
+                sub_btn['state'] = tk.DISABLED
 
-        sub_btn=tk.Button(self, text = 'Submit', command = validate)
+        def disable():
+            sub_btn['state'] = tk.DISABLED
 
         # placing the label and entry using grid
         label.grid(row=0,column=0)
@@ -82,35 +93,42 @@ class Main_window(tk.Frame):
         dest_router_entry.grid(row=3,column=1)
         offline_routers_label.grid(row=4,column=0)
         offline_routers_entry.grid(row=4,column=1)
+
+        val_btn=tk.Button(self, text = 'Validate', command = switch)
+        sub_btn=tk.Button(self, text = 'Submit', state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
+
+        val_btn.grid(row=5,column=0)
         sub_btn.grid(row=5,column=1)
-  
+
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         label = tk.Label(self, text="Edges", font=('calibre 12 bold'))  
-        label.grid(row=5,column=1)
-        # label.pack(pady=10,padx=10)  
+        label.grid(row=1,column=1)
 
         button1 = tk.Button(self, text="Go Back to Input", command=lambda: controller.show_frame(Main_window))  
-        # button1.pack()  
-        button1.grid(row=7,column=1)
-
         button2 = tk.Button(self, text="Submit", command=lambda: controller.show_frame(Page2))  
-        # button2.pack()  
-        button2.grid(row=7,column=2)
-        print("num_routers = {}, sourcec_router = {}, dest_router = {}, offline_routers = {}".format(num_routers, source_router, dest_router, offline_routers))
+        random_edges = tk.Button(self, text="Randomize Edges") 
+        
+        button1.grid(row=2,column=1)  
+        button2.grid(row=2,column=2)
+        random_edges.grid(row=3,column=1)
   
 class Page2(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         label = tk.Label(self, text="Graph animation", font=('calibre 12 bold'))  
-        # label.pack(pady=10,padx=10)  
-        label.grid(row=5,column=1)
+ 
+        label.grid(row=1,column=1)
 
-        button2 = tk.Button(self, text="Go Back to Edges", command=lambda: controller.show_frame(Page1))  
-        # button2.pack()  
-        button2.grid(row=5,column=2)
+        button1 = tk.Button(self, text="Go Back to Edges", command=lambda: controller.show_frame(Page1))  
+        cent = tk.Button(self, text="Centralized Algorithm")  
+        decent = tk.Button(self, text="Decentralized Algorithm") 
 
+        button1.grid(row=2,column=1)
+        cent.grid(row=3,column=1)
+        decent.grid(row=3,column=2)
+        
 def data(lst):
     '''accepts a list of data'''
     return lst
