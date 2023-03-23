@@ -4,4 +4,4 @@
     - This will create a virtual environment in the path
 3. Run `cd .\706env\Scripts\` 
 4. Run `./activate`
-5. Run the python code from the 706env
+5. Run frames.py
