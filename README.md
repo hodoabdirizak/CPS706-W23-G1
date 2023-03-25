@@ -7,9 +7,9 @@
 
 ## TIMELINE
 ### March 15th - April 1st
-- [ ] Centralized (3) + GUI: Camillia, Julia, Alex
-
-- [ ] Decentralized (3) + GUI: Het, Hodo, Salma
+- [ ] GUI (2): Camillia, Julia
+- [ ] Centralized (2):  Salma, Alex
+- [ ] Decentralized (2): Het, Hodo
 
 ### April 2nd - April 8th
 - [ ] Coding style
