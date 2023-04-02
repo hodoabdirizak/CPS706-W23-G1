@@ -20,7 +20,7 @@ class Container(tk.Tk):
   
         self.frames = {}  
   
-        for F in (Main_window, Page1, Page2):  
+        for F in (Main_window, Page1):  
             frame = F(container, self)
             self.frames[F] = frame  
             frame.grid(row=0, column=0, sticky="nsew")  
@@ -37,12 +37,6 @@ offline_routers = []
 buttonClicked = False
 G = None
 label_img = None
-
-def destroy_img():
-    global label_img
-    if label_img: 
-        label_img.master.destroy()
-        label_img.destroy()
 
 class Main_window(tk.Frame):  
     def __init__(self, parent, controller):  
@@ -125,55 +119,43 @@ class Page1(tk.Frame):
         label = tk.Label(self, text="Generate Network", font=('calibre 12 bold'))  
         label.grid(row=1,column=1)
 
-        button1 = tk.Button(self, text="Go Back to Input", command=lambda: controller.show_frame(Main_window))  
-        button2 = tk.Button(self, text="Submit", command=lambda: controller.show_frame(Page2))  
-
-        button1.grid(row=2,column=1)
-        button2.grid(row=2,column=2)
-
         def randomize():
             '''calls function from edges.py to display a static graph with random edges
             assumes that user does not want to customize edges'''
             global label_img
-            destroy_img()
+            if label_img:
+                label_img.destroy()
             G = display_static_graph(num_routers, source_router, dest_router, offline_routers)
 
             # get image created by previous fxn call
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
-            label_img = tk.Label(image=img)
+            label_img = tk.Label(self,image=img)
             label_img.image = img
-            label_img.pack()
+            label_img.grid(row=3,column=1)
+            return True
 
         def collect_input():
-            '''should allow user to customize edges'''
-
+            '''should create a new canvas object to allow user to customize edges'''
+        randomize()
         random_edges = tk.Button(self, text="Randomize Edges", command = randomize)
         custom_edges = tk.Button(self, text="Customize Edges", command = collect_input) 
-        random_edges.grid(row=3,column=1)
-        custom_edges.grid(row=3,column=2)
-      
-  
-class Page2(tk.Frame):  
-    def __init__(self, parent, controller):  
-        tk.Frame.__init__(self, parent)  
+        random_edges.grid(row=2,column=0,sticky='')
+        custom_edges.grid(row=2,column=2,sticky='')
 
-        label = tk.Label(self, text="Graph animation", font=('calibre 12 bold'))  
- 
-        label.grid(row=1,column=1)
+        button1 = tk.Button(self, text="Go Back to Input", command=lambda: [label_img.destroy, controller.show_frame(Main_window)])  
+        # these buttons should be hidden until the graph object has been generated
+        cent = tk.Button(self, text="Run Centralized Algorithm")  
+        decent = tk.Button(self, text="Run Decentralized Algorithm") 
 
-        button1 = tk.Button(self, text="Go Back to Edges", command=lambda: controller.show_frame(Page1))  
-        cent = tk.Button(self, text="Centralized Algorithm")  
-        decent = tk.Button(self, text="Decentralized Algorithm") 
-
-        button1.grid(row=2,column=1)
-        cent.grid(row=3,column=1)
-        decent.grid(row=3,column=2)
-        
+        button1.grid(row=5,column=0,sticky='')
+        cent.grid(row=5,column=2)
+        decent.grid(row=5,column=3)
+             
 def data(lst):
     '''accepts a list of data'''
     return lst
 
 window = Container()  
 window.title('Routing Algorithm Visualization Tool')
-window.geometry('800x600')
+window.geometry('1000x600')
 window.mainloop()  
