@@ -5,3 +5,4 @@
 3. Run `cd .\706env\Scripts\` 
 4. Run `./activate`
 5. Run frames.py
+6. `pip install networkx`

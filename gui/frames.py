@@ -1,8 +1,15 @@
 import tkinter as tk  
-from tkinter import Canvas
+from tkinter import *
+from PIL import Image, ImageTk
 import re
 from home_page import *
-  
+from create_graph import *
+import networkx as nx
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+import os
+
 class Container(tk.Tk):  
     def __init__(self, *args, **kwargs):  
         tk.Tk.__init__(self, *args, **kwargs)  
@@ -24,13 +31,23 @@ class Container(tk.Tk):
         frame = self.frames[cont]  
         frame.tkraise()  
 
+# global vars
 num_routers = source_router = dest_router = 0
 offline_routers = []
 buttonClicked = False
+G = None
+label_img = None
+
+def destroy_img():
+    global label_img
+    if label_img: 
+        label_img.master.destroy()
+        label_img.destroy()
 
 class Main_window(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)  
+
         label = tk.Label(self, text="Enter input", font=('calibre 12 bold'))  
 
         # declare vars to store values input by user 
@@ -56,6 +73,7 @@ class Main_window(tk.Frame):
             '''validates that info provided is correct
             if invalid: print error msg to window 
             else: call edges()'''
+            global num_routers, source_router, dest_router, offline_routers
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get(),offline_routers_var.get())
             print("err msg:",err_msg)
             canvas = tk.Canvas(self, width= 750, height= 150)
@@ -103,20 +121,42 @@ class Main_window(tk.Frame):
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
-        label = tk.Label(self, text="Edges", font=('calibre 12 bold'))  
+        
+        label = tk.Label(self, text="Generate Network", font=('calibre 12 bold'))  
         label.grid(row=1,column=1)
 
         button1 = tk.Button(self, text="Go Back to Input", command=lambda: controller.show_frame(Main_window))  
         button2 = tk.Button(self, text="Submit", command=lambda: controller.show_frame(Page2))  
-        random_edges = tk.Button(self, text="Randomize Edges") 
-        
-        button1.grid(row=2,column=1)  
+
+        button1.grid(row=2,column=1)
         button2.grid(row=2,column=2)
+
+        def randomize():
+            '''calls function from edges.py to display a static graph with random edges
+            assumes that user does not want to customize edges'''
+            global label_img
+            destroy_img()
+            G = display_static_graph(num_routers, source_router, dest_router, offline_routers)
+
+            # get image created by previous fxn call
+            img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
+            label_img = tk.Label(image=img)
+            label_img.image = img
+            label_img.pack()
+
+        def collect_input():
+            '''should allow user to customize edges'''
+
+        random_edges = tk.Button(self, text="Randomize Edges", command = randomize)
+        custom_edges = tk.Button(self, text="Customize Edges", command = collect_input) 
         random_edges.grid(row=3,column=1)
+        custom_edges.grid(row=3,column=2)
+      
   
 class Page2(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
+
         label = tk.Label(self, text="Graph animation", font=('calibre 12 bold'))  
  
         label.grid(row=1,column=1)
