@@ -2,6 +2,10 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import random
 
+import sys
+sys.path.append('./centralized')
+from dijkstra import * 
+
 random.seed(232)
 
 def create_random_graph(num_routers, offline_routers):
@@ -49,7 +53,7 @@ def create_random_graph(num_routers, offline_routers):
 
     # saves graph to an image
     plt.savefig("rand_graph.png")
-    
+    # print(dijkstra(G, '1', '5'))
     return G
 
 def create_custom_graph(data):

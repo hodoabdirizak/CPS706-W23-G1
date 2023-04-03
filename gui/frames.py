@@ -2,13 +2,17 @@ import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 import re
-from home_page import *
-from create_graph import *
 import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-import os
+
+from home_page import *
+from create_graph import *
+import sys
+sys.path.append('./centralized')
+from dijkstra import * 
+
 
 class Container(tk.Tk):  
     def __init__(self, *args, **kwargs):  
@@ -69,7 +73,6 @@ class Main_window(tk.Frame):
             else: call edges()'''
             global num_routers, source_router, dest_router, offline_routers
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get(),offline_routers_var.get())
-            print("err msg:",err_msg)
             canvas = tk.Canvas(self, width= 750, height= 150)
             canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
             canvas.grid(row=6,column=0, columnspan = 10, sticky = tk.W+tk.E)  
@@ -115,17 +118,17 @@ class Main_window(tk.Frame):
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
-        print(num_routers, source_router, dest_router, offline_routers)
         label = tk.Label(self, text="Generate Network", font=('calibre 12 bold'))  
         label.grid(row=0,column=1)
 
         def create_graph():
             '''calls function from edges.py to display a graph with random edges
             assumes that user does not want to customize edges'''
-            
             label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), font=('calibre 12'))  
             label.grid(row=1,column=1)
+            global G
             G = create_random_graph(num_routers, offline_routers)
+
 
             # get image created by previous fxn call
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
@@ -153,23 +156,37 @@ class Page1(tk.Frame):
 
         def update_graph(data):
             '''calls create_custom_graph() from create.py to create a new graph object'''
-            G = create_custom_graph(data)
+            # G = create_custom_graph(data)
             # get image created by previous fxn call
-            img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
-            label_img = tk.Label(self,image=img)
-            label_img.image = img
-            label_img.grid(row=3,column=1)
+            # img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
+            # label_img = tk.Label(self,image=img)
+            # label_img.image = img
+            # label_img.grid(row=3,column=1)
 
         create_graph()
         random_edges = tk.Button(self, text="Create graph", command = create_graph)
         random_edges.grid(row=2,column=0)
 
-        button1 = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
+        go_back = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
         # these buttons should be hidden until the graph object has been generated
-        cent = tk.Button(self, text="Run Centralized Algorithm")  
-        decent = tk.Button(self, text="Run Decentralized Algorithm") 
 
-        button1.grid(row=5,column=0)
+        def get_path_cent():
+            '''call the fxn from dijkstra.py to get the shortest path. 
+            executes the pygame for centralized algorithm'''
+            path = dijkstra(G, str(source_router), str(dest_router))
+            print(path)
+            # start pygame
+
+        def get_path_decent():
+            '''call the fxn from XYZ.py to get the shortest path. 
+            executes the pygame for decentralizated algorithm'''
+            
+            # start pygame
+
+        cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  
+        decent = tk.Button(self, text="Run Decentralized Algorithm", command=get_path_decent) 
+
+        go_back.grid(row=5,column=0)
         cent.grid(row=5,column=2)
         decent.grid(row=5,column=3)
              
