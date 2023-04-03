@@ -115,39 +115,61 @@ class Main_window(tk.Frame):
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
-        
+        print(num_routers, source_router, dest_router, offline_routers)
         label = tk.Label(self, text="Generate Network", font=('calibre 12 bold'))  
-        label.grid(row=1,column=1)
+        label.grid(row=0,column=1)
 
-        def randomize():
-            '''calls function from edges.py to display a static graph with random edges
+        def create_graph():
+            '''calls function from edges.py to display a graph with random edges
             assumes that user does not want to customize edges'''
-            global label_img
-            if label_img:
-                label_img.destroy()
-            G = display_static_graph(num_routers, source_router, dest_router, offline_routers)
+            
+            label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), font=('calibre 12'))  
+            label.grid(row=1,column=1)
+            G = create_random_graph(num_routers, offline_routers)
 
             # get image created by previous fxn call
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1)
-            return True
 
-        def collect_input():
-            '''should create a new canvas object to allow user to customize edges'''
-        randomize()
-        random_edges = tk.Button(self, text="Randomize Edges", command = randomize)
-        custom_edges = tk.Button(self, text="Customize Edges", command = collect_input) 
-        random_edges.grid(row=2,column=0,sticky='')
-        custom_edges.grid(row=2,column=2,sticky='')
+            # create a table with based on randomized nodes and weights, store in data var
+            #  Node A  |   Node B   |  Cost
+            #     1    |      2     |    5
 
-        button1 = tk.Button(self, text="Go Back to Input", command=lambda: [label_img.destroy, controller.show_frame(Main_window)])  
+            # should start at grid row=3 and column 2
+
+            # follow this tutorial to make the table editable: 
+            # see 'Python Tkinter Table Refresh': https://pythonguides.com/python-tkinter-table-tutorial/
+            # after each record refresh, update data var
+
+            # follow this tutorial to allow new input fields: 
+            # see 'Python Tkinter Table Input': https://pythonguides.com/python-tkinter-table-tutorial/
+
+            # after the user is done editing the table, they have to press 'update graph'  
+            # triggers fxn call to update_graph(), need to pass in data to fxn
+            custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
+            custom_edges.grid(row=2,column=2)
+
+        def update_graph(data):
+            '''calls create_custom_graph() from create.py to create a new graph object'''
+            G = create_custom_graph(data)
+            # get image created by previous fxn call
+            img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
+            label_img = tk.Label(self,image=img)
+            label_img.image = img
+            label_img.grid(row=3,column=1)
+
+        create_graph()
+        random_edges = tk.Button(self, text="Create graph", command = create_graph)
+        random_edges.grid(row=2,column=0)
+
+        button1 = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
         # these buttons should be hidden until the graph object has been generated
         cent = tk.Button(self, text="Run Centralized Algorithm")  
         decent = tk.Button(self, text="Run Decentralized Algorithm") 
 
-        button1.grid(row=5,column=0,sticky='')
+        button1.grid(row=5,column=0)
         cent.grid(row=5,column=2)
         decent.grid(row=5,column=3)
              
@@ -157,5 +179,5 @@ def data(lst):
 
 window = Container()  
 window.title('Routing Algorithm Visualization Tool')
-window.geometry('1000x600')
+window.geometry('1200x600')
 window.mainloop()  

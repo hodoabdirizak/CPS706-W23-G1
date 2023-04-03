@@ -2,18 +2,19 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import random
 
-random.seed(10)
+random.seed(232)
 
-def display_static_graph(num_routers, source_router, dest_router, offline_routers):
+def create_random_graph(num_routers, offline_routers):
+    '''returns a graph object based on a randomized graph '''
     # init graph object
     G = nx.Graph()
 
     # connect all nodes
-    for i in range(0,num_routers):
+    for i in range(1,num_routers):
         G.add_edge(str(i), str(i+1), weight=random.randint(1,11))
 
     # add random nodes
-    for i in range(0,num_routers,2):
+    for i in range(1,num_routers,2):
         # if an edge between 2 nodes doesnt already exist
         # if not G.has_edge(str(i), str(random.randint(i+1,num_routers+1))):
             # add an edge between the 
@@ -49,4 +50,15 @@ def display_static_graph(num_routers, source_router, dest_router, offline_router
     # saves graph to an image
     plt.savefig("rand_graph.png")
     
+    return G
+
+def create_custom_graph(data):
+    '''returns a graph object based on a customized graph'''
+    # init graph object
+    G = nx.Graph()
+
+    # populate graph based on input data
+    
+    # saves graph to an image
+    plt.savefig("cust_graph.png")
     return G
