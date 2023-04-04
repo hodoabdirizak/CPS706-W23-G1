@@ -95,7 +95,9 @@ def cent_main(graph, path):
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_LEFT:
                     if path_index > 0:
                         path_index -= 1
                         current_node = path[path_index]
@@ -103,6 +105,7 @@ def cent_main(graph, path):
                     if path_index < len(path) - 1:
                         path_index += 1
                         current_node = path[path_index]
+                
         
         # Update the screen
         draw_graph(screen, graph, path, current_node)
@@ -110,16 +113,16 @@ def cent_main(graph, path):
     # Quit pygame
     pygame.quit()
 
-G = nx.Graph()
-G.add_edge('1', '2', weight=5)
-G.add_edge('1', '4', weight=5)
-G.add_edge('2', '3', weight=2)
-G.add_edge('3', '4', weight=4)
-G.add_edge('4', '5', weight=2)
-G.add_edge('5', '6', weight=9)
+# G = nx.Graph()
+# G.add_edge('1', '2', weight=5)
+# G.add_edge('1', '4', weight=5)
+# G.add_edge('2', '3', weight=2)
+# G.add_edge('3', '4', weight=4)
+# G.add_edge('4', '5', weight=2)
+# G.add_edge('5', '6', weight=9)
 
 # Define a path through the graph
-path = ['1', '4', '5']
+# path = ['1', '4', '5']
 
 # Run the game
 # cent_main(G, path)
