@@ -14,7 +14,6 @@ EDGE_COLOR = (255, 255, 255)
 # Define the font for the node labels
 FONT = pygame.font.Font(None, 30)
 
-# Define the function that will draw the graph on the screen
 def draw_graph(screen, graph, path, current_node):
     # Clear the screen
     screen.fill((0, 0, 0))
@@ -23,8 +22,12 @@ def draw_graph(screen, graph, path, current_node):
     for u, v in graph.edges():
         u_pos = graph.nodes[u]["pos"]
         v_pos = graph.nodes[v]["pos"]
+        weight = str(graph[u][v]['weight'])
+        label = FONT.render(weight, True, EDGE_COLOR)
+        label_pos = ((u_pos[0] + v_pos[0])/2, (u_pos[1] + v_pos[1])/2)
+        screen.blit(label, label_pos)
         pygame.draw.line(screen, EDGE_COLOR, u_pos, v_pos)
-    
+
     # Draw the nodes
     for node in graph.nodes():
         pos = graph.nodes[node]["pos"]
@@ -40,12 +43,30 @@ def draw_graph(screen, graph, path, current_node):
         label = FONT.render(str(node), True, (255, 255, 255))
         label_pos = (pos[0] - NODE_RADIUS/2, pos[1] - NODE_RADIUS/2)
         screen.blit(label, label_pos)
-    
+        
+        # Draw the current node label
+        if node == current_node:
+            label = FONT.render(" Current Router", True, (255, 0, 0))
+            label_pos = (pos[0] + NODE_RADIUS, pos[1])
+            screen.blit(label, label_pos)
+            
+            cost = 0
+            # Draw the cost label
+            # if node is the first node:
+            if node != path[0]:
+                edge_data = graph.get_edge_data(path[path.index(node)-1],node)
+                cost = edge_data['weight']
+
+            cost_label = FONT.render("Current Cost: {}".format(cost), True, EDGE_COLOR)
+            cost_pos = (WINDOW_WIDTH - cost_label.get_width() - NODE_RADIUS, NODE_RADIUS)
+            screen.blit(cost_label, cost_pos)
+            
     # Update the screen
     pygame.display.update()
 
+
 # Define the main function that will run the game
-def main(graph, path):
+def cent_main(graph, path):
     # Initialize pygame
     pygame.init()
     
@@ -89,16 +110,16 @@ def main(graph, path):
     # Quit pygame
     pygame.quit()
 
-# G = nx.Graph()
-# G.add_edge('1', '2', weight=5)
-# G.add_edge('1', '4', weight=5)
-# G.add_edge('2', '3', weight=2)
-# G.add_edge('3', '4', weight=4)
-# G.add_edge('4', '5', weight=2)
-# G.add_edge('5', '6', weight=9)
+G = nx.Graph()
+G.add_edge('1', '2', weight=5)
+G.add_edge('1', '4', weight=5)
+G.add_edge('2', '3', weight=2)
+G.add_edge('3', '4', weight=4)
+G.add_edge('4', '5', weight=2)
+G.add_edge('5', '6', weight=9)
 
-# # Define a path through the graph
-# path = ['1', '4', '5']
+# Define a path through the graph
+path = ['1', '4', '5']
 
 # Run the game
-# main(G, path)
+# cent_main(G, path)

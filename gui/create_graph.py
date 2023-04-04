@@ -18,7 +18,7 @@ def create_random_graph(num_routers, offline_routers):
         G.add_edge(str(i), str(i+1), weight=random.randint(1,11))
 
     # add random nodes
-    for i in range(1,num_routers,2):
+    for i in range(1,num_routers-2):
         # if an edge between 2 nodes doesnt already exist
         # if not G.has_edge(str(i), str(random.randint(i+1,num_routers+1))):
             # add an edge between the 

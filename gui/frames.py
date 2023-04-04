@@ -173,15 +173,16 @@ class Page1(tk.Frame):
         random_edges.grid(row=2,column=0)
 
         go_back = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
-        # these buttons should be hidden until the graph object has been generated
-
+        
+        
         def get_path_cent():
             '''call the fxn from dijkstra.py to get the shortest path. 
             executes the pygame for centralized algorithm'''
             path = dijkstra(G, str(source_router), str(dest_router))
-            main(G, path)
+            
             # start pygame
-
+            cent_main(G, path)
+            
 
         def get_path_decent():
             '''call the fxn from XYZ.py to get the shortest path. 
@@ -189,6 +190,7 @@ class Page1(tk.Frame):
             
             # start pygame
 
+        # these buttons should be hidden until the graph object has been generated
         cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  
         decent = tk.Button(self, text="Run Decentralized Algorithm", command=get_path_decent) 
 
