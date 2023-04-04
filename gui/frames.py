@@ -43,7 +43,7 @@ buttonClicked = False
 G = None
 label_img = None
 
-class Main_window(tk.Frame):  
+class Main_window(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)  
 
@@ -127,6 +127,10 @@ class Page1(tk.Frame):
             assumes that user does not want to customize edges'''
             label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), font=('calibre 12'))  
             label.grid(row=1,column=1)
+
+            # destroy any existing graph
+            plt.clf()
+
             global G
             G = create_random_graph(num_routers, offline_routers)
 
