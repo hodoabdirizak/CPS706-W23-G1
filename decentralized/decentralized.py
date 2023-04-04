@@ -21,7 +21,7 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
     # Loop
     t = 0
 
-    print(f'{notify_neighbors}')
+    # print(f'{notify_neighbors}')
     print(f't = {t}')
     for i, x in enumerate(dist_vecs):
         print(f'{i} = {x}')
@@ -55,7 +55,7 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
         dist_vecs = dist_vecs_next
         notify_neighbors = notify_neighbors_next
 
-        print(f'{notify_neighbors}')
+        # print(f'{notify_neighbors}')
         print(f't = {t}')
         for i, x in enumerate(dist_vecs):
             print(f'{i} = {x}')
