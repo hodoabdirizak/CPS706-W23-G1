@@ -1,11 +1,18 @@
+import networkx as nx
+import os
 import pygame
 pygame.init()
-import networkx as nx
+
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Define constants for the window size and node radius
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 800
 NODE_RADIUS = 15
+
+# Get info about window size
+info = pygame.display.Info() 
+screen_width,screen_height = info.current_w,info.current_h
 
 # Define colors for the nodes and edges
 NODE_COLOR = (255, 255, 255)
@@ -40,7 +47,7 @@ def draw_graph(screen, graph, path, current_node):
         pygame.draw.circle(screen, color, pos, NODE_RADIUS)
         
         # Draw the label
-        label = FONT.render(str(node), True, (255, 255, 255))
+        label = FONT.render(str(node), True, (0,0,0))
         label_pos = (pos[0] - NODE_RADIUS/2, pos[1] - NODE_RADIUS/2)
         screen.blit(label, label_pos)
         
@@ -63,22 +70,17 @@ def draw_graph(screen, graph, path, current_node):
             
     # Update the screen
     pygame.display.update()
-
-
+    
 # Define the main function that will run the game
 def cent_main(graph, path):
-    # Initialize pygame
-    pygame.init()
-    
     # Create the window
-    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    
+    screen = pygame.display.set_mode((WINDOW_WIDTH+50, WINDOW_HEIGHT+100))
     # Set the positions of the nodes based on their degrees
-    positions = nx.spring_layout(graph, k=1)
+    positions = nx.circular_layout(graph)
     for node in graph.nodes():
         pos = positions[node]
-        graph.nodes[node]["pos"] = (int(pos[0]*WINDOW_WIDTH/2 + WINDOW_WIDTH/2),
-                                    int(pos[1]*WINDOW_HEIGHT/2 + WINDOW_HEIGHT/2))
+        graph.nodes[node]["pos"] = (int(pos[0]*WINDOW_WIDTH//2.5 + WINDOW_WIDTH//2.5+50),
+                                    int(pos[1]*WINDOW_HEIGHT//2.5 + WINDOW_HEIGHT//2.5+100))
     
     # Set the initial state
     current_node = path[0]
@@ -94,23 +96,26 @@ def cent_main(graph, path):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-                elif event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT:
                     if path_index > 0:
                         path_index -= 1
                         current_node = path[path_index]
+                
                 elif event.key == pygame.K_RIGHT:
                     if path_index < len(path) - 1:
                         path_index += 1
                         current_node = path[path_index]
-                
+
+                elif event.key == pygame.K_ESCAPE:
+                    running = False               
         
         # Update the screen
         draw_graph(screen, graph, path, current_node)
     
     # Quit pygame
+    pygame.display.quit()
     pygame.quit()
 
 # G = nx.Graph()
@@ -121,8 +126,8 @@ def cent_main(graph, path):
 # G.add_edge('4', '5', weight=2)
 # G.add_edge('5', '6', weight=9)
 
-# Define a path through the graph
+# # Define a path through the graph
 # path = ['1', '4', '5']
 
-# Run the game
+# # Run the game
 # cent_main(G, path)

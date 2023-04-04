@@ -31,20 +31,20 @@ def create_random_graph(num_routers, offline_routers):
     # list of edges
     edges = [(u, v) for (u, v, d) in G.edges(data=True)]
 
-    pos = nx.spring_layout(G, seed=7)  # positions for all nodes - seed for reproducibility
+    pos = nx.circular_layout(G)  
 
     # nodes
-    nx.draw_networkx_nodes(G, pos, node_size=700)
+    nx.draw_networkx_nodes(G, pos, node_size=500)
 
     # edges
-    nx.draw_networkx_edges(G, pos, edgelist=edges, width=6, alpha=0.5)
+    nx.draw_networkx_edges(G, pos, edgelist=edges, width=4, alpha=0.5)
 
     # node labels
-    nx.draw_networkx_labels(G, pos, font_size=20, font_family="sans-serif")
+    nx.draw_networkx_labels(G, pos, font_size=16, font_family="sans-serif")
     
     # edge weight labels
     edge_labels = nx.get_edge_attributes(G, "weight")
-    nx.draw_networkx_edge_labels(G, pos, edge_labels, font_size=15, font_family="sans-serif")
+    nx.draw_networkx_edge_labels(G, pos, edge_labels, font_size=14, font_family="sans-serif")
 
     ax = plt.gca()
     ax.margins(0.08)
