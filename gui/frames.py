@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 
 from home_page import *
 from create_graph import *
+from centralized_pygame import *
 import sys
 sys.path.append('./centralized')
 from dijkstra import * 
@@ -174,8 +175,9 @@ class Page1(tk.Frame):
             '''call the fxn from dijkstra.py to get the shortest path. 
             executes the pygame for centralized algorithm'''
             path = dijkstra(G, str(source_router), str(dest_router))
-            print(path)
+            main(G, path)
             # start pygame
+
 
         def get_path_decent():
             '''call the fxn from XYZ.py to get the shortest path. 
