@@ -1,8 +1,20 @@
 import tkinter as tk  
-from tkinter import Canvas
+from tkinter import *
+from PIL import Image, ImageTk
 import re
+import networkx as nx
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
 from home_page import *
-  
+from create_graph import *
+from centralized_pygame import *
+import sys
+sys.path.append('./centralized')
+from dijkstra import * 
+
+
 class Container(tk.Tk):  
     def __init__(self, *args, **kwargs):  
         tk.Tk.__init__(self, *args, **kwargs)  
@@ -13,7 +25,7 @@ class Container(tk.Tk):
   
         self.frames = {}  
   
-        for F in (Main_window, Page1, Page2):  
+        for F in (Main_window, Page1):  
             frame = F(container, self)
             self.frames[F] = frame  
             frame.grid(row=0, column=0, sticky="nsew")  
@@ -24,13 +36,17 @@ class Container(tk.Tk):
         frame = self.frames[cont]  
         frame.tkraise()  
 
+# global vars
 num_routers = source_router = dest_router = 0
 offline_routers = []
 buttonClicked = False
+G = None
+label_img = None
 
-class Main_window(tk.Frame):  
+class Main_window(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)  
+
         label = tk.Label(self, text="Enter input", font=('calibre 12 bold'))  
 
         # declare vars to store values input by user 
@@ -56,8 +72,8 @@ class Main_window(tk.Frame):
             '''validates that info provided is correct
             if invalid: print error msg to window 
             else: call edges()'''
+            global num_routers, source_router, dest_router, offline_routers
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get(),offline_routers_var.get())
-            print("err msg:",err_msg)
             canvas = tk.Canvas(self, width= 750, height= 150)
             canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
             canvas.grid(row=6,column=0, columnspan = 10, sticky = tk.W+tk.E)  
@@ -103,37 +119,90 @@ class Main_window(tk.Frame):
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
-        label = tk.Label(self, text="Edges", font=('calibre 12 bold'))  
-        label.grid(row=1,column=1)
+        label = tk.Label(self, text="Generate Network", font=('calibre 12 bold'))  
+        label.grid(row=0,column=1)
 
-        button1 = tk.Button(self, text="Go Back to Input", command=lambda: controller.show_frame(Main_window))  
-        button2 = tk.Button(self, text="Submit", command=lambda: controller.show_frame(Page2))  
-        random_edges = tk.Button(self, text="Randomize Edges") 
+        def create_graph():
+            '''calls function from edges.py to display a graph with random edges
+            assumes that user does not want to customize edges'''
+            label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), font=('calibre 12'))  
+            label.grid(row=1,column=1)
+
+            # destroy any existing graph
+            plt.clf()
+
+            global G
+            G = create_random_graph(num_routers, offline_routers)
+
+
+            # get image created by previous fxn call
+            img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
+            label_img = tk.Label(self,image=img)
+            label_img.image = img
+            label_img.grid(row=3,column=1)
+
+            # create a table with based on randomized nodes and weights, store in data var
+            #  Node A  |   Node B   |  Cost
+            #     1    |      2     |    5
+
+            # should start at grid row=3 and column 2
+
+            # follow this tutorial to make the table editable: 
+            # see 'Python Tkinter Table Refresh': https://pythonguides.com/python-tkinter-table-tutorial/
+            # after each record refresh, update data var
+
+            # follow this tutorial to allow new input fields: 
+            # see 'Python Tkinter Table Input': https://pythonguides.com/python-tkinter-table-tutorial/
+
+            # after the user is done editing the table, they have to press 'update graph'  
+            # triggers fxn call to update_graph(), need to pass in data to fxn
+            custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
+            custom_edges.grid(row=2,column=2)
+
+        def update_graph(data):
+            '''calls create_custom_graph() from create.py to create a new graph object'''
+            # G = create_custom_graph(data)
+            # get image created by previous fxn call
+            # img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
+            # label_img = tk.Label(self,image=img)
+            # label_img.image = img
+            # label_img.grid(row=3,column=1)
+
+        create_graph()
+        random_edges = tk.Button(self, text="Create graph", command = create_graph)
+        random_edges.grid(row=2,column=0)
+
+        go_back = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
         
-        button1.grid(row=2,column=1)  
-        button2.grid(row=2,column=2)
-        random_edges.grid(row=3,column=1)
-  
-class Page2(tk.Frame):  
-    def __init__(self, parent, controller):  
-        tk.Frame.__init__(self, parent)  
-        label = tk.Label(self, text="Graph animation", font=('calibre 12 bold'))  
- 
-        label.grid(row=1,column=1)
-
-        button1 = tk.Button(self, text="Go Back to Edges", command=lambda: controller.show_frame(Page1))  
-        cent = tk.Button(self, text="Centralized Algorithm")  
-        decent = tk.Button(self, text="Decentralized Algorithm") 
-
-        button1.grid(row=2,column=1)
-        cent.grid(row=3,column=1)
-        decent.grid(row=3,column=2)
         
+        def get_path_cent():
+            '''call the fxn from dijkstra.py to get the shortest path. 
+            executes the pygame for centralized algorithm'''
+            path = dijkstra(G, str(source_router), str(dest_router))
+            
+            # start pygame
+            cent_main(G, path)
+            
+
+        def get_path_decent():
+            '''call the fxn from XYZ.py to get the shortest path. 
+            executes the pygame for decentralizated algorithm'''
+            
+            # start pygame
+
+        # these buttons should be hidden until the graph object has been generated
+        cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  
+        decent = tk.Button(self, text="Run Decentralized Algorithm", command=get_path_decent) 
+
+        go_back.grid(row=5,column=0)
+        cent.grid(row=5,column=2)
+        decent.grid(row=5,column=3)
+             
 def data(lst):
     '''accepts a list of data'''
     return lst
 
 window = Container()  
 window.title('Routing Algorithm Visualization Tool')
-window.geometry('800x600')
+window.geometry('1200x600')
 window.mainloop()  
