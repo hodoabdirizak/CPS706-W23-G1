@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import random
 
 import sys
-sys.path.append('./centralized')
-from dijkstra import * 
 
 random.seed(232)
 
