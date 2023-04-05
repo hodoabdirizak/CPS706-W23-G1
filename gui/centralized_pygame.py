@@ -127,7 +127,10 @@ def cent_main(graph, path):
                         current_node = path[path_index]
 
                 elif event.key == pygame.K_ESCAPE:
-                    running = False               
+                    running = False 
+                    break
+        if not running:
+            break            
         
         # Update the screen
         draw_graph(screen, graph, path, current_node)

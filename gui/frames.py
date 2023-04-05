@@ -9,10 +9,16 @@ from matplotlib.figure import Figure
 
 from home_page import *
 from create_graph import *
-from centralized_pygame import *
+
 import sys
 sys.path.append('./centralized')
-from dijkstra import * 
+sys.path.append('./decentralized')
+
+from dijkstra import *
+from bellman_ford import *
+
+from centralized_pygame import *
+from decentralized_pygame import *
 
 
 class Container(tk.Tk):  
@@ -182,13 +188,14 @@ class Page1(tk.Frame):
             
             # start pygame
             cent_main(G, path)
-            
+            pygame.quit()
 
         def get_path_decent():
             '''call the fxn from XYZ.py to get the shortest path. 
             executes the pygame for decentralizated algorithm'''
-            
+            decentralized(G, str(source_router), str(dest_router))
             # start pygame
+            # 
 
         # these buttons should be hidden until the graph object has been generated
         cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  

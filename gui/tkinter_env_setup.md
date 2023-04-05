@@ -4,3 +4,5 @@
 4. Run `./activate`
 5. Run frames.py
 6. `pip install networkx`
+7. `pip install pygame`
+8. pip install all the libraries
