@@ -136,21 +136,21 @@ def cent_main(graph, path):
     pygame.display.quit()
     pygame.quit()
 
-G = nx.Graph()
-G.add_edge('1', '2', weight=5)
-G.add_edge('1', '4', weight=5)
-G.add_edge('2', '3', weight=2)
-G.add_edge('3', '4', weight=4)
-G.add_edge('4', '5', weight=2)
-G.add_edge('5', '6', weight=9)
-G.add_edge('4', '6', weight=2)
-G.add_edge('5', '7', weight=4)
-G.add_edge('4', '7', weight=6)
-G.add_edge('3', '6', weight=7)
+# G = nx.Graph()
+# G.add_edge('1', '2', weight=5)
+# G.add_edge('1', '4', weight=5)
+# G.add_edge('2', '3', weight=2)
+# G.add_edge('3', '4', weight=4)
+# G.add_edge('4', '5', weight=2)
+# G.add_edge('5', '6', weight=9)
+# G.add_edge('4', '6', weight=2)
+# G.add_edge('5', '7', weight=4)
+# G.add_edge('4', '7', weight=6)
+# G.add_edge('3', '6', weight=7)
 
 
-# # Define a path through the graph
-path = ['1', '4', '5','7']
+# # # Define a path through the graph
+# path = ['1', '4', '5','7']
 
-# # Run the game
-cent_main(G, path)
+# # # Run the game
+# cent_main(G, path)
