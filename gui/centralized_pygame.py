@@ -1,6 +1,7 @@
 import networkx as nx
 import os
 import pygame
+from update_cost import * 
 pygame.init()
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -21,6 +22,16 @@ EDGE_COLOR = (255, 255, 255)
 # Define the font for the node labels
 FONT = pygame.font.Font(None, 30)
 
+def get_path_costs(graph,path):
+    path_costs = [0]
+    next_cost = 0
+    for node in path[:-1]:
+        edge_data = graph.get_edge_data(path[path.index(node)],path[path.index(node)+1])
+        next_cost += edge_data.get('weight')
+        path_costs.append(next_cost)
+    return path_costs
+
+
 def draw_graph(screen, graph, path, current_node):
     # Clear the screen
     screen.fill((0, 0, 0))
@@ -34,6 +45,9 @@ def draw_graph(screen, graph, path, current_node):
         label_pos = ((u_pos[0] + v_pos[0])/2, (u_pos[1] + v_pos[1])/2)
         screen.blit(label, label_pos)
         pygame.draw.line(screen, EDGE_COLOR, u_pos, v_pos)
+
+    # Get the costs in the path to update the count
+    costs = get_path_costs(graph,path)
 
     # Draw the nodes
     for node in graph.nodes():
@@ -51,21 +65,25 @@ def draw_graph(screen, graph, path, current_node):
         label_pos = (pos[0] - NODE_RADIUS/2, pos[1] - NODE_RADIUS/2)
         screen.blit(label, label_pos)
         
+        # Write source and dest nodes in top right corner
+        source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
+        dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
+        source_pos = (WINDOW_WIDTH - source_label.get_width() - NODE_RADIUS, NODE_RADIUS)
+        dest_pos = (WINDOW_WIDTH - dest_label.get_width() - NODE_RADIUS, NODE_RADIUS*3)
+        screen.blit(source_label, source_pos)
+        screen.blit(dest_label, dest_pos)
+        
         # Draw the current node label
         if node == current_node:
             label = FONT.render(" Current Router", True, (255, 0, 0))
             label_pos = (pos[0] + NODE_RADIUS, pos[1])
             screen.blit(label, label_pos)
             
-            cost = 0
             # Draw the cost label
-            # if node is the first node:
-            if node != path[0]:
-                edge_data = graph.get_edge_data(path[path.index(node)-1],node)
-                cost = edge_data['weight']
-
-            cost_label = FONT.render("Current Cost: {}".format(cost), True, EDGE_COLOR)
-            cost_pos = (WINDOW_WIDTH - cost_label.get_width() - NODE_RADIUS, NODE_RADIUS)
+            i = path.index(node) 
+            cost = costs[i]
+            cost_label = FONT.render("Current Cost: {}".format(cost), True, (255, 0, 0))
+            cost_pos = (WINDOW_WIDTH - cost_label.get_width() - NODE_RADIUS, NODE_RADIUS*5)
             screen.blit(cost_label, cost_pos)
             
     # Update the screen
@@ -118,16 +136,21 @@ def cent_main(graph, path):
     pygame.display.quit()
     pygame.quit()
 
-# G = nx.Graph()
-# G.add_edge('1', '2', weight=5)
-# G.add_edge('1', '4', weight=5)
-# G.add_edge('2', '3', weight=2)
-# G.add_edge('3', '4', weight=4)
-# G.add_edge('4', '5', weight=2)
-# G.add_edge('5', '6', weight=9)
+G = nx.Graph()
+G.add_edge('1', '2', weight=5)
+G.add_edge('1', '4', weight=5)
+G.add_edge('2', '3', weight=2)
+G.add_edge('3', '4', weight=4)
+G.add_edge('4', '5', weight=2)
+G.add_edge('5', '6', weight=9)
+G.add_edge('4', '6', weight=2)
+G.add_edge('5', '7', weight=4)
+G.add_edge('4', '7', weight=6)
+G.add_edge('3', '6', weight=7)
+
 
 # # Define a path through the graph
-# path = ['1', '4', '5']
+path = ['1', '4', '5','7']
 
 # # Run the game
-# cent_main(G, path)
+cent_main(G, path)
