@@ -138,8 +138,7 @@ class Page1(tk.Frame):
             plt.clf()
 
             global G
-            G = create_random_graph(num_routers, offline_routers)
-
+            G = create_random_graph(num_routers, offline_routers, source_router, dest_router)
 
             # get image created by previous fxn call
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
