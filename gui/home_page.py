@@ -33,7 +33,6 @@ def print_errors(A,B,C,D):
             return None
 
         else:
-            # if re.search("^[-,0-9]+$",offline_routers_raw):
             offline_routers = [int(router) for router in offline_routers_raw.split(",")]
 
             if source_router in offline_routers:
