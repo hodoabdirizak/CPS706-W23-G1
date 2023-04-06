@@ -15,16 +15,18 @@ def create_random_graph(num_routers, offline_routers):
     for i in range(1,num_routers):
         G.add_edge(str(i), str(i+1), weight=random.randint(1,11))
 
-    # add random nodes
-    for i in range(1,num_routers-2):
+    for i in range(1,num_routers//2):
         # if an edge between 2 nodes doesnt already exist
-        # if not G.has_edge(str(i), str(random.randint(i+1,num_routers+1))):
-            # add an edge between the 
-        G.add_edge(str(i), str(random.randint(i+1,num_routers+1)), weight=random.randint(1,10))
+        if not G.has_edge(str(i), str(random.randint(i+1,num_routers+1))):
+            G.add_edge(str(i), str(random.randint(i+1,num_routers+1)), weight=random.randint(1,11))
 
     # add offline nodes
     for node in offline_routers:
         G.add_node(node)
+
+    # check if an extra node was added
+    if len(G.nodes) > num_routers:
+        G.remove_node(str(num_routers+1))
 
     # list of edges
     edges = [(u, v) for (u, v, d) in G.edges(data=True)]
@@ -49,10 +51,13 @@ def create_random_graph(num_routers, offline_routers):
     plt.axis("off")
     plt.tight_layout()
 
+    print(G.nodes())
     # saves graph to an image
     plt.savefig("rand_graph.png")
     # print(dijkstra(G, '1', '5'))
     return G
+
+# create_random_graph(6, [])
 
 def create_custom_graph(data):
     '''returns a graph object based on a customized graph'''
