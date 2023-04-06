@@ -208,7 +208,7 @@ class Page1(tk.Frame):
              
 def data(lst):
     '''accepts a list of data'''
-    return lst
+    return lstW 
 
 window = Container()  
 window.title('Routing Algorithm Visualization Tool')

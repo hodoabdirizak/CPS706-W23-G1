@@ -46,7 +46,7 @@ def decent_main(num_routers,start, end, dv_start_end, path, cost):
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
     # Set the font for the title
-    title_font = pygame.font.SysFont(None, 48)
+    title_font = pygame.font.SysFont(None, 35)
     # Set the font for the text in the table
     font = pygame.font.Font(None, 30)
 
@@ -66,34 +66,43 @@ def decent_main(num_routers,start, end, dv_start_end, path, cost):
     running = True
     pressed = 1
     while running:
+        # event = pygame.event.wait()
         for event in pygame.event.get():
-                    # Clear the screen
-                    screen.fill((0, 0, 0))
-                    event = pygame.event.wait()
-                    if event.type == pygame.QUIT:
-                        running = False
-                        
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_LEFT:
-                            if time > 0:
-                                time = time - 1
-                            
-                                
-                        elif event.key == pygame.K_RIGHT:
-                            if time == 0 or time <= len(dv_start_end):
-                                time = time + 1
+            # Clear the screen
+            screen.fill((0, 0, 0))
+            
+            if event.type == pygame.QUIT:
+                running = False
+                
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT and time > 0:
+                    time = time - 1
+                elif event.key == pygame.K_RIGHT and time >= 0 and not(time == len(dv_start_end)-1):
+                    time = time + 1
+                elif event.key == pygame.K_ESCAPE:
+                    running = False 
+                    break
+                else:
+                    # do nothing
+                    time
 
-                        elif event.key == pygame.K_ESCAPE:
-                            running = False 
-                            break
-                                
+        screen.fill((0, 0, 0))
                     
+        text = "Time: " + str(time) #+ "\n" +
+        title_text = title_font.render(text, True, (255, 255, 255))
+        text2 = str(path) 
+        title_text2 = title_font.render(text2, True, (255, 255, 255))
+        text3 = "Cost: " + str(cost)
+        title_text3 = title_font.render(text3, True, (255, 255, 255))
 
 
-        title_text = title_font.render(f"Time: {time}", True, (255, 255, 255))
-        title_rect = title_text.get_rect(center=(WINDOW_WIDTH/2, 30))
+        title_rect = title_text.get_rect(center=(WINDOW_WIDTH/2, 25))
+        title_rect2 = title_text.get_rect(center=(WINDOW_WIDTH/2, 50))
+        title_rect3 = title_text.get_rect(center=(WINDOW_WIDTH/2, 75))
         # Draw the title on the window surface
         screen.blit(title_text, title_rect)
+        screen.blit(title_text2, title_rect2)
+        screen.blit(title_text3, title_rect3)
         # Handle events
         
 
@@ -148,11 +157,14 @@ def decent_main(num_routers,start, end, dv_start_end, path, cost):
                     screen.blit(text_surface, text_rect)
             
 
-        # Update the display
-        pygame.display.flip()
+        # Create a clock object
+        clock = pygame.time.Clock()
+        # Limit the frame rate to 60 FPS
+        clock.tick(60)
 
-        # Limit the frame rate
-        clock.tick(fps)
+        # Update the display
+        pygame.display.update()
+
 
     # Wait for the user to close the window
     while True:
