@@ -22,7 +22,8 @@ def create_random_graph(num_routers, offline_routers, source, dest):
 
     # add offline nodes
     for node in offline_routers:
-        G.add_node(node)
+        G.remove_node(str(node))
+        G.add_node(str(node))
 
     # check if an extra node was added
     if len(G.nodes) > num_routers:
@@ -56,7 +57,6 @@ def create_random_graph(num_routers, offline_routers, source, dest):
     plt.axis("off")
     plt.tight_layout()
 
-    print(G.nodes())
     # saves graph to an image
     plt.savefig("rand_graph.png")
     # print(dijkstra(G, '1', '5'))
