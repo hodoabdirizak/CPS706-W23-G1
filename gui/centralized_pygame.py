@@ -2,7 +2,6 @@ import networkx as nx
 import os
 import pygame
 from update_cost import * 
-pygame.init()
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -11,16 +10,11 @@ WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 800
 NODE_RADIUS = 15
 
-# Get info about window size
-info = pygame.display.Info() 
-screen_width,screen_height = info.current_w,info.current_h
-
 # Define colors for the nodes and edges
 NODE_COLOR = (255, 255, 255)
 EDGE_COLOR = (255, 255, 255)
 
-# Define the font for the node labels
-FONT = pygame.font.Font(None, 30)
+FONT = None
 
 def get_path_costs(graph,path):
     path_costs = [0]
@@ -91,6 +85,12 @@ def draw_graph(screen, graph, path, current_node):
     
 # Define the main function that will run the game
 def cent_main(graph, path):
+    pygame.init()
+
+    # Define the font for the node labels
+    global FONT
+    FONT = pygame.font.Font(None, 30)
+
     # Create the window
     screen = pygame.display.set_mode((WINDOW_WIDTH+50, WINDOW_HEIGHT+100))
     # Set the positions of the nodes based on their degrees
@@ -113,6 +113,7 @@ def cent_main(graph, path):
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                pygame.quit()
                 running = False
                 
             elif event.type == pygame.KEYDOWN:
@@ -136,7 +137,6 @@ def cent_main(graph, path):
         draw_graph(screen, graph, path, current_node)
     
     # Quit pygame
-    pygame.display.quit()
     pygame.quit()
 
 # G = nx.Graph()
