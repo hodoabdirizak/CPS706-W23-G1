@@ -2,12 +2,13 @@ import networkx as nx
 import os
 import pygame
 from update_cost import * 
+import time
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Define constants for the window size and node radius
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 800
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 550
 NODE_RADIUS = 15
 
 # Define colors for the nodes and edges
@@ -62,14 +63,19 @@ def draw_graph(screen, graph, path, current_node):
         # Write source and dest nodes in top right corner
         source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
         dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
-        source_pos = (WINDOW_WIDTH - source_label.get_width() - NODE_RADIUS, NODE_RADIUS)
-        dest_pos = (WINDOW_WIDTH - dest_label.get_width() - NODE_RADIUS, NODE_RADIUS*3)
+        source_pos = (WINDOW_WIDTH - source_label.get_width() + NODE_RADIUS, NODE_RADIUS)
+        dest_pos = (WINDOW_WIDTH - dest_label.get_width()+ NODE_RADIUS, NODE_RADIUS*3)
         screen.blit(source_label, source_pos)
         screen.blit(dest_label, dest_pos)
+
+        # Write exit instructions in top left
+        exit_label = FONT.render("Hit ESC to exit or change graph".format(int(path[0])), False, EDGE_COLOR)
+        exit_pos = (NODE_RADIUS, NODE_RADIUS)
+        screen.blit(exit_label, exit_pos)
         
         # Draw the current node label
         if node == current_node:
-            label = FONT.render(" Current Router", True, (255, 0, 0))
+            label = FONT.render(" Current Node", True, (255, 0, 0))
             label_pos = (pos[0] + NODE_RADIUS, pos[1])
             screen.blit(label, label_pos)
             
@@ -77,12 +83,25 @@ def draw_graph(screen, graph, path, current_node):
             i = path.index(node) 
             cost = costs[i]
             cost_label = FONT.render("Current Cost: {}".format(cost), True, (255, 0, 0))
-            cost_pos = (WINDOW_WIDTH - cost_label.get_width() - NODE_RADIUS, NODE_RADIUS*5)
+            cost_pos = (WINDOW_WIDTH - cost_label.get_width() + NODE_RADIUS, NODE_RADIUS*5)
             screen.blit(cost_label, cost_pos)
             
     # Update the screen
     pygame.display.update()
-    
+
+def draw_game_over_screen(screen, path):
+    # Add text
+    title = FONT.render('Animation complete: The shortest path is {}'.format(" -> ".join(path)), True, (0, 255, 255))
+
+    screen.blit(title, (NODE_RADIUS, WINDOW_HEIGHT + NODE_RADIUS*3))
+    pygame.display.update()
+
+def start_page(screen):
+    # Clear the screen
+    screen.fill((0, 0, 0))
+
+
+
 # Define the main function that will run the game
 def cent_main(graph, path):
     pygame.init()
@@ -93,6 +112,7 @@ def cent_main(graph, path):
 
     # Create the window
     screen = pygame.display.set_mode((WINDOW_WIDTH+50, WINDOW_HEIGHT+100))
+
     # Set the positions of the nodes based on their degrees
     positions = nx.circular_layout(graph)
     for node in graph.nodes():
@@ -104,11 +124,15 @@ def cent_main(graph, path):
     current_node = path[0]
     path_index = 0
     
+    # Display start page
+    
+
     # Draw the initial graph
     draw_graph(screen, graph, path, current_node)
     
     # Run the game loop
     running = True
+    animation_done = False
     while running:
         # Handle events
         for event in pygame.event.get():
@@ -123,18 +147,27 @@ def cent_main(graph, path):
                         current_node = path[path_index]
                 
                 elif event.key == pygame.K_RIGHT:
-                    if path_index < len(path) - 1:
+                    # if this is the last node in the path:
+                    if path_index == len(path) - 1:
+                        animation_done = True
+
+                    elif path_index < len(path) - 1:
                         path_index += 1
                         current_node = path[path_index]
 
                 elif event.key == pygame.K_ESCAPE:
                     running = False 
                     break
+
+        if animation_done:
+            draw_game_over_screen(screen, path)
+
         if not running:
             break            
         
         # Update the screen
-        draw_graph(screen, graph, path, current_node)
+        if not animation_done:
+            draw_graph(screen, graph, path, current_node)
     
     # Quit pygame
     pygame.quit()
