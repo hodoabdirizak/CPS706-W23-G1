@@ -30,16 +30,14 @@ def print_errors(A,B,C,D):
 
         if offline_routers_raw == "":
             offline_routers = None
-            return None
 
-        else:
+        elif re.search("^[-,0-9]+$",offline_routers_raw):
             offline_routers = [int(router) for router in offline_routers_raw.split(",")]
 
-            if source_router in offline_routers:
-                return "Change source router or remove source router from list"
+        elif source_router in offline_routers:
+            return "Change source router or remove source router from list"
 
-            if dest_router in offline_routers:
-                return "Change dest router or remove dest router from list"
-        
-            else:
-                return None
+        elif dest_router in offline_routers:
+            return "Change dest router or remove dest router from list"
+        else:
+            return ""

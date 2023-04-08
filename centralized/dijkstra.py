@@ -1,5 +1,6 @@
 import networkx as nx
 
+
 def dijkstra(graph, start_node, end_node):
     """
     Finds the shortest path in a weighted graph using Dijkstra's algorithm.
@@ -34,11 +35,11 @@ def dijkstra(graph, start_node, end_node):
 
         # Mark the current node as visited.
         visited_nodes[current_node_index] = True
-        
+
         # Update the distances to all the neighboring nodes of the current node.
         for neighbor in graph.neighbors(list(graph.nodes())[current_node_index]):
             neighbor_index = list(graph.nodes()).index(neighbor)
-            distance = distances[current_node_index] + graph[list(graph.nodes())[current_node_index]][neighbor]['weight']
+            distance = distances[current_node_index] + int(graph[list(graph.nodes())[current_node_index]][neighbor]['weight'])
             if distance < distances[neighbor_index]:
                 distances[neighbor_index] = distance
                 parent_nodes[neighbor_index] = current_node_index

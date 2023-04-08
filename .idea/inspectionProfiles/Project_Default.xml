@@ -1,0 +1,30 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="ListPractice.numbersList" />
+          <option value="Lab2Practice.listofItems" />
+          <option value="Lab2Practice.listofPrices" />
+          <option value="Code.main.*" />
+          <option value="Code.tile.settings" />
+          <option value="Code.player.settings" />
+          <option value="Code.level.settings" />
+          <option value="Code.level.tile" />
+          <option value="Code.level.player" />
+          <option value="Code.level.debug" />
+          <option value="Code.level.support" />
+          <option value="Code.level.weapon" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
