@@ -1,38 +1,44 @@
+
+
 import networkx as nx
+
 
 def decentralized(graph: nx.Graph, start_node: int, end_node: int):
 
-    num_networks = graph.number_of_nodes()
+    dist_vecs = {n: ({m: float('inf') for m in graph.nodes()})
+                 for n in graph.nodes()}
 
-    dist_vecs = [[float('inf')] * num_networks for _ in range(num_networks)]
-
-    for i in range(num_networks):
-        dist_vecs[i][i] = 0
+    for n in graph.nodes():
+        dist_vecs[n][n] = 0
 
     for u, v, w in graph.edges(data='weight'):
         dist_vecs[u][v] = w
         dist_vecs[v][u] = w
 
-    notify_neighbors = [True] * num_networks
+    notify_neighbors = {n: True for n in graph.nodes()}
 
     # Loop
+
+    dv_start_end = []
+
     t = 0
+    while any(notify_neighbors.values()):
 
-    # print(f'{notify_neighbors}')
-    print(f't = {t}')
-    for i, x in enumerate(dist_vecs):
-        print(f'{i} = {x}')
-    print("\n\n")
+        # print(f'{notify_neighbors}')
+        print(f't = {t}')
+        for i, x in enumerate(dist_vecs):
+            print(f'{i} = {list(dist_vecs[x].values())}')
+        print("\n\n")
 
-    while any(notify_neighbors):
-        t += 1
+        dv_start_end.append(
+            {"dv_start": dist_vecs[start_node], "dv_end": dist_vecs[end_node]})
 
-        dist_vecs_next = []
-        notify_neighbors_next = [False] * num_networks
+        dist_vecs_next = {}
+        notify_neighbors_next = {n: False for n in graph.nodes()}
 
-        for curr_network in range(num_networks):
+        for curr_network in graph.nodes():
 
-            curr_network_dv = dist_vecs[curr_network][:]
+            curr_network_dv = dist_vecs[curr_network].copy()
 
             for neighbor, attr in graph.adj[curr_network].items():
                 weight = attr['weight']
@@ -40,26 +46,20 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
                 if not notify_neighbors[neighbor]:
                     continue
 
-                for i, distance in enumerate(dist_vecs[neighbor]):
+                for i, distance in dist_vecs[neighbor].items():
                     temp_distance = weight + distance
 
                     if temp_distance < curr_network_dv[i]:
                         curr_network_dv[i] = temp_distance
                         notify_neighbors_next[curr_network] = True
 
-            dist_vecs_next.append(curr_network_dv)
+            dist_vecs_next[curr_network] = curr_network_dv
 
         dist_vecs = dist_vecs_next
         notify_neighbors = notify_neighbors_next
 
-        # print(f'{notify_neighbors}')
-        print(f't = {t}')
-        for i, x in enumerate(dist_vecs):
-            print(f'{i} = {x}')
-        print("\n\n")
+        t += 1
 
-    
-    
     # At this point all Distance-Vectors for each network have been computed
     # We start with the starting network and use the DVs of its nieghbors to choose
     # the lowest cost path, and continue to do this until the end network is found
@@ -82,17 +82,22 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
 
     path.append(end_node)
 
+    cost = dist_vecs[start_node][end_node]
+
+    print(dv_start_end)
     print(path)
-    print("cost", dist_vecs[start_node][end_node])
+    print(cost)
+
+    return dv_start_end, path, cost
 
 
 # G = nx.Graph()
 
 # nodes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-# G.add_nodes_from(nodes)
+# nodes_str = [str(x) for x in nodes]
+# G.add_nodes_from(nodes_str)
 
-
-# Image of graph: https://media.geeksforgeeks.org/wp-content/uploads/graphhh.png
+# # Image of graph: https://media.geeksforgeeks.org/wp-content/uploads/graphhh.png
 # edges = [(0, 1, 4),
 #          (0, 7, 8),
 #          (1, 2, 8),
@@ -107,11 +112,10 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
 #          (3, 4, 9),
 #          (5, 4, 10),
 #          (6, 5, 2)]
+# edges_str = [(str(s), str(e), w) for s, e, w in edges]
+# G.add_weighted_edges_from(edges_str)
 
 
-# G.add_weighted_edges_from(edges)
-
-
-# start = 3
-# end = 7
+# start = '0'
+# end = '8'
 # decentralized(G, start, end)
