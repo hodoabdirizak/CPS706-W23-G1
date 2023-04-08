@@ -29,10 +29,10 @@ def create_random_graph(num_routers, offline_routers, source, dest):
     if len(G.nodes) > num_routers:
         G.remove_node(str(num_routers+1))
 
-    # if source and destination node are connected 
-    if G.has_edge(str(source), str(dest)):
-    # remove edge to make the path more complex
-        G.remove_edge(str(source),str(dest))
+    # # if source and destination node are connected 
+    # if G.has_edge(str(source), str(dest)):
+    # # remove edge to make the path more complex
+    #     G.remove_edge(str(source),str(dest))
 
     # list of edges
     edges = [(u, v) for (u, v, d) in G.edges(data=True)]
