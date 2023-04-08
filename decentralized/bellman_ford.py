@@ -3,7 +3,7 @@
 import networkx as nx
 
 
-def decentralized(graph, start_node: int, end_node: int):
+def decentralized(graph: nx.Graph, start_node: int, end_node: int):
 
     dist_vecs = {n: ({m: float('inf') for m in graph.nodes()})
                  for n in graph.nodes()}
@@ -47,9 +47,9 @@ def decentralized(graph, start_node: int, end_node: int):
                     continue
 
                 for i, distance in dist_vecs[neighbor].items():
-                    temp_distance = int(weight) + int(distance)
+                    temp_distance = weight + distance
 
-                    if temp_distance < int(curr_network_dv[i]):
+                    if temp_distance < curr_network_dv[i]:
                         curr_network_dv[i] = temp_distance
                         notify_neighbors_next[curr_network] = True
 
@@ -73,7 +73,7 @@ def decentralized(graph, start_node: int, end_node: int):
         for neighbor, attr in graph.adj[curr_node].items():
             weight = attr['weight']
 
-            cost = int(weight) + int(dist_vecs[neighbor][end_node])
+            cost = weight + dist_vecs[neighbor][end_node]
 
             if cost < low_cost:
                 low_node = neighbor

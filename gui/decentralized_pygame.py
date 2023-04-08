@@ -157,8 +157,8 @@ def decent_main(num_routers, start, end, dv_start_end, path, cost):
         pygame.display.update()
 
     # Wait for the user to close the window
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
+    # while True:
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             quit()
