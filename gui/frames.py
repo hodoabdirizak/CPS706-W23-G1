@@ -192,9 +192,10 @@ class Page1(tk.Frame):
         def get_path_decent():
             '''call the fxn from XYZ.py to get the shortest path. 
             executes the pygame for decentralizated algorithm'''
-            decentralized(G, str(source_router), str(dest_router))
+            dv_start_end, path, cost = decentralized(G, str(source_router), str(dest_router))
             # start pygame
-            # 
+            decent_main(str(num_routers), str(source_router), str(dest_router), dv_start_end, path, cost)
+            pygame.quit()
 
         # these buttons should be hidden until the graph object has been generated
         cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  
