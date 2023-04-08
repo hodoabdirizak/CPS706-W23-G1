@@ -50,13 +50,6 @@ def decent_main(num_routers,start, end, dv_start_end, path, cost):
     # Set the font for the text in the table
     font = pygame.font.Font(None, 30)
 
-    # Render the title text and create a rect object for it
-    # title_text = title_font.render(f"Time: {len(dv_start_end)}", True, (255, 255, 255))
-    # title_rect = title_text.get_rect(center=(WINDOW_WIDTH/2, 30))
-
-    # Draw the title on the window surface
-    # screen.blit(title_text, title_rect)
-
     # Define the size of each cell
     cell_width, cell_height = WINDOW_WIDTH // 4, 50
     
