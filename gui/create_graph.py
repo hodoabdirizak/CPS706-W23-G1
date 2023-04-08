@@ -70,7 +70,34 @@ def create_custom_graph(data):
     G = nx.Graph()
 
     # populate graph based on input data
-    
+    # structure of data list: [Node_A, Node_B, Cost, Node_A, Node_B, Cost, ...]
+
+    for i in range(0, len(data), 3):
+        G.add_edge(data[i], data[i + 1], weight=data[i + 2])
+
+    # list of edges
+    edges = [(u, v) for (u, v, d) in G.edges(data=True)]
+
+    pos = nx.circular_layout(G)
+
+    # nodes
+    nx.draw_networkx_nodes(G, pos, node_size=500)
+
+    # edges
+    nx.draw_networkx_edges(G, pos, edgelist=edges, width=4, alpha=0.5)
+
+    # node labels
+    nx.draw_networkx_labels(G, pos, font_size=16, font_family="sans-serif")
+
+    # edge weight labels
+    edge_labels = nx.get_edge_attributes(G, "weight")
+    nx.draw_networkx_edge_labels(G, pos, edge_labels, font_size=14, font_family="sans-serif")
+
+    nm = plt.gca()
+    nm.margins(0.08)
+    plt.axis("off")
+    plt.tight_layout()
+
     # saves graph to an image
     plt.savefig("cust_graph.png")
     return G
