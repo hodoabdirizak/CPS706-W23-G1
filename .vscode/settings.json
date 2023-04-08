@@ -2,5 +2,8 @@
     "python.analysis.extraPaths": [
         "./centralized",
         "./decentralized"
+    ],
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
     ]
 }
