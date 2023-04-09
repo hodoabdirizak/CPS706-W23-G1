@@ -134,8 +134,8 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, WINDOW_HEIGHT/2 + start.get_height()/2))
     pygame.display.update()
 
-    running = False
-    start_bell = True
+    running = True
+    start_bell = False
     start_animation = False
 
     # Start screen: Check if key is pressed 
@@ -149,8 +149,8 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             # stop if any key is pressed
             elif event.type == pygame.KEYDOWN:
                 # CHANGE THIS FOR THE BEGINNING SCREEN TO FIX ITSELF
-                start_bell = False 
-                running = True
+                start_bell = True 
+                running = False
 
     if start_bell:
         screen.fill((0, 0, 0))
@@ -264,8 +264,8 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             positions = nx.circular_layout(graph)
             for node in graph.nodes():
                 pos = positions[node]
-                graph.nodes[node]["pos"] = (int(pos[0]*WINDOW_WIDTH//5.5 + WINDOW_WIDTH//5.5+350),
-                                            int(pos[1]*WINDOW_HEIGHT//5.5 + WINDOW_HEIGHT//5.5+560))
+                graph.nodes[node]["pos"] = (int(pos[0]*WINDOW_WIDTH//5.5 + WINDOW_WIDTH//5.5+345),
+                                            int(pos[1]*WINDOW_HEIGHT//5.5 + WINDOW_HEIGHT//5.5+555))
             draw_graph(screen, graph, path, 1)
             # ..........................................................................
         else:
