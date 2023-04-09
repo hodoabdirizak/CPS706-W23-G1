@@ -5,8 +5,8 @@ import pygame
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Define constants for the window size and node radius
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 740
+WINDOW_WIDTH = 1300
+WINDOW_HEIGHT = 600
 NODE_RADIUS = 15
 
 
@@ -65,8 +65,9 @@ def draw_graph(screen, graph, path, current_node):
         # Write source and dest nodes in top right corner
         source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
         dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
-        source_pos = (20,670)
-        dest_pos = (20,700)
+        # -------------------------POSITION OF SOURSE AND DES
+        source_pos = (20,570)
+        dest_pos = (20,550)
         screen.blit(source_label, source_pos)
         screen.blit(dest_label, dest_pos)
 
@@ -110,7 +111,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     # Set the font for the title
     title_font = pygame.font.SysFont(None, 35)
     # Set the font for the text in the table
-    font = pygame.font.Font(None, 30)
+    font = pygame.font.Font(None, 25)
 
 
 #====================================================================================
@@ -156,7 +157,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
         screen.fill((0, 0, 0))
 
         # Define the size of each cell
-        cell_width, cell_height = WINDOW_WIDTH // 4.8 - 30, 30
+        cell_width, cell_height = WINDOW_WIDTH // 5.8 - 30, 30
 
 #====================================================================================
 
@@ -201,9 +202,10 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             text3 = "Cost: " + str(cost)
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
-            title_rect = title_text.get_rect(center=(60, 750))
-            title_rect3 = title_text.get_rect(center=(60, 780))
-            title_rect2 = title_text.get_rect(center=(60, 810))
+            # SIZEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            title_rect = title_text.get_rect(center=(60, 620))
+            title_rect3 = title_text.get_rect(center=(60, 680))
+            title_rect2 = title_text.get_rect(center=(60, 650))
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
@@ -216,8 +218,8 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
                 # Loop over each column in the row
                 for col in range(4):
                     # Calculate the position of the cell based on the row and column
-                    x = (col * cell_width) + 170
-                    y = (row * cell_height) + 60
+                    x = (col * cell_width) + 30
+                    y = (row * cell_height) + 40
 
                     # Create a Rect object for the cell
                     cell_rect = pygame.Rect(x, y, cell_width, cell_height)
@@ -264,8 +266,8 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             positions = nx.circular_layout(graph)
             for node in graph.nodes():
                 pos = positions[node]
-                graph.nodes[node]["pos"] = (int(pos[0]*WINDOW_WIDTH//5.5 + WINDOW_WIDTH//5.5+345),
-                                            int(pos[1]*WINDOW_HEIGHT//5.5 + WINDOW_HEIGHT//5.5+555))
+                graph.nodes[node]["pos"] = (int(pos[0]*WINDOW_WIDTH//5.5 + WINDOW_WIDTH//5.5+850),
+                                            int(pos[1]*WINDOW_HEIGHT//5.5 + WINDOW_HEIGHT//5.5+270))
             draw_graph(screen, graph, path, 1)
             # ..........................................................................
         else:
@@ -292,7 +294,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             for row in range(N + 1):  # Add 1 to include the header row
                 # Loop over each column in the row
                 for col in range(4):
-                    # Calculate the position of the cell based on the row and column
+                    # Calculate the position of the cell based on the row and columnssssssssssssssssssssssssssss
                     x = (col * cell_width) + 170
                     y = (row * cell_height) + 60
 
