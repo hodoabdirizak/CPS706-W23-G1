@@ -318,7 +318,7 @@ class Page1(tk.Frame):
             executes the pygame for decentralizated algorithm'''
             dv_start_end, path, cost = decentralized(G, str(source_router), str(dest_router))
             # start pygame
-            decent_main(str(num_routers), str(source_router), str(dest_router), dv_start_end, path, cost)
+            decent_main(str(num_routers), str(source_router), str(dest_router), dv_start_end, path, cost, G)
             pygame.quit()
 
         # these buttons should be hidden until the graph object has been generated
