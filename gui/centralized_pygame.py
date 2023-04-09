@@ -322,24 +322,24 @@ def cent_main(graph, path, dist_vecs):
         pygame.quit()
 
 
-G = nx.Graph()
-G.add_edge('1', '2', weight=5)
-G.add_edge('1', '4', weight=5)
-G.add_edge('2', '3', weight=2)
-G.add_edge('3', '4', weight=4)
-G.add_edge('4', '5', weight=2)
-G.add_edge('5', '6', weight=9)
+# G = nx.Graph()
+# G.add_edge('1', '2', weight=5)
+# G.add_edge('1', '4', weight=5)
+# G.add_edge('2', '3', weight=2)
+# G.add_edge('3', '4', weight=4)
+# G.add_edge('4', '5', weight=2)
+# G.add_edge('5', '6', weight=9)
 
 
-# Define a path through the graph
-path = ['1', '4', '5']
+# # Define a path through the graph
+# path = ['1', '4', '5']
 
-dist= [[0, 'inf', 'inf', 'inf', 'inf', 'inf'], 
-            [0, 5, 5, 'inf', 'inf', 'inf'], 
-            [0, 5, 5, 7, 'inf', 'inf'], 
-            [0, 5, 5, 7, 7, 'inf'], 
-            [0, 5, 5, 7, 7, 'inf'], 
-            [0, 5, 5, 7, 7, 16]]
+# dist= [[0, 'inf', 'inf', 'inf', 'inf', 'inf'], 
+#             [0, 5, 5, 'inf', 'inf', 'inf'], 
+#             [0, 5, 5, 7, 'inf', 'inf'], 
+#             [0, 5, 5, 7, 7, 'inf'], 
+#             [0, 5, 5, 7, 7, 'inf'], 
+#             [0, 5, 5, 7, 7, 16]]
 
-# Run the game
-cent_main(G, path, dist)
+# # Run the game
+# cent_main(G, path, dist)
