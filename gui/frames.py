@@ -145,23 +145,14 @@ class Page1(tk.Frame):
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
-            label_img.grid(row=3,column=1)
+            label_img.grid(row=3,column=1,rowspan=3, padx = 15)
 
             # create a table with based on randomized nodes and weights, store in data var
-            #  Node A  |   Node B   |  Cost
-            #     1    |      2     |    5
+            label_table = tk.Label(self, text="", font=('calibre 12'))  
+            label_table.grid(row=3,column=2, columnspan=2)
 
-            # should start at grid row=3 and column 2
-
-            # follow this tutorial to make the table editable: 
-            # see 'Python Tkinter Table Refresh': https://pythonguides.com/python-tkinter-table-tutorial/
-            # after each record refresh, update data var
-
-            # follow this tutorial to allow new input fields: 
-            # see 'Python Tkinter Table Input': https://pythonguides.com/python-tkinter-table-tutorial/
-
-            set = ttk.Treeview(label)
-            set.pack()
+            set = ttk.Treeview(label_table)
+            set.pack(side=RIGHT, padx=15, pady=20)
 
             set['columns'] = ('node_a', 'node_b', 'cost')
             set.column("#0", width=0, stretch=NO)
@@ -188,26 +179,29 @@ class Page1(tk.Frame):
                 set.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1], record[2]))
                 count += 1
 
-            Input_frame = Frame(label)
+            table_input = tk.Label(self, text="", font=('calibre 12'))  
+            table_input.grid(row=4,column=2,columnspan=2)
+
+            Input_frame = Frame(table_input)
             Input_frame.pack()
 
             node_a = Label(Input_frame, text="Node A")
-            node_a.grid(row=0, column=0)
+            node_a.grid(row=4, column=2)
 
             node_b = Label(Input_frame, text="Node B")
-            node_b.grid(row=0, column=1)
+            node_b.grid(row=4, column=3)
 
             cost = Label(Input_frame, text="Cost")
-            cost.grid(row=0, column=2)
+            cost.grid(row=4, column=4)
 
             node_a_entry = Entry(Input_frame)
-            node_a_entry.grid(row=1, column=0)
+            node_a_entry.grid(row=5, column=2)
 
             node_b_entry = Entry(Input_frame)
-            node_b_entry.grid(row=1, column=1)
+            node_b_entry.grid(row=5, column=3)
 
             cost_entry = Entry(Input_frame)
-            cost_entry.grid(row=1, column=2)
+            cost_entry.grid(row=5, column=4)
 
             def input_record():
                 global count
@@ -261,19 +255,23 @@ class Page1(tk.Frame):
                 cost_entry.delete(0, END)
 
             # button
-            input_button = Button(label, text="Add Record", command=input_record)
-            input_button.pack(side=RIGHT, padx=15, pady=20)
+            Input_frame_buttons = Frame(table_input)
+            Input_frame_buttons.pack()
+
+            # buttons = Label(Input_frame_buttons, text="", font=('calibre 12'))  
+            # buttons.grid(row=6,column=3)
             
-            refresh_button = Button(label, text="Update Record", command=update_record)
-            refresh_button.pack(side=RIGHT, padx=15, pady=20)
+            input_button = Button(Input_frame_buttons, text="Add Record", command=input_record)
+            input_button.grid(row=5,column=2, padx = 15, pady = 20)
+            
+            refresh_button = Button(Input_frame_buttons, text="Update Record", command=update_record)
+            refresh_button.grid(row=5,column=3, padx = 15, pady = 20)
 
-            select_button = Button(label, text="Select Record", command=select_record)
-            select_button.pack(side=RIGHT, padx=15, pady=20)
+            select_button = Button(Input_frame_buttons, text="Select Record", command=select_record)
+            select_button.grid(row=5,column=4, padx = 15, pady = 20)
 
-            # after the user is done editing the table, they have to press 'update graph'  
-            # triggers fxn call to update_graph(), need to pass in data to fxn
-            custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
-            custom_edges.grid(row=2,column=2)
+            custom_edges = Button(Input_frame_buttons, text="Update graph", command = lambda: update_graph(data)) 
+            custom_edges.grid(row=6,column=3)
 
         def update_graph(data):
             '''calls create_custom_graph() from create.py to create a new graph object'''
@@ -288,19 +286,19 @@ class Page1(tk.Frame):
             img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
-            label_img.grid(row=3,column=1)
+            label_img.grid(row=3,column=1,rowspan=3, padx = 15)
             # after the user is done editing the table, they have to press 'update graph'  
             # triggers fxn call to update_graph(), need to pass in data to fxn
             custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
-            custom_edges.grid(row=2,column=2)
+            custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
 
         create_graph()
         random_edges = tk.Button(self, text="Create graph", command = create_graph)
-        random_edges.grid(row=2,column=0)
+        random_edges.grid(row=1,column=0, padx = 5, pady = 5)
 
         go_back = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
-        
-        
+        go_back.grid(row=2,column=0)
+
         def get_path_cent():
             '''call the fxn from dijkstra.py to get the shortest path. 
             executes the pygame for centralized algorithm'''
@@ -322,9 +320,10 @@ class Page1(tk.Frame):
         cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  
         decent = tk.Button(self, text="Run Decentralized Algorithm", command=get_path_decent) 
 
-        go_back.grid(row=5,column=0)
-        cent.grid(row=5,column=2)
-        decent.grid(row=5,column=3)
+        
+        # (row=2,column=2)
+        cent.grid(row=2,column=2)
+        decent.grid(row=2,column=3)
              
 def data(lst):
     '''accepts a list of data'''
