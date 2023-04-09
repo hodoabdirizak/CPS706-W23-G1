@@ -170,12 +170,20 @@ class Page1(tk.Frame):
             data = []
 
             if G:
-               data = [(u, v, d['weight']) for u, v, d in G.edges(data=True)];
-            
+            # data = [(u, v, d['weight']) for u, v, d in G.edges(data=True)];
+                for u, v, d in G.edges(data=True):
+                    data.append(u)
+                    data.append(v)
+                    data.append(d['weight'])
+
             global count
             count = 0
 
-            for record in data:
+            records = []
+            for i in range(0, len(data), 3):
+                records.append((data[i], data[i+1], data[i+2]))
+
+            for record in records:
                 set.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1], record[2]))
                 count += 1
 
@@ -257,15 +265,18 @@ class Page1(tk.Frame):
             # button
             Input_frame_buttons = Frame(table_input, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)
             Input_frame_buttons.pack()
-           
-            input_button = Button(Input_frame_buttons, text="Add Record", fg=col_white, bg=col_grey, font=tkfont, command=input_record)
-            input_button.grid(row=5,column=2, padx = 15, pady = 20)
+
+            # buttons = Label(Input_frame_buttons, text="", font=('calibre 12'))  
+            # buttons.grid(row=6,column=3)
+            
+            select_button = Button(Input_frame_buttons, text="Select Record", command=select_record)
+            select_button.grid(row=5,column=2, padx = 15, pady = 20)
             
             refresh_button = Button(Input_frame_buttons, text="Update Record", fg=col_white, bg=col_grey, font=tkfont, command=update_record)
             refresh_button.grid(row=5,column=3, padx = 15, pady = 20)
 
-            select_button = Button(Input_frame_buttons, text="Select Record", fg=col_white, bg=col_grey, font=tkfont, command=select_record)
-            select_button.grid(row=5,column=4, padx = 15, pady = 20)
+            input_button = Button(Input_frame_buttons, text="Add Record", command=input_record)
+            input_button.grid(row=5,column=4, padx = 15, pady = 20)
 
             custom_edges = Button(Input_frame_buttons, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
             custom_edges.grid(row=6,column=3)

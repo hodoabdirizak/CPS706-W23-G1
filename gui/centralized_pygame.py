@@ -20,7 +20,7 @@ def get_path_costs(graph,path):
     next_cost = 0
     for node in path[:-1]:
         edge_data = graph.get_edge_data(path[path.index(node)],path[path.index(node)+1])
-        next_cost += edge_data.get('weight')
+        next_cost += int(edge_data.get('weight'))
         path_costs.append(next_cost)
     return path_costs
 
