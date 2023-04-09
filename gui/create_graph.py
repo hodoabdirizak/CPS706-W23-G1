@@ -6,7 +6,7 @@ import sys
 
 random.seed(232)
 
-def create_random_graph(num_routers, offline_routers, source, dest):
+def create_random_graph(num_routers, source, dest):
     '''returns a graph object based on a randomized graph '''
     # init graph object
     G = nx.Graph()
@@ -19,11 +19,6 @@ def create_random_graph(num_routers, offline_routers, source, dest):
         # if an edge between 2 nodes doesnt already exist
         if not G.has_edge(str(i), str(random.randint(i+1,num_routers+1))):
             G.add_edge(str(i), str(random.randint(i+1,num_routers+1)), weight=random.randint(1,11))
-
-    # add offline nodes
-    for node in offline_routers:
-        G.remove_node(str(node))
-        G.add_node(str(node))
 
     # check if an extra node was added
     if len(G.nodes) > num_routers:

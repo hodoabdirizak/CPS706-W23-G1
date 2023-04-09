@@ -45,7 +45,6 @@ class Container(tk.Tk):
 
 # global vars
 num_routers = source_router = dest_router = 0
-offline_routers = []
 buttonClicked = False
 G = None
 label_img = None
@@ -60,39 +59,32 @@ class Main_window(tk.Frame):
         num_routers_var = tk.StringVar()
         source_router_var = tk.StringVar()
         dest_router_var = tk.StringVar()
-        offline_routers_var = tk.StringVar()
 
         # entry widgets
         # labels for vars
         num_routers_label = tk.Label(self, text = 'Number of Routers', font=('calibre', 10, 'bold'))
         source_router_label = tk.Label(self, text = 'Source Router', font=('calibre', 10, 'bold'))
         dest_router_label = tk.Label(self, text = 'Destination Router', font=('calibre', 10, 'bold'))
-        offline_routers_label = tk.Label(self, text = 'List of Offline Routers (optional)', font=('calibre', 10, 'bold'))
 
         # entries for vars
         num_routers_entry = tk.Entry(self, textvariable = num_routers_var, font=('calibre',10,'normal'))
         source_router_entry = tk.Entry(self, textvariable = source_router_var, font=('calibre',10,'normal'))
         dest_router_entry = tk.Entry(self, textvariable = dest_router_var, font=('calibre',10,'normal'))
-        offline_routers_entry = tk.Entry(self, textvariable = offline_routers_var, font=('calibre',10,'normal')) 
         
         def validate():
             '''validates that info provided is correct
             if invalid: print error msg to window 
             else: call edges()'''
-            global num_routers, source_router, dest_router, offline_routers
-            err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get(),offline_routers_var.get())
+            global num_routers, source_router, dest_router
+            err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get())
             canvas = tk.Canvas(self, width= 750, height= 150)
             canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
-            canvas.grid(row=6,column=0, columnspan = 10, sticky = tk.W+tk.E)  
+            # canvas.grid(row=6,column=5, columnspan = 10, sticky = tk.W+tk.E)  
+            canvas.grid(row=6,column=5, columnspan = 10, sticky = tk.W+tk.E)  
             if err_msg == None:
                 num_routers = int(num_routers_var.get())
                 source_router = int(source_router_var.get())
-                dest_router = int(dest_router_var.get())
-                offline_routers_raw = offline_routers_var.get()
-                if offline_routers_raw == "":
-                    offline_routers = []
-                else:
-                    offline_routers = [int(router) for router in offline_routers_raw.split(",")]                
+                dest_router = int(dest_router_var.get())              
                 return True
 
             return False
@@ -107,15 +99,13 @@ class Main_window(tk.Frame):
             sub_btn['state'] = tk.DISABLED
 
         # placing the label and entry using grid
-        label.grid(row=0,column=0)
-        num_routers_label.grid(row=1,column=0)
-        num_routers_entry.grid(row=1,column=1)
-        source_router_label.grid(row=2,column=0)
-        source_router_entry.grid(row=2,column=1)
-        dest_router_label.grid(row=3,column=0)
-        dest_router_entry.grid(row=3,column=1)
-        offline_routers_label.grid(row=4,column=0)
-        offline_routers_entry.grid(row=4,column=1)
+        label.grid(row=0,column=4, columnspan=6)
+        num_routers_label.grid(row=1,column=4, columnspan=3)
+        num_routers_entry.grid(row=1,column=5, columnspan=3)
+        source_router_label.grid(row=2,column=4, columnspan=3)
+        source_router_entry.grid(row=2,column=5, columnspan=3)
+        dest_router_label.grid(row=3,column=4, columnspan=3)
+        dest_router_entry.grid(row=3,column=5, columnspan=3)
 
         val_btn=tk.Button(self, text = 'Validate', command = switch)
         sub_btn=tk.Button(self, text = 'Submit', state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
@@ -139,7 +129,7 @@ class Page1(tk.Frame):
             plt.clf()
 
             global G
-            G = create_random_graph(num_routers, offline_routers, source_router, dest_router)
+            G = create_random_graph(num_routers, source_router, dest_router)
 
             # get image created by previous fxn call
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
