@@ -25,10 +25,10 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
     while any(notify_neighbors.values()):
 
         # print(f'{notify_neighbors}')
-        print(f't = {t}')
-        for i, x in enumerate(dist_vecs):
-            print(f'{i} = {list(dist_vecs[x].values())}')
-        print("\n\n")
+        # print(f't = {t}')
+        # for i, x in enumerate(dist_vecs):
+        #     print(f'{i} = {list(dist_vecs[x].values())}')
+        # print("\n\n")
 
         dv_start_end.append(
             {"dv_start": dist_vecs[start_node], "dv_end": dist_vecs[end_node]})
@@ -84,9 +84,9 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
 
     cost = dist_vecs[start_node][end_node]
 
-    print(dv_start_end)
-    print(path)
-    print(cost)
+    # print(dv_start_end)
+    # print(path)
+    # print(cost)
 
     return dv_start_end, path, cost
 
