@@ -269,13 +269,13 @@ class Page1(tk.Frame):
             # buttons = Label(Input_frame_buttons, text="", font=('calibre 12'))  
             # buttons.grid(row=6,column=3)
             
-            select_button = Button(Input_frame_buttons, text="Select Record", command=select_record)
+            select_button = Button(Input_frame_buttons, text="Select Record", fg=col_white, bg=col_grey, font=tkfont, command=select_record)
             select_button.grid(row=5,column=2, padx = 15, pady = 20)
             
             refresh_button = Button(Input_frame_buttons, text="Update Record", fg=col_white, bg=col_grey, font=tkfont, command=update_record)
             refresh_button.grid(row=5,column=3, padx = 15, pady = 20)
 
-            input_button = Button(Input_frame_buttons, text="Add Record", command=input_record)
+            input_button = Button(Input_frame_buttons, text="Add Record", fg=col_white, bg=col_grey, font=tkfont, command=input_record)
             input_button.grid(row=5,column=4, padx = 15, pady = 20)
 
             custom_edges = Button(Input_frame_buttons, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
