@@ -47,11 +47,18 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
                     continue
 
                 for i, distance in dist_vecs[neighbor].items():
-                    temp_distance = weight + distance
-
-                    if temp_distance < curr_network_dv[i]:
-                        curr_network_dv[i] = temp_distance
-                        notify_neighbors_next[curr_network] = True
+                    if (isinstance(distance, float)):
+                        temp_distance = int(weight) + distance
+                    else:
+                        temp_distance = int(weight) + int(distance)
+                    if (isinstance(curr_network_dv[i], str)):
+                        if temp_distance < int(curr_network_dv[i]):
+                            curr_network_dv[i] = temp_distance
+                            notify_neighbors_next[curr_network] = True
+                    else:
+                        if temp_distance < curr_network_dv[i]:
+                            curr_network_dv[i] = temp_distance
+                            notify_neighbors_next[curr_network] = True
 
             dist_vecs_next[curr_network] = curr_network_dv
 

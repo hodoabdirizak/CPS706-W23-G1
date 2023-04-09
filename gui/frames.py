@@ -100,12 +100,12 @@ class Main_window(tk.Frame):
 
         # placing the label and entry using grid
         label.grid(row=0,column=4, columnspan=6)
-        num_routers_label.grid(row=1,column=4, columnspan=3)
-        num_routers_entry.grid(row=1,column=5, columnspan=3)
-        source_router_label.grid(row=2,column=4, columnspan=3)
-        source_router_entry.grid(row=2,column=5, columnspan=3)
-        dest_router_label.grid(row=3,column=4, columnspan=3)
-        dest_router_entry.grid(row=3,column=5, columnspan=3)
+        num_routers_label.grid(row=1,column=4)
+        num_routers_entry.grid(row=1,column=5)
+        source_router_label.grid(row=2,column=4)
+        source_router_entry.grid(row=2,column=5)
+        dest_router_label.grid(row=3,column=4)
+        dest_router_entry.grid(row=3,column=5)
 
         val_btn=tk.Button(self, text = 'Validate', command = switch)
         sub_btn=tk.Button(self, text = 'Submit', state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
@@ -160,12 +160,20 @@ class Page1(tk.Frame):
             data = []
 
             if G:
-               data = [(u, v, d['weight']) for u, v, d in G.edges(data=True)];
-            
+            # data = [(u, v, d['weight']) for u, v, d in G.edges(data=True)];
+                for u, v, d in G.edges(data=True):
+                    data.append(u)
+                    data.append(v)
+                    data.append(d['weight'])
+
             global count
             count = 0
 
-            for record in data:
+            records = []
+            for i in range(0, len(data), 3):
+                records.append((data[i], data[i+1], data[i+2]))
+
+            for record in records:
                 set.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1], record[2]))
                 count += 1
 
@@ -251,14 +259,14 @@ class Page1(tk.Frame):
             # buttons = Label(Input_frame_buttons, text="", font=('calibre 12'))  
             # buttons.grid(row=6,column=3)
             
-            input_button = Button(Input_frame_buttons, text="Add Record", command=input_record)
-            input_button.grid(row=5,column=2, padx = 15, pady = 20)
+            select_button = Button(Input_frame_buttons, text="Select Record", command=select_record)
+            select_button.grid(row=5,column=2, padx = 15, pady = 20)
             
             refresh_button = Button(Input_frame_buttons, text="Update Record", command=update_record)
             refresh_button.grid(row=5,column=3, padx = 15, pady = 20)
 
-            select_button = Button(Input_frame_buttons, text="Select Record", command=select_record)
-            select_button.grid(row=5,column=4, padx = 15, pady = 20)
+            input_button = Button(Input_frame_buttons, text="Add Record", command=input_record)
+            input_button.grid(row=5,column=4, padx = 15, pady = 20)
 
             custom_edges = Button(Input_frame_buttons, text="Update graph", command = lambda: update_graph(data)) 
             custom_edges.grid(row=6,column=3)
@@ -279,8 +287,8 @@ class Page1(tk.Frame):
             label_img.grid(row=3,column=1,rowspan=3, padx = 15)
             # after the user is done editing the table, they have to press 'update graph'  
             # triggers fxn call to update_graph(), need to pass in data to fxn
-            custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
-            custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
+            # custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
+            # custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
 
         create_graph()
         random_edges = tk.Button(self, text="Create graph", command = create_graph)
