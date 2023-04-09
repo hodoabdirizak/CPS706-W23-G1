@@ -265,9 +265,6 @@ class Page1(tk.Frame):
             # button
             Input_frame_buttons = Frame(table_input, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)
             Input_frame_buttons.pack()
-
-            # buttons = Label(Input_frame_buttons, text="", font=('calibre 12'))  
-            # buttons.grid(row=6,column=3)
             
             select_button = Button(Input_frame_buttons, text="Select Record", fg=col_white, bg=col_grey, font=tkfont, command=select_record)
             select_button.grid(row=5,column=2, padx = 15, pady = 20)
