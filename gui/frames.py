@@ -178,6 +178,9 @@ class Page1(tk.Frame):
             global data
             data = []
 
+            if G:
+               data = [(u, v, d['weight']) for u, v, d in G.edges(data=True)];
+            
             global count
             count = 0
 
