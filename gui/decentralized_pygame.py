@@ -203,9 +203,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
             # SIZEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            title_rect = title_text.get_rect(center=(60, 620))
-            title_rect3 = title_text.get_rect(center=(60, 680))
-            title_rect2 = title_text.get_rect(center=(60, 650))
+            title_rect = title_text.get_rect(center=(60, 620)) #sizing for time
+            title_rect3 = title_text.get_rect(center=(60, 650)) # sizing for cost
+            title_rect2 = title_text.get_rect(center=(60, 680)) #sizing for path
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
