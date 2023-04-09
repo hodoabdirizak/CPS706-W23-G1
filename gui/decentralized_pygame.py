@@ -6,7 +6,7 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Define constants for the window size and node radius
 WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 800
+WINDOW_HEIGHT = 740
 NODE_RADIUS = 15
 
 
@@ -65,8 +65,8 @@ def draw_graph(screen, graph, path, current_node):
         # Write source and dest nodes in top right corner
         source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
         dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
-        source_pos = (20,730)
-        dest_pos = (20,760)
+        source_pos = (20,670)
+        dest_pos = (20,700)
         screen.blit(source_label, source_pos)
         screen.blit(dest_label, dest_pos)
 
@@ -201,9 +201,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             text3 = "Cost: " + str(cost)
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
-            title_rect = title_text.get_rect(center=(60, 810))
-            title_rect3 = title_text.get_rect(center=(60, 840))
-            title_rect2 = title_text.get_rect(center=(60, 870))
+            title_rect = title_text.get_rect(center=(60, 750))
+            title_rect3 = title_text.get_rect(center=(60, 780))
+            title_rect2 = title_text.get_rect(center=(60, 810))
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
