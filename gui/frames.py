@@ -48,12 +48,18 @@ num_routers = source_router = dest_router = 0
 buttonClicked = False
 G = None
 label_img = None
+tkfont = ('DM Sans', 11, 'normal')
+tkfont_bold = ('DM Sans', 14, 'bold')
+col_dark = '#293241'
+col_white = '#e0fbfc'
+col_accent = '#98c1d9'
+col_grey = '#3d5a80'
 
 class Main_window(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)  
-
-        label = tk.Label(self, text="Enter input", font=('calibre 12 bold'))  
+        self.config(background=col_dark)
+        label = tk.Label(self, bd=1, text="Enter input", anchor='nw', fg=col_white, bg=col_dark, font=tkfont_bold)  
 
         # declare vars to store values input by user 
         num_routers_var = tk.StringVar()
@@ -62,14 +68,15 @@ class Main_window(tk.Frame):
 
         # entry widgets
         # labels for vars
-        num_routers_label = tk.Label(self, text = 'Number of Routers', font=('calibre', 10, 'bold'))
-        source_router_label = tk.Label(self, text = 'Source Router', font=('calibre', 10, 'bold'))
-        dest_router_label = tk.Label(self, text = 'Destination Router', font=('calibre', 10, 'bold'))
+        empt_string = tk.Label(self, bd=1, text = '', fg=col_white, bg=col_dark, font=tkfont)
+        num_routers_label = tk.Label(self, bd=1, text = 'Number of Routers', fg=col_white, bg=col_dark, font=tkfont)
+        source_router_label = tk.Label(self, bd=1, text = 'Source Router', fg=col_white, bg=col_dark, font=tkfont)
+        dest_router_label = tk.Label(self, bd=1, text = 'Destination Router', fg=col_white, bg=col_dark, font=tkfont)
 
         # entries for vars
-        num_routers_entry = tk.Entry(self, textvariable = num_routers_var, font=('calibre',10,'normal'))
-        source_router_entry = tk.Entry(self, textvariable = source_router_var, font=('calibre',10,'normal'))
-        dest_router_entry = tk.Entry(self, textvariable = dest_router_var, font=('calibre',10,'normal'))
+        num_routers_entry = tk.Entry(self, bd=1, textvariable = num_routers_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
+        source_router_entry = tk.Entry(self, bd=1, textvariable = source_router_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
+        dest_router_entry = tk.Entry(self, bd=1, textvariable = dest_router_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
         
         def validate():
             '''validates that info provided is correct
@@ -77,10 +84,10 @@ class Main_window(tk.Frame):
             else: call edges()'''
             global num_routers, source_router, dest_router
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get())
-            canvas = tk.Canvas(self, width= 750, height= 150)
-            canvas.create_text(10,10, anchor='nw', text=err_msg, fill="red", font=('calibre 10 bold'))  
-            # canvas.grid(row=6,column=5, columnspan = 10, sticky = tk.W+tk.E)  
-            canvas.grid(row=6,column=5, columnspan = 10, sticky = tk.W+tk.E)  
+            canvas = tk.Canvas(self, width= 750, height= 150, bg=col_dark, highlightthickness=0)
+            canvas.create_text(5,10, anchor='nw', text=err_msg, fill="#ee6c4d", font=tkfont)  
+            canvas.grid(row=8,column=5)
+            # canvas.grid(row=7,column=5, sticky = tk.W+tk.E)  
             if err_msg == None:
                 num_routers = int(num_routers_var.get())
                 source_router = int(source_router_var.get())
@@ -99,30 +106,33 @@ class Main_window(tk.Frame):
             sub_btn['state'] = tk.DISABLED
 
         # placing the label and entry using grid
-        label.grid(row=0,column=4, columnspan=6)
-        num_routers_label.grid(row=1,column=4, columnspan=3)
-        num_routers_entry.grid(row=1,column=5, columnspan=3)
-        source_router_label.grid(row=2,column=4, columnspan=3)
-        source_router_entry.grid(row=2,column=5, columnspan=3)
-        dest_router_label.grid(row=3,column=4, columnspan=3)
-        dest_router_entry.grid(row=3,column=5, columnspan=3)
+        label.grid(row=0,column=3, padx=10, pady=10)
+        empt_string.grid(row=5,column=1, padx=10, pady=10)
+        num_routers_label.grid(row=1,column=2, padx=10, pady=10)
+        num_routers_entry.grid(row=1,column=3, padx=10, pady=10)
+        source_router_label.grid(row=2,column=2, padx=10, pady=10)
+        source_router_entry.grid(row=2,column=3, padx=10, pady=10)
+        dest_router_label.grid(row=3,column=2, padx=10, pady=10)
+        dest_router_entry.grid(row=3,column=3, padx=10, pady=10)
 
-        val_btn=tk.Button(self, text = 'Validate', command = switch)
-        sub_btn=tk.Button(self, text = 'Submit', state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
+        val_btn=tk.Button(self, text = 'Validate', fg=col_dark, bg=col_accent, font=tkfont, command = switch)
+        sub_btn=tk.Button(self, text = 'Submit', fg=col_dark, bg=col_accent, font=tkfont, state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
 
-        val_btn.grid(row=5,column=0)
-        sub_btn.grid(row=5,column=1)
+        val_btn.grid(row=5,column=2,padx=10, pady=10)
+        sub_btn.grid(row=5,column=3,padx=10, pady=10)
+        empt_string.grid(row=6,column=1, padx=10, pady=10)
 
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
-        label = tk.Label(self, text="Generate Network", font=('calibre 12 bold'))  
+        self.config(background=col_dark)
+        label = tk.Label(self, text="Generate Network", pady = 10, fg=col_white, bg=col_dark, font=tkfont_bold)  
         label.grid(row=0,column=1)
 
         def create_graph():
             '''calls function from edges.py to display a graph with random edges
             assumes that user does not want to customize edges'''
-            label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), font=('calibre 12'))  
+            label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), fg=col_white, bg=col_dark, font=('DM Sans', 13, 'bold'))  
             label.grid(row=1,column=1)
 
             # destroy any existing graph
@@ -135,10 +145,10 @@ class Page1(tk.Frame):
             img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
-            label_img.grid(row=3,column=1,rowspan=3, padx = 15)
+            label_img.grid(row=3,column=1,rowspan=3, padx = 25)
 
             # create a table with based on randomized nodes and weights, store in data var
-            label_table = tk.Label(self, text="", font=('calibre 12'))  
+            label_table = tk.Label(self, text="", font=tkfont, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)  
             label_table.grid(row=3,column=2, columnspan=2)
 
             set = ttk.Treeview(label_table)
@@ -169,19 +179,19 @@ class Page1(tk.Frame):
                 set.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1], record[2]))
                 count += 1
 
-            table_input = tk.Label(self, text="", font=('calibre 12'))  
+            table_input = tk.Label(self, text="", font=tkfont, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)  
             table_input.grid(row=4,column=2,columnspan=2)
 
-            Input_frame = Frame(table_input)
+            Input_frame = Frame(table_input, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)
             Input_frame.pack()
 
-            node_a = Label(Input_frame, text="Node A")
+            node_a = Label(Input_frame, text="Node A", bg=col_dark, fg=col_white)
             node_a.grid(row=4, column=2)
 
-            node_b = Label(Input_frame, text="Node B")
+            node_b = Label(Input_frame, text="Node B", bg=col_dark, fg=col_white)
             node_b.grid(row=4, column=3)
 
-            cost = Label(Input_frame, text="Cost")
+            cost = Label(Input_frame, text="Cost", bg=col_dark, fg=col_white)
             cost.grid(row=4, column=4)
 
             node_a_entry = Entry(Input_frame)
@@ -245,22 +255,19 @@ class Page1(tk.Frame):
                 cost_entry.delete(0, END)
 
             # button
-            Input_frame_buttons = Frame(table_input)
+            Input_frame_buttons = Frame(table_input, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)
             Input_frame_buttons.pack()
-
-            # buttons = Label(Input_frame_buttons, text="", font=('calibre 12'))  
-            # buttons.grid(row=6,column=3)
-            
-            input_button = Button(Input_frame_buttons, text="Add Record", command=input_record)
+           
+            input_button = Button(Input_frame_buttons, text="Add Record", fg=col_white, bg=col_grey, font=tkfont, command=input_record)
             input_button.grid(row=5,column=2, padx = 15, pady = 20)
             
-            refresh_button = Button(Input_frame_buttons, text="Update Record", command=update_record)
+            refresh_button = Button(Input_frame_buttons, text="Update Record", fg=col_white, bg=col_grey, font=tkfont, command=update_record)
             refresh_button.grid(row=5,column=3, padx = 15, pady = 20)
 
-            select_button = Button(Input_frame_buttons, text="Select Record", command=select_record)
+            select_button = Button(Input_frame_buttons, text="Select Record", fg=col_white, bg=col_grey, font=tkfont, command=select_record)
             select_button.grid(row=5,column=4, padx = 15, pady = 20)
 
-            custom_edges = Button(Input_frame_buttons, text="Update graph", command = lambda: update_graph(data)) 
+            custom_edges = Button(Input_frame_buttons, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
             custom_edges.grid(row=6,column=3)
 
         def update_graph(data):
@@ -276,18 +283,18 @@ class Page1(tk.Frame):
             img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
-            label_img.grid(row=3,column=1,rowspan=3, padx = 15)
+            label_img.grid(row=3,column=1,rowspan=3, padx = 25)
             # after the user is done editing the table, they have to press 'update graph'  
             # triggers fxn call to update_graph(), need to pass in data to fxn
-            custom_edges = tk.Button(self, text="Update graph", command = lambda: update_graph(data)) 
+            custom_edges = tk.Button(self, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
             custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
 
         create_graph()
-        random_edges = tk.Button(self, text="Create graph", command = create_graph)
-        random_edges.grid(row=1,column=0, padx = 5, pady = 5)
+        random_edges = tk.Button(self, text="Create graph", fg=col_white, bg=col_grey, font=tkfont, command = create_graph)
+        random_edges.grid(row=1,column=0, padx = 5, pady = 10)
 
-        go_back = tk.Button(self, text="Go Back to Input", command=lambda: [controller.show_frame(Main_window)])  
-        go_back.grid(row=2,column=0)
+        go_back = tk.Button(self, text="Go Back to Input", fg=col_white, bg=col_grey, font=tkfont, command=lambda: [controller.show_frame(Main_window)])  
+        go_back.grid(row=2,column=0, padx = 5, pady = 10)
 
         def get_path_cent():
             '''call the fxn from dijkstra.py to get the shortest path. 
@@ -307,8 +314,8 @@ class Page1(tk.Frame):
             pygame.quit()
 
         # these buttons should be hidden until the graph object has been generated
-        cent = tk.Button(self, text="Run Centralized Algorithm", command=get_path_cent)  
-        decent = tk.Button(self, text="Run Decentralized Algorithm", command=get_path_decent) 
+        cent = tk.Button(self, text="Run Centralized Algorithm", fg=col_dark, bg=col_accent, font=tkfont, command=get_path_cent)  
+        decent = tk.Button(self, text="Run Decentralized Algorithm", fg=col_dark, bg=col_accent, font=tkfont, command=get_path_decent) 
 
         
         # (row=2,column=2)
@@ -322,4 +329,5 @@ def data(lst):
 window = Container()  
 window.title('Routing Algorithm Visualization Tool')
 window.geometry('1200x600')
+window.configure(background=col_dark)
 window.mainloop()  
