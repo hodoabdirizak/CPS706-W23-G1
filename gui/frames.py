@@ -142,7 +142,7 @@ class Page1(tk.Frame):
             G = create_random_graph(num_routers, source_router, dest_router)
 
             # get image created by previous fxn call
-            img = ImageTk.PhotoImage(Image.open("rand_graph.png"))
+            img = ImageTk.PhotoImage(Image.open("graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
@@ -288,7 +288,7 @@ class Page1(tk.Frame):
             G = create_custom_graph(data)
 
             # get image created by previous fxn call
-            img = ImageTk.PhotoImage(Image.open("cust_graph.png"))
+            img = ImageTk.PhotoImage(Image.open("graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
@@ -310,7 +310,7 @@ class Page1(tk.Frame):
             path = dijkstra(G, str(source_router), str(dest_router))
             
             # start pygame
-            cent_main(G, path)
+            cent_main(G, path, dist_vecs)
             pygame.quit()
 
         def get_path_decent():

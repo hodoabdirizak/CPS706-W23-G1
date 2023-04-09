@@ -1,5 +1,8 @@
 import networkx as nx
 
+# Initialize a dictionary to track the distances at each iteration
+
+
 def dijkstra(graph, start_node, end_node):
     """
     Finds the shortest path in a weighted graph using Dijkstra's algorithm.
@@ -12,6 +15,8 @@ def dijkstra(graph, start_node, end_node):
     Returns:
         the shortest path as a list of nodes from source to destination.
     """
+    dist_vecs = []
+
     # Initialize a list to keep track of the shortest distance to each node from the start node.
     distances = [float('inf')] * len(graph.nodes())
     distances[list(graph.nodes()).index(start_node)] = 0
@@ -24,6 +29,12 @@ def dijkstra(graph, start_node, end_node):
 
     # Loop through all the nodes in the graph.
     while not all(visited_nodes):
+        print(distances)
+        curr_var = distances
+        if curr_var not in dist_vecs:
+            dist_vecs.append(curr_var)
+        # print(dist_vecs)
+
         # Find the unvisited node with the smallest distance from the start node.
         current_node_index = None
         current_node_distance = float('inf')
@@ -42,7 +53,7 @@ def dijkstra(graph, start_node, end_node):
             if distance < distances[neighbor_index]:
                 distances[neighbor_index] = distance
                 parent_nodes[neighbor_index] = current_node_index
-
+        
     # Backtrack from the end node to the start node to find the shortest path.
     shortest_path = [list(graph.nodes()).index(end_node)]
     current_node_index = shortest_path[0]
@@ -55,13 +66,13 @@ def dijkstra(graph, start_node, end_node):
     return (shortest_path)
 
 # Example usage
-# G = nx.Graph()
-# G.add_edge('1', '2', weight=5)
-# G.add_edge('1', '4', weight=5)
-# G.add_edge('2', '3', weight=2)
-# G.add_edge('3', '4', weight=4)
-# G.add_edge('4', '5', weight=2)
-# G.add_edge('5', '6', weight=9)
+G = nx.Graph()
+G.add_edge('1', '2', weight=5)
+G.add_edge('1', '4', weight=5)
+G.add_edge('2', '3', weight=2)
+G.add_edge('3', '4', weight=4)
+G.add_edge('4', '5', weight=2)
+G.add_edge('5', '6', weight=9)
 # print("Edges: ", G.edges.data())
 
-# print(dijkstra(G, '1', '5')) 
+print(dijkstra(G, '1', '5')) 
