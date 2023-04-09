@@ -53,7 +53,7 @@ def create_random_graph(num_routers, source, dest):
     plt.tight_layout()
 
     # saves graph to an image
-    plt.savefig("rand_graph.png")
+    plt.savefig("graph.png")
     # print(dijkstra(G, '1', '5'))
     return G
 
@@ -94,5 +94,5 @@ def create_custom_graph(data):
     plt.tight_layout()
 
     # saves graph to an image
-    plt.savefig("cust_graph.png")
+    plt.savefig("graph.png")
     return G
