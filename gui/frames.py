@@ -294,8 +294,8 @@ class Page1(tk.Frame):
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
             # after the user is done editing the table, they have to press 'update graph'  
             # triggers fxn call to update_graph(), need to pass in data to fxn
-            custom_edges = tk.Button(self, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
-            custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
+            # custom_edges = tk.Button(self, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
+            # custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
 
         create_graph()
         random_edges = tk.Button(self, text="Create graph", fg=col_white, bg=col_grey, font=tkfont, command = create_graph)
@@ -307,11 +307,11 @@ class Page1(tk.Frame):
         def get_path_cent():
             '''call the fxn from dijkstra.py to get the shortest path. 
             executes the pygame for centralized algorithm'''
-            path = dijkstra(G, str(source_router), str(dest_router))
+            # path = dijkstra(G, str(source_router), str(dest_router))
             
-            # start pygame
-            cent_main(G, path, dist_vecs)
-            pygame.quit()
+            # # start pygame
+            # cent_main(G, path, dist_vecs)
+            # pygame.quit()
 
         def get_path_decent():
             '''call the fxn from XYZ.py to get the shortest path. 
