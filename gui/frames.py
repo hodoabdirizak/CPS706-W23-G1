@@ -258,14 +258,14 @@ class Page1(tk.Frame):
                 cost_entry.delete(0, END)
 
             # button
-            input_button = Button(label, text="Input Record", command=input_record)
+            input_button = Button(label, text="Add Record", command=input_record)
             input_button.pack(side=RIGHT, padx=15, pady=20)
+            
+            refresh_button = Button(label, text="Update Record", command=update_record)
+            refresh_button.pack(side=RIGHT, padx=15, pady=20)
 
             select_button = Button(label, text="Select Record", command=select_record)
             select_button.pack(side=RIGHT, padx=15, pady=20)
-
-            refresh_button = Button(label, text="Refresh Record", command=update_record)
-            refresh_button.pack(side=RIGHT, padx=15, pady=20)
 
             # after the user is done editing the table, they have to press 'update graph'  
             # triggers fxn call to update_graph(), need to pass in data to fxn
