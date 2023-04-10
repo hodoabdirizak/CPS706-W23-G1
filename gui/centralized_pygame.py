@@ -124,7 +124,7 @@ def cent_main(graph, path, dist_vecs, prev_node):
 
     title = text_font.render( "The centralized algorithm implements Dijkstra's algorithm for finding the shortest path in a network. Each node ", True, (255, 255, 255))
     screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*2))
-    title1 = text_font.render("represents a router. The cost of each edge represents the cost of sending between routers.", True, (255, 255, 255))
+    title1 = text_font.render("represents a router. The cost of each edge represents the cost of sending a packet between routers.", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*3))
 
     title1 = text_font.render("The function takes three arguments: graph, which is a NetworkX graph object representing the weighted graph, ", True, (255, 255, 255))
