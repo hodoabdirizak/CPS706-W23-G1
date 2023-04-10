@@ -129,24 +129,25 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     text_font = pygame.font.SysFont('DM Sans', 25)
     i = 25
 
-    
-
-    title = font.render("The algorithm aims to find the shortest path between a given start and end node in a network, without requiring any central ", True, (255, 255, 255))
+    title = font.render("This algorithm finds the shortest path between a given start and end node in a network, without requiring any central authority", True, (255, 255, 255))
     screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2, i*2))
-    title1 = font.render("authority or global knowledge of the network topology.", True, (255, 255, 255))
+    title1 = font.render("or global knowledge of the network topology. Each node represents a router in the network, and each edge cost represents the", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*3))
-    title1 = font.render("The code uses the networkx library to represent and manipulate the graph. The algorithm begins by initializing a dictionary called ", True, (255, 255, 255))
-    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*5))
-    title1 = font.render("dist_vecs, which represents the distance vector of each node in the network.The distance vector is a dictionary that contains the ", True, (255, 255, 255))
+    title1 = font.render("cost of sending a packet between two routers. ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*4))
+
+    title1 = font.render("The algorithm begins by initializing a dictionary called dist_vecs, which represents the distance vector of each node in the ", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*6))
-    title1 = font.render("distance from a given node to every other node in the network." , True, (255, 255, 255))
+    title1 = font.render("network. The distance vector is a dictionary that contains the distance from a given node to every other node in the network." , True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*7))
-    title1 = font.render("Next, the code initializes the distance vectors of all nodes by " , True, (255, 255, 255))
+
+    title1 = font.render("Next, the code initializes the distance vectors of all nodes by setting the distance from each node to itself to 0, and the" , True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*9))
-    title1 = font.render("setting the distance from each node to itself to 0, and the distance to all other nodes to infinity. Then, for each edge in ", True, (255, 255, 255))
+    title1 = font.render("distance to all other nodes to infinity. Then, for each edge in the graph, the code updates the distance vectors of both nodes", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*10))
-    title1 = font.render("the graph, the code updates the distance vectors of both nodes by setting the distance between them to the weight of the edge.", True, (255, 255, 255))
+    title1 = font.render("by setting the distance between them to the weight of the edge.", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*11))
+
     title1 = font.render("The algorithm then enters a loop, where it repeatedly updates the distance vectors of each node in the network based on the  ", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*13))
     title1 = font.render("distance vectors of its neighbors.  During each iteration of the loop, the code computes the new distance vectors for each node by ", True, (255, 255, 255))
@@ -155,11 +156,13 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*15))
     title1 = font.render("be notified of the changes. The loop continues until all nodes have been notified and their distance vectors have converged.", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*16))
+
     title1 = font.render("Finally, the algorithm uses the converged distance vectors to find the shortest path between the start and end nodes.", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*18))
     title1 = font.render("It starts at the start node and iteratively chooses the neighbor with the lowest cost path to the end node, until it ", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*19))
     title1 = font.render("reaches the end node.", True, (255, 255, 255))
+    
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*20))
     title1 = font.render("The algorithm returns three values: dv_start_end, which is a list of dictionaries containing the distance vectors of the", True, (255, 255, 255))
     screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*22))
@@ -178,7 +181,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, (WINDOW_HEIGHT/2 + start.get_height()/2)+340))
     # title1 = font.render("Description", True, (255, 0, 0))
     # screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, (WINDOW_HEIGHT/2 + start.get_height()/2)-200))
-    start = font.render("Description of Bellman-Ford's Algorithm and Implementation", True, (255, 255,0))
+    start = font.render("Decentralized Algorithm in Networking: Bellman-Ford's Algorithm", True, (255, 255,0))
     screen.blit(start, ((WINDOW_WIDTH/2 - start.get_width()/2), (WINDOW_HEIGHT/2 + start.get_height()/2)-295))
     pygame.display.update()
 

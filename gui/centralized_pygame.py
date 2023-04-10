@@ -9,7 +9,7 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Define constants for the window size and node radius
 WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 550
+WINDOW_HEIGHT = 590
 NODE_RADIUS = 15
 
 # Define colors for the nodes and edges
@@ -112,17 +112,61 @@ def cent_main(graph, path, dist_vecs, prev_node):
     # Create the window
     screen = pygame.display.set_mode((WINDOW_WIDTH+50, WINDOW_HEIGHT+100))
   
+
     # Display start page
     screen.fill((0, 0, 0))
-    font = pygame.font.SysFont('DM Sans', 30)
-    text_font = pygame.font.SysFont('DM Sans', 25)
+    font = pygame.font.SysFont('DM Sans', 26)
+    text_font = pygame.font.SysFont('DM Sans', 23)
+    i = 25
 
-    title = font.render("Explanation of Dijikstra's Algorithm", True, (255, 255, 255))
-    start = text_font.render("Press any key to continue to the animation", True, (0, 255, 255))
+    title = font.render("Centralized Algorithm in Networking: Dijkstra's algorithm", True, (255, 255,0))
+    screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, 15))
 
-    screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2, WINDOW_HEIGHT/2 - title.get_height()/2))
-    screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, WINDOW_HEIGHT/2 + start.get_height()/2))
+    title = text_font.render( "The centralized algorithm implements Dijkstra's algorithm for finding the shortest path in a network. Each node ", True, (255, 255, 255))
+    screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*2))
+    title1 = text_font.render("represents a router. The cost of each edge represents the cost of sending between routers.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*3))
+
+    title1 = text_font.render("The function takes three arguments: graph, which is a NetworkX graph object representing the weighted graph, ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*5))
+    title1 = text_font.render("start_node, which is the starting node for the shortest path, and end_node, which is the end node for the path.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*6))
+
+    title1 = text_font.render("The function starts by initializing three lists: distances, which keeps track of the shortest distance to each", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*8))
+    title1 = text_font.render("node from the start node, parent_nodes, which keeps track of the parent node in the shortest path to each" , True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*9))
+    title1 = text_font.render("node, and visited_nodes, which keeps track of visited nodes." , True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*10))
+
+    title1 = text_font.render("The algorithm then loops through all the nodes in the graph until all nodes have been visited. It finds the", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*12))
+    title1 = text_font.render("unvisited node with the smallest distance from the start node and marks it as visited. It then updates the", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*13))
+    title1 = text_font.render("distances to all the neighboring nodes of the current node.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*14))
+
+    title1 = text_font.render("Once all nodes have been visited, the function backtracks from the end node to the start node to find the ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*16))
+    title1 = text_font.render("shortest path. It starts by appending the index of the end node to the shortest_path list and then iteratively", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*17))
+    title1 = text_font.render("adds the parent node of each node in the path until it reaches the start node.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*18))
+
+    title1 = text_font.render("Finally, the function converts the indices in shortest_path to node names using the list(graph.nodes())[i]", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*20))
+    title1 = text_font.render("syntax, and returns the resulting list.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*21))
+
+    title1 = text_font.render("Overall, this function provides a simple and efficient way to find the shortest path in a weighted graph", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*23))
+    title1 = text_font.render("using Dijkstra's algorithm.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, i*24))
+
+    start = font.render("Press any key to continue to the animation", True, (0, 255, 255))
+    screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, i*26))
     pygame.display.update()
+
 
     running = True
     start_dijkstras = False
