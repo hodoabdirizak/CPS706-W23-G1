@@ -2,8 +2,6 @@ import networkx as nx
 import os
 import pygame
 pygame.init()
-from explanations import *
-
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
