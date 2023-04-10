@@ -396,16 +396,16 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             pygame.display.update()
 
 
-G = nx.Graph()
-G.add_edge('1', '2', weight=5)
-G.add_edge('1', '4', weight=5)
-G.add_edge('2', '3', weight=2)
-G.add_edge('3', '4', weight=4)
-G.add_edge('4', '5', weight=2)
-G.add_edge('5', '6', weight=9)
+# G = nx.Graph()
+# G.add_edge('1', '2', weight=5)
+# G.add_edge('1', '4', weight=5)
+# G.add_edge('2', '3', weight=2)
+# G.add_edge('3', '4', weight=4)
+# G.add_edge('4', '5', weight=2)
+# G.add_edge('5', '6', weight=9)
 
-dv_start_end = [{'dv_start': {'1': 0, '2': 4, '3': 'inf'}, 'dv_end': {'1': 4, '2': 0, '3': 2}}, {'dv_start': {'1': 0, '2': 4, '3': 6}, 'dv_end': {'1': 4, '2': 0, '3': 2}}]
-path = ['1', '2']
-cost = 5
+# dv_start_end = [{'dv_start': {'1': 0, '2': 4, '3': 'inf'}, 'dv_end': {'1': 4, '2': 0, '3': 2}}, {'dv_start': {'1': 0, '2': 4, '3': 6}, 'dv_end': {'1': 4, '2': 0, '3': 2}}]
+# path = ['1', '2']
+# cost = 5
 
-decent_main(3,1,2, dv_start_end, path, cost,G)
+# decent_main(3,1,2, dv_start_end, path, cost,G)
