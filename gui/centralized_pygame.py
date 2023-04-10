@@ -289,11 +289,13 @@ def cent_main(graph, path, dist_vecs, prev_node):
     # If table is complete, start the animation
     if pressed2:
         title = FONT.render('Using the resulting table, backtrack from the destination to the start node.', True, (255, 255, 255))
-        title2 = FONT.render('The shortest path is {}'.format(" -> ".join(path)), True, (255, 255, 255))
+        title1 = FONT.render('The result of backtracking is:  {}'.format(" -> ".join(path[::-1])), True, (255, 255, 255))
+        title2 = FONT.render('Therefore, the shortest path is:  {}'.format(" -> ".join(path)), True, (255, 255, 255))
         title3 = FONT.render('Press any key to continue', True, (0, 255, 255))
-        screen.blit(title, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*4))
-        screen.blit(title2, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*3 + 25))
-        screen.blit(title3, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*2 + 50))
+        screen.blit(title, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*6))
+        screen.blit(title1, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*6 + 35))
+        screen.blit(title2, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*6 + 35*2))
+        screen.blit(title3, (NODE_RADIUS, WINDOW_HEIGHT - NODE_RADIUS*6 + 35*3 + 30))
         pygame.display.update()
 
         running = True
@@ -365,26 +367,3 @@ def cent_main(graph, path, dist_vecs, prev_node):
 
         # Quit pygame
         pygame.quit()
-
-
-# G = nx.Graph()
-# G.add_edge('1', '2', weight=5)
-# G.add_edge('1', '4', weight=5)
-# G.add_edge('2', '3', weight=2)
-# G.add_edge('3', '4', weight=4)
-# G.add_edge('4', '5', weight=2)
-# G.add_edge('5', '6', weight=9)
-
-
-# # Define a path through the graph
-# path = ['1', '4', '5']
-
-# dist= [[0, 'inf', 'inf', 'inf', 'inf', 'inf'], 
-#             [0, 5, 5, 'inf', 'inf', 'inf'], 
-#             [0, 5, 5, 7, 'inf', 'inf'], 
-#             [0, 5, 5, 7, 7, 'inf'], 
-#             [0, 5, 5, 7, 7, 'inf'], 
-#             [0, 5, 5, 7, 7, 16]]
-
-# # Run the game
-# cent_main(G, path, dist)
