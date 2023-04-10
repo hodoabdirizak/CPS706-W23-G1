@@ -66,8 +66,8 @@ def draw_graph(screen, graph, path, current_node):
         source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
         dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
         # -------------------------POSITION OF SOURSE AND DES
-        source_pos = (20,570)
-        dest_pos = (20,550)
+        source_pos = (1100,50)
+        dest_pos = (1100,80)
         screen.blit(source_label, source_pos)
         screen.blit(dest_label, dest_pos)
 
@@ -127,12 +127,59 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     screen.fill((0, 0, 0))
     font = pygame.font.SysFont('DM Sans', 30)
     text_font = pygame.font.SysFont('DM Sans', 25)
+    i = 25
 
-    title = font.render("Explanation of Bellford's Algorithm", True, (255, 255, 255))
-    start = text_font.render("Press any key to continue to the animation", True, (0, 255, 255))
+    
 
-    screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2, WINDOW_HEIGHT/2 - title.get_height()/2))
-    screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, WINDOW_HEIGHT/2 + start.get_height()/2))
+    title = font.render("The algorithm aims to find the shortest path between a given start and end node in a network, without requiring any central ", True, (255, 255, 255))
+    screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2, i*2))
+    title1 = font.render("authority or global knowledge of the network topology.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*3))
+    title1 = font.render("The code uses the networkx library to represent and manipulate the graph. The algorithm begins by initializing a dictionary called ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*5))
+    title1 = font.render("dist_vecs, which represents the distance vector of each node in the network.The distance vector is a dictionary that contains the ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*6))
+    title1 = font.render("distance from a given node to every other node in the network." , True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*7))
+    title1 = font.render("Next, the code initializes the distance vectors of all nodes by " , True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*9))
+    title1 = font.render("setting the distance from each node to itself to 0, and the distance to all other nodes to infinity. Then, for each edge in ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*10))
+    title1 = font.render("the graph, the code updates the distance vectors of both nodes by setting the distance between them to the weight of the edge.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*11))
+    title1 = font.render("The algorithm then enters a loop, where it repeatedly updates the distance vectors of each node in the network based on the  ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*13))
+    title1 = font.render("distance vectors of its neighbors.  During each iteration of the loop, the code computes the new distance vectors for each node by ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*14))
+    title1 = font.render("considering the distance vectors of its neighbors, and updates the notify_neighbors dictionary to indicate which nodes need to ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*15))
+    title1 = font.render("be notified of the changes. The loop continues until all nodes have been notified and their distance vectors have converged.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*16))
+    title1 = font.render("Finally, the algorithm uses the converged distance vectors to find the shortest path between the start and end nodes.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*18))
+    title1 = font.render("It starts at the start node and iteratively chooses the neighbor with the lowest cost path to the end node, until it ", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*19))
+    title1 = font.render("reaches the end node.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*20))
+    title1 = font.render("The algorithm returns three values: dv_start_end, which is a list of dictionaries containing the distance vectors of the", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*22))
+    title1 = font.render("start and end nodes at each iteration of the loop; path, which is a list of nodes representing the shortest path from", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*23))
+    title1 = font.render("the start node to the end node; and cost, which is the total cost of the shortest path.", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*24))
+    
+    
+    
+    title1 = font.render("", True, (255, 255, 255))
+    screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, i*12))
+
+
+    start = font.render("Press any key to continue to the animation", True, (0, 255, 255))
+    screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, (WINDOW_HEIGHT/2 + start.get_height()/2)+340))
+    # title1 = font.render("Description", True, (255, 0, 0))
+    # screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, (WINDOW_HEIGHT/2 + start.get_height()/2)-200))
+    start = font.render("Description of Bellman-Ford's Algorithm and Implementation", True, (255, 255,0))
+    screen.blit(start, ((WINDOW_WIDTH/2 - start.get_width()/2), (WINDOW_HEIGHT/2 + start.get_height()/2)-295))
     pygame.display.update()
 
     running = True
@@ -203,9 +250,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
             # SIZEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            title_rect = title_text.get_rect(center=(60, 620)) #sizing for time
-            title_rect3 = title_text.get_rect(center=(60, 650)) # sizing for cost
-            title_rect2 = title_text.get_rect(center=(60, 680)) #sizing for path
+            title_rect = title_text.get_rect(center=(900, 60)) #sizing for time
+            title_rect3 = title_text.get_rect(center=(900, 90)) # sizing for cost
+            title_rect2 = title_text.get_rect(center=(900, 120)) #sizing for path
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
@@ -280,9 +327,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             text3 = "Cost: " + str(cost)
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
-            title_rect = title_text.get_rect(center=(280, 35))
-            title_rect3 = title_text.get_rect(center=(425, 35))
-            title_rect2 = title_text.get_rect(center=(550, 35))
+            title_rect = title_text.get_rect(center=(60, 35))
+            title_rect3 = title_text.get_rect(center=(170, 35))
+            title_rect2 = title_text.get_rect(center=(280, 35))
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
@@ -295,7 +342,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
                 # Loop over each column in the row
                 for col in range(4):
                     # Calculate the position of the cell based on the row and columnssssssssssssssssssssssssssss
-                    x = (col * cell_width) + 170
+                    x = (col * cell_width) + 10
                     y = (row * cell_height) + 60
 
                     # Create a Rect object for the cell
