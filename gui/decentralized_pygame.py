@@ -66,8 +66,8 @@ def draw_graph(screen, graph, path, current_node):
         source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
         dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
         # -------------------------POSITION OF SOURSE AND DES
-        source_pos = (20,570)
-        dest_pos = (20,550)
+        source_pos = (1100,50)
+        dest_pos = (1100,80)
         screen.blit(source_label, source_pos)
         screen.blit(dest_label, dest_pos)
 
@@ -250,9 +250,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
             # SIZEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            title_rect = title_text.get_rect(center=(60, 620)) #sizing for time
-            title_rect3 = title_text.get_rect(center=(60, 650)) # sizing for cost
-            title_rect2 = title_text.get_rect(center=(60, 680)) #sizing for path
+            title_rect = title_text.get_rect(center=(900, 60)) #sizing for time
+            title_rect3 = title_text.get_rect(center=(900, 90)) # sizing for cost
+            title_rect2 = title_text.get_rect(center=(900, 120)) #sizing for path
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
@@ -327,9 +327,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             text3 = "Cost: " + str(cost)
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
-            title_rect = title_text.get_rect(center=(280, 35))
-            title_rect3 = title_text.get_rect(center=(425, 35))
-            title_rect2 = title_text.get_rect(center=(550, 35))
+            title_rect = title_text.get_rect(center=(60, 35))
+            title_rect3 = title_text.get_rect(center=(170, 35))
+            title_rect2 = title_text.get_rect(center=(280, 35))
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
@@ -342,7 +342,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
                 # Loop over each column in the row
                 for col in range(4):
                     # Calculate the position of the cell based on the row and columnssssssssssssssssssssssssssss
-                    x = (col * cell_width) + 170
+                    x = (col * cell_width) + 10
                     y = (row * cell_height) + 60
 
                     # Create a Rect object for the cell
