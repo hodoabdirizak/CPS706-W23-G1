@@ -102,7 +102,7 @@ def draw_game_over_screen(screen, path):
 
 
 # Define the main function that will run the game
-def cent_main(graph, path, dist_vecs):
+def cent_main(graph, path, dist_vecs, prev_node):
     pygame.init()
 
     # Define the font for the node labels
@@ -228,7 +228,9 @@ def cent_main(graph, path, dist_vecs):
                             starting = timeat[row-1]
                             text = str(starting)
                         else:
-                            text = None
+                            timeat = prev_node[time]
+                            starting = timeat[row-1]
+                            text = str(starting)
                         text_surface = table_font.render(text, True, (0, 0, 0))
                         text_rect = text_surface.get_rect(center=cell_rect.center)
                         screen.blit(text_surface, text_rect)
@@ -341,5 +343,5 @@ def cent_main(graph, path, dist_vecs):
 #             [0, 5, 5, 7, 7, 'inf'], 
 #             [0, 5, 5, 7, 7, 16]]
 
-# # # Run the game
+# # Run the game
 # cent_main(G, path, dist)

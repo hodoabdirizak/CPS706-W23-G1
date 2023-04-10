@@ -1,6 +1,7 @@
 import networkx as nx
 
 dist_vecs = []
+prev_node = []
 
 def dijkstra(graph, start_node, end_node):
     """
@@ -15,6 +16,7 @@ def dijkstra(graph, start_node, end_node):
         the shortest path as a list of nodes from source to destination.
     """
     global dist_vecs
+    global prev_node
     temp = None
 
     # Initialize a list to keep track of the shortest distance to each node from the start node.
@@ -27,11 +29,20 @@ def dijkstra(graph, start_node, end_node):
     # Initialize a list to keep track of visited nodes.
     visited_nodes = [False] * len(graph.nodes())
 
-    index = 0
     # Loop through all the nodes in the graph.
     while not all(visited_nodes):
-        temp = distances.copy()
-        dist_vecs.append(temp)
+        temp_dv = distances.copy()
+        dist_vecs.append(temp_dv)
+
+        temp_pn = parent_nodes.copy()
+        new_pn = []
+        # Populate parent nodes
+        for i in temp_pn:
+            if i is not None:
+                new_pn.append(str(i+1))
+            else:
+                new_pn.append("N/A")
+        prev_node.append(new_pn)
 
         # Find the unvisited node with the smallest distance from the start node.
         current_node_index = None
@@ -40,7 +51,6 @@ def dijkstra(graph, start_node, end_node):
             if not visited_nodes[i] and distances[i] < current_node_distance:
                 current_node_index = i
                 current_node_distance = distances[i]
-        print(current_node_index)
             
         # Mark the current node as visited.
         visited_nodes[current_node_index] = True
@@ -52,8 +62,12 @@ def dijkstra(graph, start_node, end_node):
             if distance < distances[neighbor_index]:
                 distances[neighbor_index] = distance
                 parent_nodes[neighbor_index] = current_node_index
+                # print(f"neighbor {neighbor_index + 1} is connected to node {parent_nodes[neighbor_index]}")
         
-        index +=1
+    # Populate the prev_node list
+    # prev_node = [i+1 for i in prev_node if i is not None]
+    # print(prev_node)
+
     # Backtrack from the end node to the start node to find the shortest path.
     shortest_path = [list(graph.nodes()).index(end_node)]
     current_node_index = shortest_path[0]
@@ -68,7 +82,10 @@ def dijkstra(graph, start_node, end_node):
 def get_dist_vecs():
     return dist_vecs
 
-# # Example usage
+def get_prev_node():
+    return prev_node
+
+# Example usage
 # G = nx.Graph()
 # G.add_edge('1', '2', weight=5)
 # G.add_edge('1', '4', weight=5)
@@ -76,6 +93,7 @@ def get_dist_vecs():
 # G.add_edge('3', '4', weight=4)
 # G.add_edge('4', '5', weight=2)
 # G.add_edge('5', '6', weight=9)
-# # print("Edges: ", G.edges.data())
 
-# print(dijkstra(G, '1', '5')) 
+# print(dijkstra(G, '1', '5'))
+# 
+# print("Edges: ", G.edges.data()) 

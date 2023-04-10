@@ -308,11 +308,13 @@ class Page1(tk.Frame):
             '''call the fxn from dijkstra.py to get the shortest path. 
             executes the pygame for centralized algorithm'''
             path = dijkstra(G, str(source_router), str(dest_router))
+        
+            # get table columns
+            dist_vecs = get_dist_vecs()
+            prev_node = get_prev_node()
             
             # start pygame
-            dist_vecs = get_dist_vecs()
-            print
-            cent_main(G, path, dist_vecs)
+            cent_main(G, path, dist_vecs, prev_node)
             pygame.quit()
 
         def get_path_decent():
