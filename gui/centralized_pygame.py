@@ -73,9 +73,9 @@ def draw_graph(screen, graph, path, current_node):
         screen.blit(dest_label, dest_pos)
 
         # Write exit instructions in top left
-        exit_label = FONT.render("Hit ESC to exit or change graph".format(int(path[0])), False, EDGE_COLOR)
+        title = FONT.render('Shortest path:  {}'.format(" -> ".join(path)), True, (0, 255, 255))
         exit_pos = (NODE_RADIUS, NODE_RADIUS)
-        screen.blit(exit_label, exit_pos)
+        screen.blit(title, exit_pos)
         
         # Draw the current node label
         if node == current_node:
@@ -95,8 +95,7 @@ def draw_graph(screen, graph, path, current_node):
 
 def draw_game_over_screen(screen, path):
     # Add text
-    title = FONT.render('Animation complete: The shortest path is {}'.format(" -> ".join(path)), True, (0, 255, 255))
-
+    title = FONT.render('Animation complete: Hit ESC key to exit program', True, (0, 255, 255))
     screen.blit(title, (NODE_RADIUS, WINDOW_HEIGHT + NODE_RADIUS*3))
     pygame.display.update()
 
