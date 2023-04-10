@@ -48,7 +48,7 @@ num_routers = source_router = dest_router = 0
 buttonClicked = False
 G = None
 label_img = None
-tkfont = ('DM Sans', 11, 'normal')
+tkfont = ('DM Sans', 11, 'bold')
 tkfont_bold = ('DM Sans', 14, 'bold')
 col_dark = '#293241'
 col_white = '#e0fbfc'
@@ -59,7 +59,8 @@ class Main_window(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)  
         self.config(background=col_dark)
-        label = tk.Label(self, bd=1, text="Enter input", anchor='nw', fg=col_white, bg=col_dark, font=tkfont_bold)  
+        label = tk.Label(self, bd=1, text="Routing Algorithm Visualization Tool", anchor='nw', fg=col_accent, bg=col_dark, font=tkfont_bold)  
+        label2 = tk.Label(self, bd=1, text="Before we start, we'll need the following information:", anchor='nw', fg='white', bg=col_dark, font=('DM Sans', 12, 'bold'))  
 
         # declare vars to store values input by user 
         num_routers_var = tk.StringVar()
@@ -110,14 +111,16 @@ class Main_window(tk.Frame):
             sub_btn['state'] = tk.DISABLED
 
         # placing the label and entry using grid
-        label.grid(row=0,column=2, padx=10, pady=10, columnspan=2)
-        empt_string.grid(row=5,column=1, padx=10, pady=10)
-        num_routers_label.grid(row=1,column=2, padx=10, pady=10)
-        num_routers_entry.grid(row=1,column=3, padx=10, pady=10)
-        source_router_label.grid(row=2,column=2, padx=10, pady=10)
-        source_router_entry.grid(row=2,column=3, padx=10, pady=10)
-        dest_router_label.grid(row=3,column=2, padx=10, pady=10)
-        dest_router_entry.grid(row=3,column=3, padx=10, pady=10)
+        label.grid(row=0,column=2, padx=10, pady=30, columnspan=2)
+        label2.grid(row=1,column=2, padx=10, pady=40, columnspan=2)
+   
+        num_routers_label.grid(row=2,column=2, padx=10, pady=10)
+        num_routers_entry.grid(row=2,column=3, padx=10, pady=10)
+        source_router_label.grid(row=3,column=2, padx=10, pady=10)
+        source_router_entry.grid(row=3,column=3, padx=10, pady=10)
+        dest_router_label.grid(row=4,column=2, padx=10, pady=10)
+        dest_router_entry.grid(row=4,column=3, padx=10, pady=10)
+        # empt_string.grid(row=5,column=1, padx=10, pady=10)
 
         val_btn=tk.Button(self, text = 'Validate', fg=col_dark, bg=col_accent, font=tkfont, command = switch)
         sub_btn=tk.Button(self, text = 'Submit', fg=col_dark, bg=col_accent, font=tkfont, state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
@@ -131,7 +134,7 @@ class Main_window(tk.Frame):
         empty_3.grid(row=7,column=2, padx=10, pady=10)
         empty_4.grid(row=7,column=3, padx=10, pady=10)
 
-        label_end.grid(row=8,column=2, padx=10, pady=10, columnspan=2)
+        label_end.grid(row=8,column=2, padx=10, pady=250, columnspan=2)
          
 
 class Page1(tk.Frame):  
