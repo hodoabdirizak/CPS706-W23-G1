@@ -78,16 +78,20 @@ class Main_window(tk.Frame):
         source_router_entry = tk.Entry(self, bd=1, textvariable = source_router_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
         dest_router_entry = tk.Entry(self, bd=1, textvariable = dest_router_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
         
+        empty_1 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
+        empty_2 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
+        empty_3 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
+        empty_4 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
+        label_end = tk.Label(self, bd=1, text="Hit ESC key to exit program", fg='white', bg=col_dark, font=tkfont_bold) 
+
         def validate():
             '''validates that info provided is correct
             if invalid: print error msg to window 
             else: call edges()'''
             global num_routers, source_router, dest_router
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get())
-            canvas = tk.Canvas(self, width= 750, height= 150, bg=col_dark, highlightthickness=0)
-            canvas.create_text(5,10, anchor='nw', text=err_msg, fill="#ee6c4d", font=tkfont)  
-            canvas.grid(row=8,column=5)
-            # canvas.grid(row=7,column=5, sticky = tk.W+tk.E)  
+            msg = tk.Label(self, bd=1, text=err_msg, anchor='nw', fg='red', bg=col_dark, font=('DM Sans', 12, 'bold'))  
+            msg.grid(row=7,column=2, padx=10, pady=10, columnspan=2) 
             if err_msg == None:
                 num_routers = int(num_routers_var.get())
                 source_router = int(source_router_var.get())
@@ -106,7 +110,7 @@ class Main_window(tk.Frame):
             sub_btn['state'] = tk.DISABLED
 
         # placing the label and entry using grid
-        label.grid(row=0,column=3, padx=10, pady=10)
+        label.grid(row=0,column=2, padx=10, pady=10, columnspan=2)
         empt_string.grid(row=5,column=1, padx=10, pady=10)
         num_routers_label.grid(row=1,column=2, padx=10, pady=10)
         num_routers_entry.grid(row=1,column=3, padx=10, pady=10)
@@ -122,11 +126,19 @@ class Main_window(tk.Frame):
         sub_btn.grid(row=5,column=3,padx=10, pady=10)
         empt_string.grid(row=6,column=1, padx=10, pady=10)
 
+        empty_1.grid(row=7,column=0, padx=10, pady=10)
+        empty_2.grid(row=7,column=1, padx=10, pady=10)
+        empty_3.grid(row=7,column=2, padx=10, pady=10)
+        empty_4.grid(row=7,column=3, padx=10, pady=10)
+
+        label_end.grid(row=8,column=2, padx=10, pady=10, columnspan=2)
+         
+
 class Page1(tk.Frame):  
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(background=col_dark)
-        label = tk.Label(self, text="Generate Network", pady = 10, fg=col_white, bg=col_dark, font=tkfont_bold)  
+        label = tk.Label(self, text="Generate Network", pady = 10, fg=col_white, bg=col_dark, font=tkfont)  
         label.grid(row=0,column=1)
 
         def create_graph():
@@ -325,21 +337,26 @@ class Page1(tk.Frame):
             decent_main(str(num_routers), str(source_router), str(dest_router), dv_start_end, path, cost, G)
             pygame.quit()
 
-        # these buttons should be hidden until the graph object has been generated
         cent = tk.Button(self, text="Run Centralized Algorithm", fg=col_dark, bg=col_accent, font=tkfont, command=get_path_cent)  
         decent = tk.Button(self, text="Run Decentralized Algorithm", fg=col_dark, bg=col_accent, font=tkfont, command=get_path_decent) 
 
-        
-        # (row=2,column=2)
         cent.grid(row=2,column=2)
         decent.grid(row=2,column=3)
+
+        label_end = tk.Label(self, bd=1, text="Hit ESC key to exit program", fg='white', bg=col_dark, font=tkfont_bold) 
+        empty_1 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
+        empty_1.grid(row=8,column=1)
+        label_end.grid(row=9,column=1)
+
              
-def data(lst):
-    '''accepts a list of data'''
-    return lst
+def close(event):
+    window.withdraw() # if you want to bring it back
+    sys.exit()
 
 window = Container()  
 window.title('Routing Algorithm Visualization Tool')
 window.geometry('1200x600')
 window.configure(background=col_dark)
+window.attributes('-fullscreen', True)
+window.bind('<Escape>', close)
 window.mainloop()  
