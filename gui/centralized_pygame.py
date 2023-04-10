@@ -152,6 +152,7 @@ def cent_main(graph, path, dist_vecs):
         running = True
         pressed2 = False
        
+        print(graph.number_of_nodes())
         while running:      
             for event in pygame.event.get():
                 # Clear the screen
@@ -162,7 +163,7 @@ def cent_main(graph, path, dist_vecs):
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT and time > 0:
                         time = time - 1
-                    elif event.key == pygame.K_RIGHT and time >= 0 and time < len(dist_vecs)-1:
+                    elif event.key == pygame.K_RIGHT and time >= 0 and time < graph.number_of_nodes()-1:
                         time = time + 1
                     
                     elif event.key == pygame.K_ESCAPE:
@@ -183,7 +184,7 @@ def cent_main(graph, path, dist_vecs):
             text = "Step: " + str(time+1)  # + "\n" +
             title_text = font.render(text, True, (255, 255, 255))
 
-            title_rect = title_text.get_rect(center=(WINDOW_WIDTH / 2 + 400, 25))
+            title_rect = title_text.get_rect(center=(WINDOW_WIDTH / 2 + 220, 25))
             
             # Draw the title on the window surface
             screen.blit(title_text, title_rect)
@@ -197,7 +198,7 @@ def cent_main(graph, path, dist_vecs):
                 for col in range(3):
                     # Calculate the position of the cell based on the row and column                   
                     x = col * cell_width + 400
-                    y = (row * cell_height) + 100  
+                    y = (row * cell_height) + 50  
 
                     # Create a Rect object for the cell
                     cell_rect = pygame.Rect(x, y, cell_width, cell_height)
@@ -239,7 +240,6 @@ def cent_main(graph, path, dist_vecs):
 
             # Update the display
             pygame.display.update()
-
 
     # If table is complete, start the animation
     if pressed2:
@@ -341,5 +341,5 @@ def cent_main(graph, path, dist_vecs):
 #             [0, 5, 5, 7, 7, 'inf'], 
 #             [0, 5, 5, 7, 7, 16]]
 
-# # Run the game
+# # # Run the game
 # cent_main(G, path, dist)

@@ -24,7 +24,7 @@ from decentralized_pygame import *
 
 class Container(tk.Tk):  
     def __init__(self, *args, **kwargs):  
-        tk.Tk.__init__(self, *args, **kwargs)  
+        tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)  
         container.pack(side="top", fill="both", expand = True)  
         container.grid_rowconfigure(0, weight=1)  
@@ -142,7 +142,7 @@ class Page1(tk.Frame):
             G = create_random_graph(num_routers, source_router, dest_router)
 
             # get image created by previous fxn call
-            img = ImageTk.PhotoImage(Image.open("graph.png"))
+            img = ImageTk.PhotoImage(Image.open("gui/graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
@@ -288,7 +288,7 @@ class Page1(tk.Frame):
             G = create_custom_graph(data)
 
             # get image created by previous fxn call
-            img = ImageTk.PhotoImage(Image.open("graph.png"))
+            img = ImageTk.PhotoImage(Image.open("gui/graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
@@ -307,11 +307,13 @@ class Page1(tk.Frame):
         def get_path_cent():
             '''call the fxn from dijkstra.py to get the shortest path. 
             executes the pygame for centralized algorithm'''
-            # path = dijkstra(G, str(source_router), str(dest_router))
+            path = dijkstra(G, str(source_router), str(dest_router))
             
-            # # start pygame
-            # cent_main(G, path, dist_vecs)
-            # pygame.quit()
+            # start pygame
+            dist_vecs = get_dist_vecs()
+            print
+            cent_main(G, path, dist_vecs)
+            pygame.quit()
 
         def get_path_decent():
             '''call the fxn from XYZ.py to get the shortest path. 
