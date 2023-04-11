@@ -62,11 +62,7 @@ def dijkstra(graph, start_node, end_node):
             if distance < distances[neighbor_index]:
                 distances[neighbor_index] = distance
                 parent_nodes[neighbor_index] = current_node_index
-                # print(f"neighbor {neighbor_index + 1} is connected to node {parent_nodes[neighbor_index]}")
-        
-    # Populate the prev_node list
-    # prev_node = [i+1 for i in prev_node if i is not None]
-    # print(prev_node)
+
 
     # Backtrack from the end node to the start node to find the shortest path.
     shortest_path = [list(graph.nodes()).index(end_node)]
@@ -84,16 +80,3 @@ def get_dist_vecs():
 
 def get_prev_node():
     return prev_node
-
-# Example usage
-# G = nx.Graph()
-# G.add_edge('1', '2', weight=5)
-# G.add_edge('1', '4', weight=5)
-# G.add_edge('2', '3', weight=2)
-# G.add_edge('3', '4', weight=4)
-# G.add_edge('4', '5', weight=2)
-# G.add_edge('5', '6', weight=9)
-
-# print(dijkstra(G, '1', '5'))
-# 
-# print("Edges: ", G.edges.data()) 
