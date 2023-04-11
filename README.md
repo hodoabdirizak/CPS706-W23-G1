@@ -67,7 +67,7 @@ This program requires Python version 3.10 or later. <br>
 
 ### Running the Program
 1. Clone this repository. 
-2. In terminal, locate the repository and cd into the root of the repository.
+2. In terminal, cd into the root of the repository.
 3. Run the following commands to install the necessary libraries: <br>
     - `pip install pygame` <br>
     - `pip install networkx` <br>
