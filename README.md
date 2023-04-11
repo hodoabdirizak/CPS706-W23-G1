@@ -53,7 +53,7 @@ We used the following Python libraries:
 - Matplotlib, to depict the graphs
 
 ### Collaborators
-- Alex Huynh
+- [Alex Huynh](https://github.com/alextuffy)
 - [Camillia Amin](https://github.com/chamin19)
 - [Het Patel](https://github.com/hetp4401)
 - [Hodo Abdirizak](https://github.com/hodoabdirizak)
