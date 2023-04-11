@@ -9,7 +9,6 @@ WINDOW_WIDTH = 1300
 WINDOW_HEIGHT = 600
 NODE_RADIUS = 15
 
-
 # Define colors for the nodes and edges
 NODE_COLOR = (255, 255, 255)
 EDGE_COLOR = (255, 255, 255)
@@ -30,8 +29,6 @@ def get_path_costs(graph,path):
 
 
 def draw_graph(screen, graph, path, current_node):
-    # Clear the screen
-    # screen.fill((0, 0, 0))
     
     # Draw the edges
     for u, v in graph.edges():
@@ -65,7 +62,6 @@ def draw_graph(screen, graph, path, current_node):
         # Write source and dest nodes in top right corner
         source_label = FONT.render("Source: {}".format(int(path[0])), True, EDGE_COLOR)
         dest_label = FONT.render("Destination: {}".format(int(path[-1])), True, EDGE_COLOR)
-        # -------------------------POSITION OF SOURSE AND DES
         source_pos = (1100,50)
         dest_pos = (1100,80)
         screen.blit(source_label, source_pos)
@@ -92,13 +88,11 @@ def draw_graph(screen, graph, path, current_node):
     # Update the screen
     pygame.display.update()
 
-
 # ====================================================================================
 
 # Define the main function that will run the game
 def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
    
-    
     # Define the number of rows in the table
     N = int(num_routers)
 
@@ -112,7 +106,6 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
     title_font = pygame.font.SysFont(None, 35)
     # Set the font for the text in the table
     font = pygame.font.Font(None, 25)
-
 
 #====================================================================================
 
@@ -179,8 +172,6 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
 
     start = font.render("Press any key to continue to the animation", True, (0, 255, 255))
     screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, (WINDOW_HEIGHT/2 + start.get_height()/2)+340))
-    # title1 = font.render("Description", True, (255, 0, 0))
-    # screen.blit(title1, (WINDOW_WIDTH/2 - title.get_width()/2, (WINDOW_HEIGHT/2 + start.get_height()/2)-200))
     start = font.render("Decentralized Algorithm in Networking: Bellman-Ford's Algorithm", True, (255, 255,0))
     screen.blit(start, ((WINDOW_WIDTH/2 - start.get_width()/2), (WINDOW_HEIGHT/2 + start.get_height()/2)-295))
     pygame.display.update()
@@ -199,7 +190,6 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             
             # stop if any key is pressed
             elif event.type == pygame.KEYDOWN:
-                # CHANGE THIS FOR THE BEGINNING SCREEN TO FIX ITSELF
                 start_bell = True 
                 running = False
 
@@ -210,7 +200,6 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
         cell_width, cell_height = WINDOW_WIDTH // 5.8 - 30, 30
 
 #====================================================================================
-
 
     # Run the game loop
     time = 0
@@ -241,10 +230,10 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
                 else:
                     # do nothing
                     time
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
         if animation_done:
             screen.fill((0, 0, 0))
-
             text = "Time: " + str(time)  # + "\n" +
             title_text = title_font.render(text, True, (255, 255, 255))
             text2 = "Path: " + str(path)
@@ -252,9 +241,9 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             text3 = "Cost: " + str(cost)
             title_text3 = title_font.render(text3, True, (255, 255, 255))
 
-            # SIZEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            # SIZEs for displaying the time cost and path
             title_rect = title_text.get_rect(center=(900, 60)) #sizing for time
-            title_rect3 = title_text.get_rect(center=(900, 90)) # sizing for cost
+            title_rect3 = title_text.get_rect(center=(900, 90)) #sizing for cost
             title_rect2 = title_text.get_rect(center=(900, 120)) #sizing for path
             
             # Draw the title on the window surface
@@ -312,7 +301,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
                         text_rect = text_surface.get_rect(center=cell_rect.center)
                         # Draw the data text to the screen
                         screen.blit(text_surface, text_rect)
- # Set the positions of the nodes based on their degrees
+            # Set the positions of the nodes based on their degrees
             positions = nx.circular_layout(graph)
             for node in graph.nodes():
                 pos = positions[node]
@@ -344,7 +333,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             for row in range(N + 1):  # Add 1 to include the header row
                 # Loop over each column in the row
                 for col in range(4):
-                    # Calculate the position of the cell based on the row and columnssssssssssssssssssssssssssss
+                    # Calculate the position of the cell based on the row and columns
                     x = (col * cell_width) + 10
                     y = (row * cell_height) + 60
 
@@ -398,7 +387,7 @@ def decent_main(num_routers, begin, end, dv_start_end, path, cost,graph):
             # Update the display
             pygame.display.update()
 
-
+# for testing
 # G = nx.Graph()
 # G.add_edge('1', '2', weight=5)
 # G.add_edge('1', '4', weight=5)
