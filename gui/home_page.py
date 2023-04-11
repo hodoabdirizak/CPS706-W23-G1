@@ -22,9 +22,9 @@ def print_errors(A,B,C):
             return "Source and destination router must be different"
 
         elif source_router > num_routers or source_router < 1:
-            return "Change source router to a value between 1 and {}".format(num_routers)
+            return "Source router must be between 1 and {}".format(num_routers)
         
         elif dest_router > num_routers or dest_router < 1:
-            return "Change destination router to a value between 1 and {}".format(num_routers)
+            return "Destination router must be between 1 and {}".format(num_routers)
 
         return None

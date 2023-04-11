@@ -85,14 +85,26 @@ class Main_window(tk.Frame):
         empty_4 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         label_end = tk.Label(self, bd=1, text="Hit ESC key to exit program", fg='white', bg=col_dark, font=tkfont_bold) 
 
+        # msg = tk.Label(self, bd=1, text="", anchor='nw', fg='red', bg=col_dark, font=('DM Sans', 12, 'bold'))
+        # err_msg = ""
+        # msg = None
+
+
         def validate():
             '''validates that info provided is correct
             if invalid: print error msg to window 
             else: call edges()'''
             global num_routers, source_router, dest_router
+
+            # update error message
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get())
-            msg = tk.Label(self, bd=1, text=err_msg, anchor='nw', fg='red', bg=col_dark, font=('DM Sans', 12, 'bold'))  
-            msg.grid(row=7,column=2, padx=10, pady=10, columnspan=2) 
+
+            # create canvas image that displays the error message
+            canvas = tk.Canvas(self, width= 750, height= 30, bg=col_dark, highlightthickness=0)
+            canvas.create_text(5,5, anchor='nw', text=err_msg, fill="#ee6c4d", font=tkfont)  
+            canvas.grid(row=4,column=6) 
+
+            # if there is no error, update the number of routers, source and destination router
             if err_msg == None:
                 num_routers = int(num_routers_var.get())
                 source_router = int(source_router_var.get())
@@ -141,7 +153,7 @@ class Page1(tk.Frame):
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self, parent)  
         self.config(background=col_dark)
-        label = tk.Label(self, text="Generate Network", pady = 10, fg=col_white, bg=col_dark, font=tkfont)  
+        label = tk.Label(self, text="Generate Network", pady = 10, fg=col_white, bg=col_dark, font=tkfont_bold)  
         label.grid(row=0,column=1)
 
         def create_graph():
