@@ -95,7 +95,7 @@ This folder contains the file [`bellman_ford.py`](https://github.com/hodoabdiriz
 This file implements Bellman Ford's algorithm and is used to generate the distance vectors and shortest path for a networkx graph. 
 
 ### GUI
-[Code in the GUI folder](https://github.com/hodoabdirizak/CPS706-W23-G1/tree/main/dentralized)<br>
+[Code in the `GUI` folder](https://github.com/hodoabdirizak/CPS706-W23-G1/tree/main/dentralized)<br>
 This folder contains the following files:<br>
 `frames.py`
 - Contains the Main frame (the page first seen by the user upon executing the program) and Page1 frame (the page after passing input validation).
