@@ -177,27 +177,31 @@ class Page1(tk.Frame):
             # create a table with based on randomized nodes and weights, store in data var
             label_table = tk.Label(self, text="", font=tkfont, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)  
             label_table.grid(row=3,column=2, columnspan=2)
-
+            
+            # uses Treeview to make a table to display current graph info (Node A, Node B, Cost)
             set = ttk.Treeview(label_table)
             set.pack(side=RIGHT, padx=15, pady=20)
 
+            # set columns of table 
             set['columns'] = ('node_a', 'node_b', 'cost')
             set.column("#0", width=0, stretch=NO)
             set.column("node_a", anchor=CENTER, width=80)
             set.column("node_b", anchor=CENTER, width=80)
             set.column("cost", anchor=CENTER, width=80)
 
+            # set heading of table 
             set.heading("#0", text="", anchor=CENTER)
             set.heading("node_a", text="Node A", anchor=CENTER)
             set.heading("node_b", text="Node B", anchor=CENTER)
             set.heading("cost", text="Cost", anchor=CENTER)
 
-            # data
+            # initalize data array to hold the source nodes, destination nodes, and weights of graph G
             global data
             data = []
 
+            # if graph G is not empty, user has selected to create randomized graph
             if G:
-            # data = [(u, v, d['weight']) for u, v, d in G.edges(data=True)];
+                # populate data array with node info of graph G
                 for u, v, d in G.edges(data=True):
                     data.append(u)
                     data.append(v)
@@ -205,11 +209,16 @@ class Page1(tk.Frame):
 
             global count
             count = 0
-
+            
+            # records array to use when to populate table
             records = []
             for i in range(0, len(data), 3):
+                # populate records array with info from data array
                 records.append((data[i], data[i+1], data[i+2]))
+                
+            # user graph customization
 
+            # create input textboxes for nodes user wants to enter
             for record in records:
                 set.insert(parent='', index='end', iid=count, text='', values=(record[0], record[1], record[2]))
                 count += 1
@@ -220,6 +229,7 @@ class Page1(tk.Frame):
             Input_frame = Frame(table_input, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)
             Input_frame.pack()
 
+            # set label of input textboxes
             node_a = Label(Input_frame, text="Node A", bg=col_dark, fg=col_white)
             node_a.grid(row=4, column=2)
 
@@ -228,7 +238,8 @@ class Page1(tk.Frame):
 
             cost = Label(Input_frame, text="Cost", bg=col_dark, fg=col_white)
             cost.grid(row=4, column=4)
-
+            
+            # create input textboxes
             node_a_entry = Entry(Input_frame)
             node_a_entry.grid(row=5, column=2)
 
@@ -239,18 +250,26 @@ class Page1(tk.Frame):
             cost_entry.grid(row=5, column=4)
 
             def input_record():
+                '''Is called when user wants to add a row to the customization table, modifying current graph later'''
                 global count
 
+                # place user entries in table
                 set.insert(parent='', index='end', iid=count, text='',
                            values=(node_a_entry.get(), node_b_entry.get(), cost_entry.get()))
                 count += 1
+                
+                # add user entries to data array to modify graph later
                 data.extend((node_a_entry.get(), node_b_entry.get(), cost_entry.get()))
+                
+                # clear user entry textboxes
                 node_a_entry.delete(0, END)
                 node_b_entry.delete(0, END)
                 cost_entry.delete(0, END)
 
             # Select Record
             def select_record():
+                '''Is called when user wants to edit the existing row of table, displaying highlighted row data in entry boxes
+                for editing'''
                 # clear entry boxes
                 node_a_entry.delete(0, END)
                 node_b_entry.delete(0, END)
@@ -272,6 +291,7 @@ class Page1(tk.Frame):
 
             # save Record
             def update_record():
+                '''Is called when user wants to refresh table to include edited existing row of table'''
                 # need to insert new data and remove indexes that have been overwritten
                 selected = set.focus()
 
@@ -289,19 +309,23 @@ class Page1(tk.Frame):
                 node_b_entry.delete(0, END)
                 cost_entry.delete(0, END)
 
-            # button
+            # frame for button trio
             Input_frame_buttons = Frame(table_input, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)
             Input_frame_buttons.pack()
             
+            # select button - calls select_record function
             select_button = Button(Input_frame_buttons, text="Select Record", fg=col_white, bg=col_grey, font=tkfont, command=select_record)
             select_button.grid(row=5,column=2, padx = 15, pady = 20)
             
+            # update button - calls update_record function
             refresh_button = Button(Input_frame_buttons, text="Update Record", fg=col_white, bg=col_grey, font=tkfont, command=update_record)
             refresh_button.grid(row=5,column=3, padx = 15, pady = 20)
 
+            # input button - calls input_record function
             input_button = Button(Input_frame_buttons, text="Add Record", fg=col_white, bg=col_grey, font=tkfont, command=input_record)
             input_button.grid(row=5,column=4, padx = 15, pady = 20)
 
+            # calls update_graph() function, with list of current graph info to create graph image
             custom_edges = Button(Input_frame_buttons, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
             custom_edges.grid(row=6,column=3)
 
