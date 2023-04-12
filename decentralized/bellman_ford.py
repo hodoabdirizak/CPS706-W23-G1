@@ -5,37 +5,38 @@ import networkx as nx
 
 def decentralized(graph: nx.Graph, start_node: int, end_node: int):
 
+    # Create dictionary to assign each network its own distance vector
+    # By default cost will be set to infinity
     dist_vecs = {n: ({m: float('inf') for m in graph.nodes()})
                  for n in graph.nodes()}
 
+    # Assign cost to network itself as 0
     for n in graph.nodes():
         dist_vecs[n][n] = 0
 
+    # Assign cost to neighbors, the weight between them
     for u, v, w in graph.edges(data='weight'):
         dist_vecs[u][v] = w
         dist_vecs[v][u] = w
 
+    # Create a dictionary to indicate whether a network was updated and needs to notify its neighbors
     notify_neighbors = {n: True for n in graph.nodes()}
 
-    # Loop
-
+    # A list to return the distance vectors of the starting and ending network as the algorithm progresses
     dv_start_end = []
 
     t = 0
     while any(notify_neighbors.values()):
 
-        # print(f'{notify_neighbors}')
-        # print(f't = {t}')
-        # for i, x in enumerate(dist_vecs):
-        #     print(f'{i} = {list(dist_vecs[x].values())}')
-        # print("\n\n")
-
+        # Save distance vector of starting/ending network at time=t
         dv_start_end.append(
             {"dv_start": dist_vecs[start_node], "dv_end": dist_vecs[end_node]})
 
+        # Temporary dictionaries for dist_vecs and notify_neighbors to be used in next iteration
         dist_vecs_next = {}
         notify_neighbors_next = {n: False for n in graph.nodes()}
 
+        # Send distance vectors to neighbors and update vectors if lower cost possible
         for curr_network in graph.nodes():
 
             curr_network_dv = dist_vecs[curr_network].copy()
@@ -90,10 +91,6 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
     path.append(end_node)
 
     cost = dist_vecs[start_node][end_node]
-
-    # print(dv_start_end)
-    # print(path)
-    # print(cost)
 
     return dv_start_end, path, cost
 
