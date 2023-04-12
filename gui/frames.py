@@ -369,7 +369,7 @@ class Page1(tk.Frame):
             pygame.quit()
 
         def get_path_decent():
-            '''call the fxn from XYZ.py to get the shortest path. 
+            '''call the fxn from bellman_ford.py to get the shortest path. 
             executes the pygame for decentralizated algorithm'''
             dv_start_end, path, cost = decentralized(G, str(source_router), str(dest_router))
             # start pygame
