@@ -4,12 +4,12 @@
 ## Project Installation Manual
 
 ### Team Members
-- Alex Huynh &emsp; (501025646)
-- Camillia Amin &emsp; (501071556)
-- Salma Farahat &emsp; (501026177)
-- Hodo Abdirizak &emsp; (501029458)
-- Julia Khong &emsp; (501031572)
-- Het Patel &emsp; ()
+- Alex Huynh &emsp;&emsp; (501025646)
+- Camillia Amin &emsp;&emsp; (501071556)
+- Salma Farahat &emsp;&emsp; (501026177)
+- Hodo Abdirizak &emsp;&emsp; (501029458)
+- Julia Khong &emsp;&emsp; (501031572)
+- Het Patel &emsp;&emsp; ()
 
 ### Table of Contents
 <ol>
