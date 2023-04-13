@@ -2,6 +2,7 @@
 
 # Routing Algorithm Visualization Tool
 
+<p align="center">
 ### Team Members
 | Student Name | Student Number |
 | :---: | :---: |
@@ -11,7 +12,7 @@
 |Hodo Abdirizak    |501029458
 |Julia Khong       |501031572
 |Het Patel         |
-
+</p>
 ### Table of Contents
 <ol>
   <li>
