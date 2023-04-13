@@ -1,15 +1,16 @@
+## CPS 706 Winter 2023:  Project Installation Manual
+
 # Routing Algorithm Visualization Tool
 
-## CPS 706 Winter 2023
-## Project Installation Manual
-
 ### Team Members
-- Alex Huynh        (501025646)
-- Camillia Amin     (501071556)
-- Salma Farahat     (501026177)
-- Hodo Abdirizak    (501029458)
-- Julia Khong       (501031572)
-- Het Patel         ()
+| Student Name | Student Number |
+| --- | --- |
+| Alex Huynh        | 501025646
+| Camillia Amin     | 501071556
+| Salma Farahat     | 501026177
+| Hodo Abdirizak    | 501029458
+| Julia Khong       | 501031572
+| Het Patel         | 
 
 ### Table of Contents
 <ol>
