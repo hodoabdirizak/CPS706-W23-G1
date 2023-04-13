@@ -91,6 +91,7 @@ This program requires Python version 3.10 or later. <br>
 ## Program Features
 
 ### Network Customization
+We added an Update Graph feature to our application to give our users the flexibility to customize graphs according to their needs. The user is able to create a new custom graph and edit a current existing graph. Users can clear the current graph display by going back to the main window, then progressing to the next page then entering values in the entry textboxes and clicking ‘Add Record’. To edit a current graph, the user highlights the connections you want to modify, click ‘Select Record’, update the nodes or weight in the entry text boxes, and hit ‘Update Record’. Users can also add new rows to the graph object by entering values in the entry textboxes and clicking ‘Add Record’.
 
 ### Guided Implementation of Centralized Algorithm
 After choosing 'Run Centralized Algorithm', a descirption of the centeralized algorithm used (dijkstra's algorithm) is displayed in a pop-up window.
