@@ -14,13 +14,16 @@ NODE_RADIUS = 15
 NODE_COLOR = (255, 255, 255)
 EDGE_COLOR = (255, 255, 255)
 
+# Initialize the font to none
 FONT = None
 
 # Set the frame rate
 clock = pygame.time.Clock()
 fps = 60
 
+
 def get_path_costs(graph,path):
+    '''Gets the cost of the path at each step of Dijkstra's algorithm'''
     path_costs = [0]
     next_cost = 0
     for node in path[:-1]:
@@ -30,6 +33,7 @@ def get_path_costs(graph,path):
     return path_costs
 
 def draw_graph(screen, graph, path, current_node):
+    '''Draws the graph on the pygame screen'''
     # Clear the screen
     screen.fill((0, 0, 0))
     
@@ -92,14 +96,14 @@ def draw_graph(screen, graph, path, current_node):
     pygame.display.update()
 
 def draw_game_over_screen(screen, path):
-    # Add text
+    '''Adds text to the screen when animation is complete'''
     title = FONT.render('Animation complete: Hit ESC key to exit program', True, (0, 255, 255))
     screen.blit(title, (NODE_RADIUS, WINDOW_HEIGHT + NODE_RADIUS*3))
     pygame.display.update()
 
 
-# Define the main function that will run the game
 def cent_main(graph, path, dist_vecs, prev_node):
+    '''Define the main function that will run the game'''
     pygame.init()
 
     # Define the font for the node labels
@@ -109,13 +113,13 @@ def cent_main(graph, path, dist_vecs, prev_node):
     # Create the window
     screen = pygame.display.set_mode((WINDOW_WIDTH+50, WINDOW_HEIGHT+100))
   
-
     # Display start page
     screen.fill((0, 0, 0))
     font = pygame.font.SysFont('DM Sans', 26)
     text_font = pygame.font.SysFont('DM Sans', 23)
     i = 25
 
+    # Display the description of Dijkstra's algorithm
     title = font.render("Centralized Algorithm in Networking: Dijkstra's algorithm", True, (255, 255,0))
     screen.blit(title, (WINDOW_WIDTH/2 - title.get_width()/2 + 25, 15))
 
@@ -164,12 +168,12 @@ def cent_main(graph, path, dist_vecs, prev_node):
     screen.blit(start, (WINDOW_WIDTH/2 - start.get_width()/2, i*26))
     pygame.display.update()
 
-
+    # Initilize running to True
     running = True
     start_dijkstras = False
     start_animation = False
 
-    # Start screen: Check if key is pressed 
+    # Start screen: Check if key is pressed
     while running:
         # Handle events
         for event in pygame.event.get():

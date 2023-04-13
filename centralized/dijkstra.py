@@ -1,6 +1,11 @@
 import networkx as nx
 
+# Initialize an array that will contain all of the distance vectors with 
+# each iteration of the while loop 
 dist_vecs = []
+
+# Initialize an array that will contain all of the distance vectors with 
+# each iteration of the while loop 
 prev_node = []
 
 def dijkstra(graph, start_node, end_node):
@@ -76,7 +81,11 @@ def dijkstra(graph, start_node, end_node):
     return shortest_path
 
 def get_dist_vecs():
+    '''A helper function that is used to retrieve 
+    the distance vector array from frames.py'''
     return dist_vecs
 
 def get_prev_node():
+    '''A helper function that is used to retrieve 
+    the list containing the parents nodes from frames.py'''
     return prev_node

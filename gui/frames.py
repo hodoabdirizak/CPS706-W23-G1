@@ -22,8 +22,10 @@ from centralized_pygame import *
 from decentralized_pygame import *
 
 
-class Container(tk.Tk):  
+class Container(tk.Tk): 
+    '''Class that contains all of the frames in the Tkinter Window''' 
     def __init__(self, *args, **kwargs):  
+        '''Initialization method for the Container class'''
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)  
         container.pack(side="top", fill="both", expand = True)  
@@ -32,6 +34,7 @@ class Container(tk.Tk):
   
         self.frames = {}  
   
+        # Place each frame in the Container
         for F in (Main_window, Page1):  
             frame = F(container, self)
             self.frames[F] = frame  
@@ -39,11 +42,12 @@ class Container(tk.Tk):
   
         self.show_frame(Main_window)  
   
+    # Displays a frame 
     def show_frame(self, cont):  
         frame = self.frames[cont]  
         frame.tkraise()  
 
-# global vars
+# Define global variables to be accessed by multiple frames
 num_routers = source_router = dest_router = 0
 buttonClicked = False
 G = None
@@ -56,73 +60,79 @@ col_accent = '#98c1d9'
 col_grey = '#3d5a80'
 
 class Main_window(tk.Frame):
+    '''Class for the Main Window frame, the frame first seen by the user'''
     def __init__(self, parent, controller):  
         tk.Frame.__init__(self,parent)  
         self.config(background=col_dark)
+
+        # Create text for the title and instructions for the Main Window 
         label = tk.Label(self, bd=1, text="Routing Algorithm Visualization Tool", anchor='nw', fg=col_accent, bg=col_dark, font=tkfont_bold)  
         label2 = tk.Label(self, bd=1, text="Before we start, we'll need the following information:", anchor='nw', fg='white', bg=col_dark, font=('DM Sans', 12, 'bold'))  
 
-        # declare vars to store values input by user 
+        # Declare variables to store values input by the user 
         num_routers_var = tk.StringVar()
         source_router_var = tk.StringVar()
         dest_router_var = tk.StringVar()
 
         # entry widgets
-        # labels for vars
+        # Create labels for the text boxes
         empt_string = tk.Label(self, bd=1, text = '', fg=col_white, bg=col_dark, font=tkfont)
         num_routers_label = tk.Label(self, bd=1, text = 'Number of Routers', fg=col_white, bg=col_dark, font=tkfont)
         source_router_label = tk.Label(self, bd=1, text = 'Source Router', fg=col_white, bg=col_dark, font=tkfont)
         dest_router_label = tk.Label(self, bd=1, text = 'Destination Router', fg=col_white, bg=col_dark, font=tkfont)
 
-        # entries for vars
+        # Create entries for each label
         num_routers_entry = tk.Entry(self, bd=1, textvariable = num_routers_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
         source_router_entry = tk.Entry(self, bd=1, textvariable = source_router_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
         dest_router_entry = tk.Entry(self, bd=1, textvariable = dest_router_var, fg=col_dark, font=('DM Sans', 11, 'bold'))
         
+        # Create empty text to situate the display grid
         empty_1 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         empty_2 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         empty_3 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         empty_4 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         label_end = tk.Label(self, bd=1, text="Hit ESC key to exit program", fg='white', bg=col_dark, font=tkfont_bold) 
 
-        # msg = tk.Label(self, bd=1, text="", anchor='nw', fg='red', bg=col_dark, font=('DM Sans', 12, 'bold'))
-        # err_msg = ""
-        # msg = None
-
+        # Create Validate and Submit buttons
+        val_btn=tk.Button(self, text = 'Validate', fg=col_dark, bg=col_accent, font=tkfont, command = switch)
+        sub_btn=tk.Button(self, text = 'Submit', fg=col_dark, bg=col_accent, font=tkfont, state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
 
         def validate():
-            '''validates that info provided is correct
+            '''Validates that info provided is correct
             if invalid: print error msg to window 
             else: call edges()'''
             global num_routers, source_router, dest_router
 
-            # update error message
+            # Update error message
             err_msg = print_errors(num_routers_var.get(),source_router_var.get(),dest_router_var.get())
 
-            # create canvas image that displays the error message
+            # Create the canvas element that displays the error message
             canvas = tk.Canvas(self, width= 750, height= 30, bg=col_dark, highlightthickness=0)
             canvas.create_text(5,5, anchor='nw', text=err_msg, fill="#ee6c4d", font=tkfont)  
             canvas.grid(row=4,column=6) 
 
-            # if there is no error, update the number of routers, source and destination router
+            # If there is no error, update the number of routers, source and destination router
             if err_msg == None:
                 num_routers = int(num_routers_var.get())
                 source_router = int(source_router_var.get())
                 dest_router = int(dest_router_var.get())              
                 return True
 
+            # There is an error with the input data
             return False
             
         def switch():
+            '''Makes the Submit button visible if the data is validated'''
             if validate():
                 sub_btn['state'] = tk.NORMAL
             if not validate():
                 sub_btn['state'] = tk.DISABLED
 
         def disable():
+            '''Disables the Submit button if the data has not yet been validated'''
             sub_btn['state'] = tk.DISABLED
 
-        # placing the label and entry using grid
+        # Display each previously created label and entry using grid
         label.grid(row=0,column=2, padx=10, pady=30, columnspan=2)
         label2.grid(row=1,column=2, padx=10, pady=40, columnspan=2)
    
@@ -132,10 +142,6 @@ class Main_window(tk.Frame):
         source_router_entry.grid(row=3,column=3, padx=10, pady=10)
         dest_router_label.grid(row=4,column=2, padx=10, pady=10)
         dest_router_entry.grid(row=4,column=3, padx=10, pady=10)
-        # empt_string.grid(row=5,column=1, padx=10, pady=10)
-
-        val_btn=tk.Button(self, text = 'Validate', fg=col_dark, bg=col_accent, font=tkfont, command = switch)
-        sub_btn=tk.Button(self, text = 'Submit', fg=col_dark, bg=col_accent, font=tkfont, state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
 
         val_btn.grid(row=5,column=2,padx=10, pady=10)
         sub_btn.grid(row=5,column=3,padx=10, pady=10)
@@ -148,60 +154,63 @@ class Main_window(tk.Frame):
 
         label_end.grid(row=8,column=2, padx=10, pady=250, columnspan=2)
          
-
 class Page1(tk.Frame):  
+    '''Class for the Page1 frame, the page that comes after Main Window'''
     def __init__(self, parent, controller):  
+        '''Initialize the class'''
         tk.Frame.__init__(self, parent)  
         self.config(background=col_dark)
         label = tk.Label(self, text="Generate Network", pady = 10, fg=col_white, bg=col_dark, font=tkfont_bold)  
         label.grid(row=0,column=1)
 
         def create_graph():
-            '''calls function from edges.py to display a graph with random edges
-            assumes that user does not want to customize edges'''
+            '''Calls function from edges.py to create a randomized networkx graph and display the graph on Page1'''
+
+            # Create text to display the number of routers, the source and destination nodes
             label = tk.Label(self, text="Network of {} routers, where source = {} and destination = {}".format(num_routers,source_router,dest_router), fg=col_white, bg=col_dark, font=('DM Sans', 13, 'bold'))  
             label.grid(row=1,column=1)
 
-            # destroy any existing graph
+            # Destroy any existing graph shown in Page 1 
             plt.clf()
 
+            # Set the G variable equal to the result of the create_rand_graph function from create_graph.py
             global G
             G = create_random_graph(num_routers, source_router, dest_router)
 
-            # get image created by previous fxn call
+            # Get image created by previous fxn call
             img = ImageTk.PhotoImage(Image.open("gui/graph.png"))
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
 
-            # create a table with based on randomized nodes and weights, store in data var
+            # Create a table with based on randomized nodes and weights, store in data var
             label_table = tk.Label(self, text="", font=tkfont, bg=col_dark, highlightbackground=col_dark, highlightthickness=0, borderwidth=0)  
             label_table.grid(row=3,column=2, columnspan=2)
             
-            # uses Treeview to make a table to display current graph info (Node A, Node B, Cost)
+            # Uses Treeview to make a table to display current graph info (Node A, Node B, Cost)
             set = ttk.Treeview(label_table)
             set.pack(side=RIGHT, padx=15, pady=20)
 
-            # set columns of table 
+            # Set columns of table 
             set['columns'] = ('node_a', 'node_b', 'cost')
             set.column("#0", width=0, stretch=NO)
             set.column("node_a", anchor=CENTER, width=80)
             set.column("node_b", anchor=CENTER, width=80)
             set.column("cost", anchor=CENTER, width=80)
 
-            # set heading of table 
+            # Set heading of table 
             set.heading("#0", text="", anchor=CENTER)
             set.heading("node_a", text="Node A", anchor=CENTER)
             set.heading("node_b", text="Node B", anchor=CENTER)
             set.heading("cost", text="Cost", anchor=CENTER)
 
-            # initalize data array to hold the source nodes, destination nodes, and weights of graph G
+            # Initalize data array to hold the source nodes, destination nodes, and weights of graph G
             global data
             data = []
 
-            # if graph G is not empty, user has selected to create randomized graph
+            # If graph G is not empty, user has selected to create randomized graph
             if G:
-                # populate data array with node info of graph G
+                # Populate data array with node info of graph G
                 for u, v, d in G.edges(data=True):
                     data.append(u)
                     data.append(v)
@@ -254,8 +263,7 @@ class Page1(tk.Frame):
                 global count
 
                 # place user entries in table
-                set.insert(parent='', index='end', iid=count, text='',
-                           values=(node_a_entry.get(), node_b_entry.get(), cost_entry.get()))
+                set.insert(parent='', index='end', iid=count, text='', values=(node_a_entry.get(), node_b_entry.get(), cost_entry.get()))
                 count += 1
                 
                 # add user entries to data array to modify graph later
@@ -268,8 +276,9 @@ class Page1(tk.Frame):
 
             # Select Record
             def select_record():
-                '''Is called when user wants to edit the existing row of table, displaying highlighted row data in entry boxes
-                for editing'''
+                '''Is called when user wants to edit the existing row of table, displaying highlighted row data 
+                in entry boxes for editing'''
+
                 # clear entry boxes
                 node_a_entry.delete(0, END)
                 node_b_entry.delete(0, END)
@@ -282,7 +291,6 @@ class Page1(tk.Frame):
                 to_delete = [values[0], values[1], values[2]]
                 # grab record values
                 values = set.item(selected, 'values')
-                # temp_label.config(text=selected)
 
                 # output to entry boxes
                 node_a_entry.insert(0, values[0])
@@ -330,7 +338,7 @@ class Page1(tk.Frame):
             custom_edges.grid(row=6,column=3)
 
         def update_graph(data):
-            '''calls create_custom_graph() from create.py to create a new graph object'''
+            '''Calls function from edges.py to create a custom networkx graph and display the graph on Page1'''
 
             # destroy any existing graph
             plt.clf()
@@ -343,45 +351,56 @@ class Page1(tk.Frame):
             label_img = tk.Label(self,image=img)
             label_img.image = img
             label_img.grid(row=3,column=1,rowspan=3, padx = 25)
-            # after the user is done editing the table, they have to press 'update graph'  
-            # triggers fxn call to update_graph(), need to pass in data to fxn
-            # custom_edges = tk.Button(self, text="Update graph", fg=col_dark, bg=col_accent, font=tkfont, command = lambda: update_graph(data)) 
-            # custom_edges.grid(row=2,column=2, padx = 5, pady = 5)
 
+        # Initially displays no graph
         create_graph()
+
+        # Upon clicking create graph button, triggers the create_graph function
         random_edges = tk.Button(self, text="Create graph", fg=col_white, bg=col_grey, font=tkfont, command = create_graph)
         random_edges.grid(row=1,column=0, padx = 5, pady = 10)
 
+        # Upon clicking the Go Back to Input button, returns to the first page 
         go_back = tk.Button(self, text="Go Back to Input", fg=col_white, bg=col_grey, font=tkfont, command=lambda: [controller.show_frame(Main_window)])  
         go_back.grid(row=2,column=0, padx = 5, pady = 10)
 
         def get_path_cent():
-            '''call the fxn from dijkstra.py to get the shortest path. 
-            executes the pygame for centralized algorithm'''
+            '''Calls functions from dijkstra.py to get the shortest path, 
+            the list of parents nodes, and the list of distance vectors,  
+            executes the pygame for the centralized algorithm'''
+            # Create the shortest path from dijsktra.py 
             path = dijkstra(G, str(source_router), str(dest_router))
         
-            # get table columns
+            # get table columns from the dijkstra's algorithm
             dist_vecs = get_dist_vecs()
             prev_node = get_prev_node()
             
-            # start pygame
+            # start the pygame for the centralized algorithm
             cent_main(G, path, dist_vecs, prev_node)
+
+            # quit the pygame
             pygame.quit()
 
         def get_path_decent():
             '''call the fxn from bellman_ford.py to get the shortest path. 
             executes the pygame for decentralizated algorithm'''
+            # Creates the shortest path and gathers vector info from bellman_ford.py 
             dv_start_end, path, cost = decentralized(G, str(source_router), str(dest_router))
-            # start pygame
+
+            # start the pygame for the decentralized algorithm
             decent_main(str(num_routers), str(source_router), str(dest_router), dv_start_end, path, cost, G)
+
+            # quit the pygame
             pygame.quit()
 
+        # Create buttons for the centralized and decentralized algorithms  
         cent = tk.Button(self, text="Run Centralized Algorithm", fg=col_dark, bg=col_accent, font=tkfont, command=get_path_cent)  
         decent = tk.Button(self, text="Run Decentralized Algorithm", fg=col_dark, bg=col_accent, font=tkfont, command=get_path_decent) 
 
+        # Display the buttons on the grid
         cent.grid(row=2,column=2)
         decent.grid(row=2,column=3)
 
+        # Display text for quitting the game
         label_end = tk.Label(self, bd=1, text="Hit ESC key to exit program", fg='white', bg=col_dark, font=tkfont_bold) 
         empty_1 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         empty_1.grid(row=8,column=1)
@@ -389,13 +408,25 @@ class Page1(tk.Frame):
 
              
 def close(event):
-    window.withdraw() # if you want to bring it back
+    '''closes the program'''
+    window.withdraw()
     sys.exit()
 
+# Initialize the class
 window = Container()  
+
+# Create the title and set window size
 window.title('Routing Algorithm Visualization Tool')
 window.geometry('1200x600')
+
+# Set background to dark colour
 window.configure(background=col_dark)
+
+# Make window full screen
 window.attributes('-fullscreen', True)
+
+# When ESC is pressed, close the program
 window.bind('<Escape>', close)
+
+# Run the program
 window.mainloop()  
