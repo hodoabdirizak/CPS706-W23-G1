@@ -4,6 +4,8 @@
 
 <p align="center">
 ### Team Members
+</p>
+<div align="center">
 | Student Name | Student Number |
 | :---: | :---: |
 |Alex Huynh        |501025646
@@ -12,7 +14,7 @@
 |Hodo Abdirizak    |501029458
 |Julia Khong       |501031572
 |Het Patel         |
-</p>
+</div>
 ### Table of Contents
 <ol>
   <li>
