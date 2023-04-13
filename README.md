@@ -2,11 +2,11 @@
 
 # Routing Algorithm Visualization Tool
 
-<p align="center">
+
 ### Team Members
-</p>
+
 <div align="center">
-| Student Name | Student Number |
+| </br>Student Name | </br>Student Number |
 | :---: | :---: |
 |Alex Huynh        |501025646
 |Camillia Amin     |501071556
@@ -15,6 +15,7 @@
 |Julia Khong       |501031572
 |Het Patel         |
 </div>
+
 ### Table of Contents
 <ol>
   <li>
