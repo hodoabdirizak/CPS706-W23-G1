@@ -15,6 +15,7 @@ def create_random_graph(num_routers, source, dest):
     for i in range(1,num_routers):
         G.add_edge(str(i), str(i+1), weight=random.randint(1,11))
 
+    # create random edges between nodes
     for i in range(1,num_routers//2):
         # if an edge between 2 nodes doesnt already exist
         if not G.has_edge(str(i), str(random.randint(i+1,num_routers+1))):
@@ -27,6 +28,7 @@ def create_random_graph(num_routers, source, dest):
     # list of edges
     edges = [(u, v) for (u, v, d) in G.edges(data=True)]
 
+    # display the network in a circular layout
     pos = nx.circular_layout(G)  
 
     # nodes
@@ -49,7 +51,8 @@ def create_random_graph(num_routers, source, dest):
 
     # saves graph to an image
     plt.savefig("gui/graph.png")
-    # print(dijkstra(G, '1', '5'))
+    
+    # return the graph object
     return G
 
 # create_random_graph(6, [])
@@ -68,6 +71,7 @@ def create_custom_graph(data):
     # list of edges
     edges = [(u, v) for (u, v, d) in G.edges(data=True)]
 
+    # display the network in a circular layout
     pos = nx.circular_layout(G)
 
     # nodes
@@ -90,4 +94,6 @@ def create_custom_graph(data):
 
     # saves graph to an image
     plt.savefig("gui/graph.png")
+
+    # return the graph object
     return G
