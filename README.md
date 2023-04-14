@@ -1,4 +1,18 @@
+## CPS 706 Winter 2023:  Project Installation Manual
+
 # Routing Algorithm Visualization Tool
+
+
+### Team Members
+
+| Student Name | Student Number|
+| :---: | :---: |
+|Alex Huynh        |501025646
+|Camillia Amin     |501071556
+|Salma Farahat     |501026177
+|Hodo Abdirizak    |501029458
+|Julia Khong       |501031572
+|Het Patel         |
 
 ### Table of Contents
 <ol>
@@ -77,9 +91,11 @@ This program requires Python version 3.10 or later. <br>
 ## Program Features
 
 ### Network Customization
+We added an Update Graph feature to our application to give our users the flexibility to customize graphs according to their needs. The user is able to create a new custom graph and edit a current existing graph. Users can clear the current graph display by going back to the main window, then progressing to the next page then entering values in the entry textboxes and clicking ‘Add Record’. To edit a current graph, the user highlights the connections you want to modify, click ‘Select Record’, update the nodes or weight in the entry text boxes, and hit ‘Update Record’. Users can also add new rows to the graph object by entering values in the entry textboxes and clicking ‘Add Record’.
 
 ### Guided Implementation of Centralized Algorithm
-
+After choosing 'Run Centralized Algorithm', a descirption of the centeralized algorithm used (dijkstra's algorithm) is displayed in a pop-up window.
+Then, you click on any key to move on to the animation of the algorithm running. In the animation, the graph is shown on the right side and next to it is a table with the nodes, the distance from the start node, and parent node. By clicking on the right arrow on the keyborad, you will see the table being populated according to dijkstra's alogrithm. After the whole table has been updated, the shortest path will be portrayed on the screen. Then another animation will appear where the shortest path will be highlighted in green and the current node will be highlighted in red. Use the arrow keys to move from one node to the next and as you move the cost at the top right corner of the screen will be updated to portray the addition of the edge costs being added to give the final cost of the shortest path. After you have moved from the source to the destination you will click ESC on your keyboard to quit the animation. 
 ### Guided Implementation of Decentralized Algorithm
 
 ## Code 
