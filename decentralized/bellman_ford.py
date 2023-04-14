@@ -93,33 +93,3 @@ def decentralized(graph: nx.Graph, start_node: int, end_node: int):
     cost = dist_vecs[start_node][end_node]
 
     return dv_start_end, path, cost
-
-
-# G = nx.Graph()
-
-# nodes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-# nodes_str = [str(x) for x in nodes]
-# G.add_nodes_from(nodes_str)
-
-# # Image of graph: https://media.geeksforgeeks.org/wp-content/uploads/graphhh.png
-# edges = [(0, 1, 4),
-#          (0, 7, 8),
-#          (1, 2, 8),
-#          (1, 7, 11),
-#          (7, 6, 1),
-#          (7, 8, 7),
-#          (2, 8, 2),
-#          (8, 6, 6),
-#          (2, 3, 7),
-#          (2, 5, 4),
-#          (3, 5, 14),
-#          (3, 4, 9),
-#          (5, 4, 10),
-#          (6, 5, 2)]
-# edges_str = [(str(s), str(e), w) for s, e, w in edges]
-# G.add_weighted_edges_from(edges_str)
-
-
-# start = '0'
-# end = '8'
-# decentralized(G, start, end)
