@@ -12,7 +12,7 @@
 |Salma Farahat     |501026177
 |Hodo Abdirizak    |501029458
 |Julia Khong       |501031572
-|Het Patel         |
+|Het Patel         |500967528
 
 ### Table of Contents
 <ol>
@@ -95,8 +95,9 @@ We added an Update Graph feature to our application to give our users the flexib
 
 ### Guided Implementation of Centralized Algorithm
 After choosing 'Run Centralized Algorithm', a descirption of the centeralized algorithm used (dijkstra's algorithm) is displayed in a pop-up window.
-Then, you click on any key to move on to the animation of the algorithm running. In the animation, the graph is shown on the right side and next to it is a table with the nodes, the distance from the start node, and parent node. By clicking on the right arrow on the keyborad, you will see the table being populated according to dijkstra's alogrithm. After the whole table has been updated, the shortest path will be portrayed on the screen. Then another animation will appear where the shortest path will be highlighted in green and the current node will be highlighted in red. Use the arrow keys to move from one node to the next and as you move the cost at the top right corner of the screen will be updated to portray the addition of the edge costs being added to give the final cost of the shortest path. After you have moved from the source to the destination you will click ESC on your keyboard to quit the animation. 
+Then, you click on any key to move on to the animation of the algorithm. In the animation, the graph is shown on the right side and next to it is a table with the nodes, the distance from the start node, and parent node. By clicking on the right arrow on the keyborad, you will see the table being populated according to dijkstra's alogrithm after each click. After the whole table has been updated, the shortest path will be portrayed on the screen. Then another animation will appear where the shortest path will be highlighted in green and the current node will be highlighted in red. Use the arrow keys to move from one node to the next, and as you move the cost at the top right corner of the screen will be updated to portray the addition of the edge costs being added to give the final cost of the shortest path. After you have moved from the source to the destination you can click ESC on your keyboard to quit the animation. 
 ### Guided Implementation of Decentralized Algorithm
+After choosing 'Run Decentralized Algorithm', a description of the decenteralized algorithm used (Bellman Fords’s algorithm) is displayed in a pop-up window. Then, you click on any key to move on to the animation of the algorithm.  In the animation, there will be the distance vectors for the selected starting and ending network starting at time 0. By using left/right arrow keys, you can increment/decrement time, and it will display states of the distance vectors at that time of that second. As you continue to click the right arrow key, you will see the distance vectors updating, until all the lowest costs have been populated. After that will be a final screen that displays the lowest cost, the path going from the starting to ending network, and the path highlighted in green on the network graph. Then you can click ESC to quit the animation.
 
 ## Code 
 
