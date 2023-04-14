@@ -92,7 +92,18 @@ class Main_window(tk.Frame):
         empty_3 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         empty_4 = tk.Label(self, bd=1, text="                                                                   ", bg=col_dark) 
         label_end = tk.Label(self, bd=1, text="Hit ESC key to exit program", fg='white', bg=col_dark, font=tkfont_bold) 
+        
+        def switch():
+            '''Makes the Submit button visible if the data is validated'''
+            if validate():
+                sub_btn['state'] = tk.NORMAL
+            if not validate():
+                sub_btn['state'] = tk.DISABLED
 
+        def disable():
+            '''Disables the Submit button if the data has not yet been validated'''
+            sub_btn['state'] = tk.DISABLED
+            
         # Create Validate and Submit buttons
         val_btn=tk.Button(self, text = 'Validate', fg=col_dark, bg=col_accent, font=tkfont, command = switch)
         sub_btn=tk.Button(self, text = 'Submit', fg=col_dark, bg=col_accent, font=tkfont, state=tk.DISABLED, command = lambda: [disable,controller.show_frame(Page1)])
@@ -120,17 +131,6 @@ class Main_window(tk.Frame):
 
             # There is an error with the input data
             return False
-            
-        def switch():
-            '''Makes the Submit button visible if the data is validated'''
-            if validate():
-                sub_btn['state'] = tk.NORMAL
-            if not validate():
-                sub_btn['state'] = tk.DISABLED
-
-        def disable():
-            '''Disables the Submit button if the data has not yet been validated'''
-            sub_btn['state'] = tk.DISABLED
 
         # Display each previously created label and entry using grid
         label.grid(row=0,column=2, padx=10, pady=30, columnspan=2)
