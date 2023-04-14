@@ -198,27 +198,40 @@ def cent_main(graph, path, dist_vecs, prev_node):
         pressed2 = False
        
         print(graph.number_of_nodes())
+
+        # while running is True, check for events to see if user has pressed ESC, right or left arrow keys
         while running:      
             for event in pygame.event.get():
                 # Clear the screen
                 screen.fill((0, 0, 0))
+
+                # Quit the game if user has closed the program
                 if event.type == pygame.QUIT:
                     running = False
 
+                # If user has pressed a key
                 elif event.type == pygame.KEYDOWN:
+
+                    # If user has pressed the left arrow key, decrement the time
                     if event.key == pygame.K_LEFT and time > 0:
                         time = time - 1
+
+                    # If user has pressed the right arrow key, increment the time    
                     elif event.key == pygame.K_RIGHT and time >= 0 and time < graph.number_of_nodes()-1:
                         time = time + 1
                     
+                    # IF user has pressed ESC, quit the game 
                     elif event.key == pygame.K_ESCAPE:
                         running = False
                         break
+
+                    # Otherwise, set running to false and break the loop 
                     else:
                         pressed2 = True
                         running = False
                         break
-                        
+            
+            # Clear the screen 
             screen.fill((0, 0, 0))
 
             # Display the graph
@@ -226,6 +239,7 @@ def cent_main(graph, path, dist_vecs, prev_node):
             IMAGE_SMALL = pygame.transform.rotozoom(imp, 0, 0.6)
             screen.blit(IMAGE_SMALL, (10, 50))
 
+            # Display the Step number
             text = "Step: " + str(time+1)  # + "\n" +
             title_text = font.render(text, True, (255, 255, 255))
 
@@ -253,13 +267,15 @@ def cent_main(graph, path, dist_vecs, prev_node):
                     pygame.draw.rect(screen, (0, 0, 0), cell_rect, 1)
 
                     # Add text to the cell
+                    # Populate the data table 
                     if row == 0:  # This is the header row
-                        if col == 0:
+                        if col == 0: # First column - Node number
                             text = f"Node"
-                        elif col == 1:
+                        elif col == 1: # Second column - for the distances
                             text = f"Distance from {path[0]}"
-                        else:
+                        else: # Third column - for the previous node
                             text = f"Previous node"
+                        
                         # Render the header text in bold
                         text_surface = table_font.render(text, True, (0, 0, 0), (255, 255, 255))
                         text_rect = text_surface.get_rect(center=cell_rect.center)
@@ -269,13 +285,17 @@ def cent_main(graph, path, dist_vecs, prev_node):
                         if col == 0:
                             text = f"{row}"
                         elif col == 1 and time < len(dist_vecs):
+                            # Get the distance of that node
                             timeat = dist_vecs[time]
                             starting = timeat[row-1]
                             text = str(starting)
                         else:
+                            # Get the previous node of that node
                             timeat = prev_node[time]
                             starting = timeat[row-1]
                             text = str(starting)
+
+                        # Print the data
                         text_surface = table_font.render(text, True, (0, 0, 0))
                         text_rect = text_surface.get_rect(center=cell_rect.center)
                         screen.blit(text_surface, text_rect)
@@ -290,6 +310,7 @@ def cent_main(graph, path, dist_vecs, prev_node):
 
     # If table is complete, start the animation
     if pressed2:
+        # Display text to explain the outcome of the algorithm
         title = FONT.render('Using the resulting table, backtrack from the destination to the start node.', True, (255, 255, 255))
         title1 = FONT.render('The result of backtracking is:  {}'.format(" -> ".join(path[::-1])), True, (255, 255, 255))
         title2 = FONT.render('Therefore, the shortest path is:  {}'.format(" -> ".join(path)), True, (255, 255, 255))
@@ -305,15 +326,17 @@ def cent_main(graph, path, dist_vecs, prev_node):
         while running:
             # Handle events
             for event in pygame.event.get():
+                # If user exited, quit pygame
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     running = False
                 
-                # stop if any key is pressed
+                # Stop if any key is pressed
                 elif event.type == pygame.KEYDOWN:
                     start_animation = True
                     running = False
 
+    # Display the graph for animating the path
     if start_animation:
         # Set the positions of the nodes based on their degrees
         positions = nx.circular_layout(graph)
@@ -326,6 +349,7 @@ def cent_main(graph, path, dist_vecs, prev_node):
         current_node = path[0]
         path_index = 0
 
+        # Call the draw_graph function to show the graph
         draw_graph(screen, graph, path, current_node)
         
         # Run the game loop
@@ -334,29 +358,35 @@ def cent_main(graph, path, dist_vecs, prev_node):
         while running:
             # Handle events
             for event in pygame.event.get():
+                # If user exited, quit pygame
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     running = False
                     
                 elif event.type == pygame.KEYDOWN:
+                    # If left arrow key is pressed, go to prev node
                     if event.key == pygame.K_LEFT:
                         if path_index > 0:
                             path_index -= 1
                             current_node = path[path_index]
                     
+                    # If right arrow key is pressed, go to next node
                     elif event.key == pygame.K_RIGHT:
-                        # if this is the last node in the path:
+                        # if this is the last node in the path, stop the animation
                         if path_index == len(path) - 1:
                             animation_done = True
 
+                        # if it is not the last node in the graph, go to the next
                         elif path_index < len(path) - 1:
                             path_index += 1
                             current_node = path[path_index]
 
+                    # Quit if ESC is pressed
                     elif event.key == pygame.K_ESCAPE:
                         running = False 
                         break
 
+            # Call game over function if animation is done 
             if animation_done:
                 draw_game_over_screen(screen, path)
 
