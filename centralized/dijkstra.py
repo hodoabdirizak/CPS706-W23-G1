@@ -22,7 +22,6 @@ def dijkstra(graph, start_node, end_node):
     """
     global dist_vecs
     global prev_node
-    temp = None
 
     # Initialize a list to keep track of the shortest distance to each node from the start node.
     distances = [float('inf')] * len(graph.nodes())
