@@ -2,18 +2,6 @@
 
 # Routing Algorithm Visualization Tool
 
-
-### Team Members
-
-| Student Name | Student Number|
-| :---: | :---: |
-|Alex Huynh        |501025646
-|Camillia Amin     |501071556
-|Salma Farahat     |501026177
-|Hodo Abdirizak    |501029458
-|Julia Khong       |501031572
-|Het Patel         |500967528
-
 ### Table of Contents
 <ol>
   <li>
